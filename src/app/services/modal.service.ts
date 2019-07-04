@@ -1,0 +1,43 @@
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { CreateNewUserModalComponent } from '../components/create-new-user-modal/create-new-user-modal.component';
+import { UsersService } from './users.service';
+import { Observable } from 'rxjs';
+import { User } from '../models/user';
+import { ChugModalComponent } from '../components/chug-modal/chug-modal.component';
+import { FinishModalComponent } from '../components/finish-modal/finish-modal.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ModalService {
+
+  constructor(private dialog: MatDialog, private userService: UsersService) { }
+
+  public openCreateNewUser(username: string, password: string) {
+    return this.dialog.open(CreateNewUserModalComponent, {
+      disableClose: true,
+      data: {
+        username
+      }
+    }).afterClosed();
+  }
+
+  public openChug(username: string) {
+    return this.dialog.open(ChugModalComponent, {
+      disableClose: true,
+      data: {
+        username
+      }
+    }).afterClosed();
+  }
+
+  public openFinish(duration: number) {
+    return this.dialog.open(FinishModalComponent, {
+      disableClose: true,
+      data: {
+        duration
+      }
+    }).afterClosed();
+  }
+}

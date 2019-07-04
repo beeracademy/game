@@ -1,0 +1,28 @@
+:host, mat-card {
+  width: 100%;
+
+  display: flex;
+
+  mat-card {
+    padding: 0px;
+    margin: 5px;
+
+    background-color: #ac181c;
+    color: white;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .item {
+    margin: 5px;
+    text-align: center;
+    font-size: 24px;
+    flex: 1;
+
+    p{
+      text-align: center;
+      margin: 0px;
+    }
+  }
+}

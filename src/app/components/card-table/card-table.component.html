@@ -1,0 +1,10 @@
+<table>
+    <tr>
+      <th>Round</th>
+      <th *ngFor="let u of usersService.users">{{ u.username }}</th>
+    </tr>
+    <tr *ngFor="let p of ' '.repeat(13).split(''); let i = index">
+      <td>{{ i + 1 }}</td>
+      <td *ngFor="let u of usersService.users"></td>
+    </tr>
+  </table>

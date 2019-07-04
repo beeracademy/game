@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    font-weight: 200;
+    text-align: center;
+
+    &.title {
+      font-size: 3em;
+      margin: 12px 0 12px;
+    }
+
+    &.time {
+      font-size: 24px;
+      margin-bottom: 48px
+    }
+  }
+
+  button {
+    font-size: 18px;
+    padding: 10px;
+    text-transform: uppercase;
+  }
+}

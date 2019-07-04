@@ -1,0 +1,18 @@
+<mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''">
+  <h3>{{ user?.username }}</h3>
+  <div class="stats-wrap">
+    <div>
+      <p>Sips</p>
+      <p>Beers</p>
+      <p>Min</p>
+      <p>Max</p>
+    </div>
+    <div class="right-flex">
+      <p></p>
+      <p>0</p>
+      <p>0</p>
+      <p>140</p>
+      <p>150</p>
+    </div>
+  </div>
+</mat-card>

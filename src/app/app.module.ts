@@ -10,12 +10,33 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { LoginComponent } from './views/login/login.component';
 import { MatInputModule } from '@angular/material';
+import { LoginModalItemComponent } from './components/login-modal-item/login-modal-item.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateNewUserModalComponent } from './components/create-new-user-modal/create-new-user-modal.component';
+import { GameComponent } from './views/game/game.component';
+import { ChugModalComponent } from './components/chug-modal/chug-modal.component';
+import { FinishModalComponent } from './components/finish-modal/finish-modal.component';
+import { PlayersComponent } from './components/players/players.component';
+import { PlayersItemComponent } from './components/players-item/players-item.component';
+import { InfoBarComponent } from './components/info-bar/info-bar.component';
+import { CardTableComponent } from './components/card-table/card-table.component';
+import { GameCountdownComponent } from './components/game-countdown/game-countdown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginModalComponent,
-    LoginComponent
+    LoginComponent,
+    LoginModalItemComponent,
+    CreateNewUserModalComponent,
+    GameComponent,
+    ChugModalComponent,
+    FinishModalComponent,
+    PlayersComponent,
+    PlayersItemComponent,
+    InfoBarComponent,
+    CardTableComponent,
+    GameCountdownComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +44,9 @@ import { MatInputModule } from '@angular/material';
     BrowserAnimationsModule,
     MatInputModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
@@ -31,6 +54,12 @@ import { MatInputModule } from '@angular/material';
       useClass: AuthInterceptor,
       multi: true
     }
+  ],
+  entryComponents: [
+    CreateNewUserModalComponent,
+    ChugModalComponent,
+    FinishModalComponent,
+    GameCountdownComponent
   ],
   bootstrap: [AppComponent]
 })

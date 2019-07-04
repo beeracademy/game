@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+
+  mat-form-field {
+    margin: 0 10px;
+    flex-grow: 1;
+    padding-top: 10px;
+  }
+
+  .login-dicator {
+    height: 64px;
+    width: 5px;
+  }
+
+  .login-image {
+    height: 64px;
+    width: 64px;
+
+    background-image: url("../../../assets/user.jpg");
+    background-position: top;
+    background-size: cover;
+  }
+}

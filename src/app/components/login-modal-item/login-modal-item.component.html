@@ -1,0 +1,11 @@
+<mat-form-field [hideRequiredMarker]="true">
+  <input matInput placeholder="Username" required #username [disabled]="disabled">
+</mat-form-field>
+
+<mat-form-field [hideRequiredMarker]="true" flex>
+  <input matInput placeholder="Password" type="password" required #password (blur)="login(username.value, password.value)" [disabled]="disabled">
+</mat-form-field>
+
+<div class="login-image" [ngStyle]="{'background-image': 'url(' + ( image || 'assets/user.jpg') + ')'}"></div>
+
+<div class="login-dicator" [ngStyle]="{'background-color': indicatorColor }"></div>

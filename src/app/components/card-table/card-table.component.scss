@@ -1,0 +1,33 @@
+:host {
+
+  text-align: center;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: none;
+    text-align: center;
+    padding: 4px;
+  }
+
+  td {
+    font-family: AU_Passata;
+  }
+
+  th {
+    font-family: AU_Passata_light;
+    font-weight: bold;
+  }
+
+  tr {
+    border-bottom: 1px solid #eee;
+
+    &:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+  }
+}
+

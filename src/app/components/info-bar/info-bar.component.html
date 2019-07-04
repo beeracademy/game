@@ -1,0 +1,9 @@
+<mat-card>
+  <div class="item">Round {{ gameService.getRound() }}</div>
+  <div class="item">
+    <p style="font-size: 36px;">{{ roundDuration | date: "HH:mm:ss":"+0000" }}</p>
+    <p style="font-size: 16px">{{ duration | date: "HH:mm:ss":"+0000" }}</p>
+  </div>
+  <div class="item">{{ gameService.getCardsLeft() }} card{{ gameService.getCardsLeft() === 1 ? '' : 's' }} left</div>
+</mat-card>
+

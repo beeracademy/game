@@ -1,0 +1,40 @@
+:host {
+  mat-divider {
+    position: inherit;
+    margin: 18px 0px;
+  }
+
+  mat-slider {
+    width: 100%;
+    margin-bottom: -20px;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px 0px;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+}
+
+
+::ng-deep {
+
+  .mat-slider-thumb-label {
+    transform: rotate(45deg) !important;
+    border-radius: 50% 50% 0 !important;
+  }
+
+  .mat-slider-thumb {
+    transform: scale(0) !important;
+  }
+
+  .mat-slider-horizontal .mat-slider-ticks {
+    opacity: 1 !important;
+ }
+
+  .mat-slider-thumb-label-text {
+    opacity: 1 !important;
+  }
+
+}
