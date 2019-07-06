@@ -9,9 +9,39 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class CardTableComponent implements OnInit {
 
-  constructor(public gameService: GameService, public usersService: UsersService) { }
+  public matrix: any[][];
 
-  ngOnInit() {
+  private c = this.gameService.game.playerCount;
+  private r = 13;
+
+  constructor(public gameService: GameService, public usersService: UsersService) {
   }
 
+  ngOnInit() {
+    /*
+    this.gameService.onCardDrawn.subscribe(() => {
+      //this.matrix = this.getMatrix();
+    });
+    */
+  }
+
+  /*getMatrix() {
+    const m = [];
+
+    for (let i = 0; i < this.r; i++) {
+      m[i] = [];
+      for (let j = 0; j < this.c; j++) {
+
+        const cardIndex = this.c * i + j;
+
+        if (this.gameService.game.cardsDrawn.length < cardIndex + 1) {
+          m[i][j] = '';
+        } else {
+          m[i][j] = this.gameService.game.cardsDrawn[cardIndex];
+        }
+      }
+    }
+
+    return m;
+  }*/
 }

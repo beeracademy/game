@@ -14,7 +14,9 @@ export class LoginGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       if (this.gameService.game.startTime) {
-        console.log(this.router.getCurrentNavigation());
+        if (this.router.url !== '/') {
+          this.router.navigate(['']);
+        }
         return true;
       } else {
         this.router.navigate(['login']);

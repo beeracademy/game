@@ -22,7 +22,11 @@ export class LoginModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  startGame() {
+  public sliderChange(val) {
+    console.log(val);
+  }
+
+  public startGame() {
     const ref = this.modal.showSpinner();
 
     ref.afterOpened().subscribe(()=> {

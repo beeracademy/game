@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user';
 import { ModalService } from 'src/app/services/modal.service';
 import { MatSnackBar } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login-modal-item',
@@ -44,6 +45,9 @@ export class LoginModalItemComponent implements OnInit {
     this.usersService.login(username, password).subscribe(
       (user: User) => {
         this.indicatorColor = this.indicatorSuccess;
+        if (user.image) {
+          this.image = environment.url + '/' + user.image;
+        }
       },
       (err: HttpErrorResponse) => {
         if (err.status === 404) {
@@ -69,7 +73,7 @@ export class LoginModalItemComponent implements OnInit {
     this.usersService.create(username, password).subscribe((result) => {
       this.login(username, password);
     }, (err: HttpErrorResponse) => {
-      this.snackBar.open(err.message + ' ' + err.status + ' ' + err.statusText, null, {
+      this.snackBar.open(this.parseFieldErrors(err.error), null, {
         duration: 5000
       });
 
@@ -83,18 +87,23 @@ export class LoginModalItemComponent implements OnInit {
   }
 
   public parseFieldErrors(json: any) {
-    if (json.non_field_errors) {
-      return json.non_field_errors.join('\n');
-    }
+    try {
 
-    let res = '';
-
-    for (const k in json) {
-      if (json.hasOwnProperty(k)) {
-        res += k + ': ' + json[k].join(' ') + ' ';
+      if (json.non_field_errors) {
+        return json.non_field_errors.join('\n');
       }
-    }
 
-    return res.trim();
+      let res = '';
+
+      for (const k in json) {
+        if (json.hasOwnProperty(k)) {
+          res += k + ': ' + json[k].join(' ') + ' ';
+        }
+      }
+
+      return res.trim();
+    } catch (e) {
+      return 'An error occurred.';
+    }
   }
 }

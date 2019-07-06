@@ -20,7 +20,6 @@ import { PlayersComponent } from './components/players/players.component';
 import { PlayersItemComponent } from './components/players-item/players-item.component';
 import { InfoBarComponent } from './components/info-bar/info-bar.component';
 import { CardTableComponent } from './components/card-table/card-table.component';
-import { GameCountdownComponent } from './components/game-countdown/game-countdown.component';
 import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.component';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.
     PlayersItemComponent,
     InfoBarComponent,
     CardTableComponent,
-    GameCountdownComponent,
     SpinnerModalComponent
   ],
   imports: [
@@ -61,7 +59,6 @@ import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.
     CreateNewUserModalComponent,
     ChugModalComponent,
     FinishModalComponent,
-    GameCountdownComponent,
     SpinnerModalComponent
   ],
   bootstrap: [AppComponent]

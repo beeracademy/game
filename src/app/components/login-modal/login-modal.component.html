@@ -7,7 +7,7 @@
 
   <br>
 
-  <mat-slider min="2" max="6" value="4" step="1" tickInterval="1" color="primary" thumbLabel="thumbLabel" [(ngModel)]="gameService.game.playerCount"></mat-slider>
+  <mat-slider min="2" max="6" value="4" step="1" tickInterval="1" color="primary" thumbLabel="thumbLabel" [(ngModel)]="gameService.game.playerCount" (change)="sliderChange($event.value)"></mat-slider>
 
   <mat-divider></mat-divider>
 
