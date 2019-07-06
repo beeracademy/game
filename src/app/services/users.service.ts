@@ -24,12 +24,7 @@ export class UsersService {
   ];
 
   constructor(private http: HttpClient) {
-    this.users = [
-      new User('test', 'form1', '#d35400', 0),
-      new User('test', 'form2', '#27ae60', 1),
-      new User('test', 'form3', '#c0392b', 2),
-      new User('test', 'form4', '#8e44ad', 3),
-    ];
+    this.users = [];
   }
 
   public login(username: string, password: string): Observable<User> {

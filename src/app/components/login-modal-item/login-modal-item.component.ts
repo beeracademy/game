@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user';
 import { ModalService } from 'src/app/services/modal.service';
 import { MatSnackBar } from '@angular/material';
@@ -18,11 +18,14 @@ export class LoginModalItemComponent implements OnInit {
   public indicatorColor: string;
   public disabled: boolean;
 
-  private indicatorSuccess: string = '#2ecc71';
-  private indicatorWaiting: string = '#f1c40f';
-  private indicatorDenied: string = '#e74c3c';
+  private indicatorSuccess = '#2ecc71';
+  private indicatorWaiting = '#f1c40f';
+  private indicatorDenied  = '#e74c3c';
 
-  constructor(private usersService: UsersService, private modalService: ModalService, private snackBar: MatSnackBar, private http: HttpClient) {
+  constructor(
+    private usersService: UsersService,
+    private modalService: ModalService,
+    private snackBar: MatSnackBar) {
     this.indicatorColor = '#fff';
     this.disabled = false;
   }
@@ -31,6 +34,10 @@ export class LoginModalItemComponent implements OnInit {
   }
 
   public login(username: string, password: string) {
+    if (!username || !password) {
+      return;
+    }
+
     this.indicatorColor = this.indicatorWaiting;
     this.disabled = true;
 
@@ -38,19 +45,19 @@ export class LoginModalItemComponent implements OnInit {
       (user: User) => {
         this.indicatorColor = this.indicatorSuccess;
       },
-      (err1: HttpErrorResponse) => {
-        if (err1.status === 404) {
-          this.modalService.openCreateNewUser(username, password).subscribe(() => {
-            this.createNewUser(username, password);
-          }, (err2: HttpErrorResponse) => {
-            this.resetIndicator();
-            this.snackBar.open('Failed to authenticate ' + username, null, {
-              duration: 5000
-            });
+      (err: HttpErrorResponse) => {
+        if (err.status === 404) {
+          this.modalService.openCreateNewUser(username, password).subscribe((result) => {
+            if (result) {
+              this.createNewUser(username, password);
+            } else {
+              this.resetIndicator();
+            }
           });
         } else {
           this.resetIndicator();
-          this.snackBar.open('Failed to authenticate ' + username, null, {
+
+          this.snackBar.open(this.parseFieldErrors(err.error), null, {
             duration: 5000
           });
         }
@@ -62,15 +69,32 @@ export class LoginModalItemComponent implements OnInit {
     this.usersService.create(username, password).subscribe((result) => {
       this.login(username, password);
     }, (err: HttpErrorResponse) => {
-      this.resetIndicator();
-      this.snackBar.open('Failed to create user ' + username, null, {
+      this.snackBar.open(err.message + ' ' + err.status + ' ' + err.statusText, null, {
         duration: 5000
       });
+
+      this.resetIndicator();
     });
   }
 
   public resetIndicator() {
     this.indicatorColor = this.indicatorDenied;
     this.disabled = false;
+  }
+
+  public parseFieldErrors(json: any) {
+    if (json.non_field_errors) {
+      return json.non_field_errors.join('\n');
+    }
+
+    let res = '';
+
+    for (const k in json) {
+      if (json.hasOwnProperty(k)) {
+        res += k + ': ' + json[k].join(' ') + ' ';
+      }
+    }
+
+    return res.trim();
   }
 }

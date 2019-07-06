@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Inject} from '@angular/core';
+import { Component, OnInit, HostListener, Inject, OnDestroy} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
 import { UsersService } from '../../services/users.service';
@@ -9,7 +9,7 @@ import { SoundService } from 'src/app/services/sound.service';
   templateUrl: './chug-modal.component.html',
   styleUrls: ['./chug-modal.component.scss']
 })
-export class ChugModalComponent implements OnInit {
+export class ChugModalComponent implements OnInit, OnDestroy {
 
   public time = 0;
   public isRunning = false;
@@ -18,8 +18,6 @@ export class ChugModalComponent implements OnInit {
 
   private startTime: number;
   private intervalRef: any;
-
-  private pressureSound: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -52,8 +50,12 @@ export class ChugModalComponent implements OnInit {
         this.sounds.play('monsterkill.wav');
         break;
       }
+  }
 
-      //this.pressureSound = this.sounds.play('pressure.webm');
+  ngOnDestroy(): void {
+    if (this.intervalRef) {
+      clearInterval(this.intervalRef);
+    }
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -73,14 +75,12 @@ export class ChugModalComponent implements OnInit {
     }, 1);
   }
 
-  stop(){
+  stop() {
     if(this.time > 500) {
       clearInterval(this.intervalRef);
       this.isRunning = false;
       this.playFinishSound();
       this.dialogRef.close(this.time);
-
-      this.pressureSound.pause();
     }
   }
 
@@ -93,7 +93,7 @@ export class ChugModalComponent implements OnInit {
   }
 
   playFinishSound(){
-    if(this.time < 5000) {
+    if (this.time < 5000) {
       this.sounds.play('mkd_flawless.wav');
     } else if(this.time < 7000) {
       this.sounds.play('mkd_fatality.wav');

@@ -10,6 +10,7 @@
     &.title {
       font-size: 3em;
       margin: 12px 0 12px;
+      text-transform: uppercase;
     }
 
     &.time {
@@ -22,5 +23,11 @@
     font-size: 18px;
     padding: 10px;
     text-transform: uppercase;
+  }
+
+  textarea {
+    height: 150px;
+    resize: none;
+    overflow-x:hidden;
   }
 }

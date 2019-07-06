@@ -21,6 +21,7 @@ import { PlayersItemComponent } from './components/players-item/players-item.com
 import { InfoBarComponent } from './components/info-bar/info-bar.component';
 import { CardTableComponent } from './components/card-table/card-table.component';
 import { GameCountdownComponent } from './components/game-countdown/game-countdown.component';
+import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { GameCountdownComponent } from './components/game-countdown/game-countdo
     PlayersItemComponent,
     InfoBarComponent,
     CardTableComponent,
-    GameCountdownComponent
+    GameCountdownComponent,
+    SpinnerModalComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import { GameCountdownComponent } from './components/game-countdown/game-countdo
     CreateNewUserModalComponent,
     ChugModalComponent,
     FinishModalComponent,
-    GameCountdownComponent
+    GameCountdownComponent,
+    SpinnerModalComponent
   ],
   bootstrap: [AppComponent]
 })

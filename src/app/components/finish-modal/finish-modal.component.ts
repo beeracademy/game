@@ -12,22 +12,18 @@ import { UsersService } from 'src/app/services/users.service';
 export class FinishModalComponent implements OnInit {
 
   public duration: number;
+  public description = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef:MatDialogRef<FinishModalComponent>,
-    private route: Router) {
+    private dialogRef:MatDialogRef<FinishModalComponent>) {
     this.duration = this.data.duration;
   }
 
   ngOnInit() {
   }
 
-  public newGame() {
-    this.dialogRef.close(true);
-  }
-
-  public viewGame() {
-    // TODO
+  public done() {
+    this.dialogRef.close(this.description);
   }
 }

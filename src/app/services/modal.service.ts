@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { ChugModalComponent } from '../components/chug-modal/chug-modal.component';
 import { FinishModalComponent } from '../components/finish-modal/finish-modal.component';
+import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,12 @@ import { FinishModalComponent } from '../components/finish-modal/finish-modal.co
 export class ModalService {
 
   constructor(private dialog: MatDialog, private userService: UsersService) { }
+
+  public showSpinner()  {
+    return this.dialog.open(SpinnerModalComponent, {
+      disableClose: true
+    });
+  }
 
   public openCreateNewUser(username: string, password: string) {
     return this.dialog.open(CreateNewUserModalComponent, {

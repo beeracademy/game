@@ -11,6 +11,8 @@ export class PlayersItemComponent implements OnInit {
 
   @Input() user: User;
 
+  public moreInfo = false;
+
   constructor(public gameService: GameService) { }
 
   ngOnInit() {

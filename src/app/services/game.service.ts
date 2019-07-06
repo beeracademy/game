@@ -7,6 +7,9 @@ import { ModalService } from './modal.service';
 import { UsersService } from './users.service';
 import { Chug } from '../models/chug';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +25,7 @@ export class GameService {
   private draws = 0;
 
   constructor(
+    private http: HttpClient,
     private sounds: SoundService,
     private modal:ModalService,
     private usersService: UsersService,
@@ -30,41 +34,59 @@ export class GameService {
   }
 
   public start() {
-    this.router.navigate(['game']);
-    this.sounds.play('baladada.wav');
+    return this.http.post(`${environment.url}/api/games/`, {
+      tokens: this.usersService.users.map(u => u.token)
+    }).pipe(map((game: Game) => {
+        this.game.id = game.id;
 
-    this.game.startTime = (new Date()).getTime();
-    this.roundStartTime = this.game.startTime;
+        this.router.navigate(['game']);
+        this.sounds.play('baladada.wav');
+
+        this.game.startTime = (new Date()).getTime();
+        this.roundStartTime = this.game.startTime;
+
+        return game;
+    }));
   }
 
   public draw() {
     const playerIndex = this.getActiveIndex();
 
-    const card = this.getRandomCard();
-    this.draws++;
+    return this.http.post(`${environment.url}/api/games/` + this.game.id + '/draw_card/', null).pipe(map((card: Card) => {
+      this.draws++;
 
-    this.checkForChug(card, playerIndex).subscribe(() => {
-      this.game.cardsDrawn.push(card);
+      this.checkForChug(card, playerIndex).subscribe(() => {
+        this.game.cardsDrawn.push(card);
 
-      if (this.getCardsLeft() <= 0) {
-        this.finish();
-      } else {
-        this.roundStartTime = (new Date()).getTime();
-      }
+        if (this.getCardsLeft() <= 0) {
+          this.endGame();
+        } else {
+          this.roundStartTime = (new Date()).getTime();
+        }
 
-      // This needs to be done as the last thing!
-      this.onCardDrawn.emit();
-    });
+        // This needs to be done as the last thing!
+        this.onCardDrawn.emit();
+      });
+
+      return card;
+    }));
   }
 
-  public finish() {
+    public endGame() {
     if(!this.game.endTime) {
       this.game.endTime = (new Date()).getTime();
-      this.modal.openFinish(this.game.endTime - this.game.startTime).subscribe((result) => {
-        if (result) {
+
+      this.modal.openFinish(this.game.endTime - this.game.startTime).subscribe((description) => {
+        this.http.post(`${environment.url}/api/games/` + this.game.id + '/end_game/', {
+          description,
+          end_datetime: new Date(this.game.endTime)
+        }).subscribe(() => {
           this.newGame();
-        }
+        }, (err: HttpErrorResponse) => {
+          // TODO
+        });
       });
+
     }
   }
 
@@ -97,24 +119,28 @@ export class GameService {
     return (new Date()).getTime() - this.roundStartTime;
   }
 
-  private getRandomCard(): Card {
-    return new Card(14);
-  }
-
   private checkForChug(card: Card, playerIndex: number): Observable<void> {
     return new Observable((obs) => {
       if (card.value === 14) {
         this.isChugging = true;
 
         this.modal.openChug(this.usersService.users[playerIndex].username).subscribe((res) => {
-          this.game.chugs.push(new Chug(
+          const newChug = new Chug(
             res,
             playerIndex,
-          ));
+          );
+
+          this.game.chugs.push(newChug);
 
           this.isChugging = false;
 
-           obs.next();
+          this.http.post(`${environment.url}/api/games/` + this.game.id + '/register_chug/', {
+            duration_in_milliseconds: res
+          }).subscribe(() => {
+            obs.next();
+          }, (err: HttpErrorResponse) => {
+            // TODO
+          });
         });
       } else {
         obs.next();

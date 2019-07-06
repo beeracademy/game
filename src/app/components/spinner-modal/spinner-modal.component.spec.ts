@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameCountdownComponent } from './game-countdown.component';
+import { SpinnerModalComponent } from './spinner-modal.component';
 
-describe('GameCountdownComponent', () => {
-  let component: GameCountdownComponent;
-  let fixture: ComponentFixture<GameCountdownComponent>;
+describe('SpinnerModalComponent', () => {
+  let component: SpinnerModalComponent;
+  let fixture: ComponentFixture<SpinnerModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameCountdownComponent ]
+      declarations: [ SpinnerModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameCountdownComponent);
+    fixture = TestBed.createComponent(SpinnerModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

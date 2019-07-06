@@ -1,6 +1,22 @@
-<mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''">
+<mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''" (mouseover)="moreInfo = false" (mouseleave)="moreInfo = false">
   <h3>{{ user?.username }}</h3>
   <div class="stats-wrap">
+    <div>
+      <p>Sips</p>
+      <p>Beers</p>
+      <p>Min</p>
+      <p>Max</p>
+    </div>
+    <div class="right-flex">
+      <p></p>
+      <p>0</p>
+      <p>0</p>
+      <p>140</p>
+      <p>150</p>
+    </div>
+  </div>
+
+  <div class="stats-wrap" *ngIf="moreInfo">
     <div>
       <p>Sips</p>
       <p>Beers</p>

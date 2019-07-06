@@ -2,8 +2,12 @@
   Game is done!
 </p>
 
-<p class="time">The game took<br>{{ duration | date: "HH:mm:ss":"+0000" }}</p>
+<p class="time">{{ duration | date: "HH:mm:ss":"+0000" }}</p>
 
-<button mat-raised-button color="primary" (click)="newGame()">New game</button>
+<mat-divider></mat-divider>
 <br>
-<button mat-raised-button color="primary" (click)="viewGame()">View game</button>
+<textarea matInput placeholder="Write a description" [(ngModel)]="description" maxlength="1000"></textarea>
+<mat-divider></mat-divider>
+<br>
+
+<button mat-raised-button color="primary" (click)="done()">OK</button>
