@@ -103,7 +103,7 @@ export class LoginModalItemComponent implements OnInit {
 
       return res.trim();
     } catch (e) {
-      return 'An error occurred.';
+      return 'Login failed';
     }
   }
 }

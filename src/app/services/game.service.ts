@@ -20,9 +20,12 @@ export class GameService {
 
   public game: Game;
   public isChugging = false;
+  public dickMode = false;
 
   private roundStartTime: number;
   private draws = 0;
+
+  private drawnCards = {};
 
   constructor(
     private http: HttpClient,
@@ -45,6 +48,7 @@ export class GameService {
         this.game.startTime = (new Date()).getTime();
         this.roundStartTime = this.game.startTime;
 
+
         return game;
     }));
   }
@@ -57,6 +61,7 @@ export class GameService {
 
       this.checkForChug(card, playerIndex).subscribe(() => {
         this.game.cardsDrawn.push(card);
+        this.drawnCards[card.suit + card.value] = card;
 
         if (this.getCardsLeft() <= 0) {
           this.endGame();
@@ -81,17 +86,18 @@ export class GameService {
           description,
           end_datetime: new Date(this.game.endTime)
         }).subscribe(() => {
-          this.newGame();
+          // this.newGame();
         }, (err: HttpErrorResponse) => {
           // TODO
         });
       });
-
     }
   }
 
   public newGame() {
     this.game = new Game();
+    this.draws = 0;
+    this.isChugging = false;
     this.roundStartTime = 0;
 
     this.usersService.clearAll();
@@ -105,6 +111,10 @@ export class GameService {
 
   public getCardsLeft(): number {
     return (13 * this.game.playerCount) - this.draws;
+  }
+
+  public isCardDrawn(suit: string, value: number) {
+    return (suit + value) in this.drawnCards;
   }
 
   public getRound(): number {

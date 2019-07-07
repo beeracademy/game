@@ -1,0 +1,5 @@
+<div *ngFor="let s of suits">
+  <div class="suit">
+    <app-card-deck-item *ngFor="let c of cards" [suit]="s" [value]="c"></app-card-deck-item>
+  </div>
+</div>

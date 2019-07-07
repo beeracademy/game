@@ -18,14 +18,14 @@ export class CardTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*
     this.gameService.onCardDrawn.subscribe(() => {
-      //this.matrix = this.getMatrix();
+      this.matrix = this.getMatrix();
     });
-    */
+
+    this.matrix = this.getMatrix();
   }
 
-  /*getMatrix() {
+  getMatrix() {
     const m = [];
 
     for (let i = 0; i < this.r; i++) {
@@ -35,13 +35,13 @@ export class CardTableComponent implements OnInit {
         const cardIndex = this.c * i + j;
 
         if (this.gameService.game.cardsDrawn.length < cardIndex + 1) {
-          m[i][j] = '';
+          m[i][j] = ' ';
         } else {
-          m[i][j] = this.gameService.game.cardsDrawn[cardIndex];
+          m[i][j] = this.gameService.game.cardsDrawn[cardIndex].value;
         }
       }
     }
 
     return m;
-  }*/
+  }
 }

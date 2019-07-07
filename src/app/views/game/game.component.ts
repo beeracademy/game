@@ -15,6 +15,11 @@ export class GameComponent implements OnInit, OnDestroy {
   private lastKeyPressTimeStamp: number;
   private IDLTime = 1000 * 60 * 15; // Every 15 min
 
+  private debounceTime = 300;
+
+  private theDWord = 'itsnotadick';
+  private theDProgress = 0;
+
   private intervalRef;
 
   constructor(private gameService: GameService, private sound: SoundService, private snackBar: MatSnackBar) {
@@ -39,15 +44,31 @@ export class GameComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.code === 'Space' && this.gameService.getCardsLeft() !== 0 && !this.gameService.isChugging) {
-      this.gameService.draw().subscribe(() => {}, (err: HttpErrorResponse) => {
-        this.snackBar.open('Failed to draw card', null, {
-          duration: 5000
-        });
-      });
+    if (event.code === 'Space' && this.gameService.getCardsLeft() !== 0 && !this.gameService.isChugging && this.debounce()) {
+      this.drawCard();
 
       event.preventDefault();
     }
+
+    if (event.key === this.theDWord[this.theDProgress]) {
+      this.theDProgress++;
+
+      if (this.theDProgress >= this.theDWord.length) {
+        this.gameService.dickMode = true;
+      }
+    } else {
+      this.theDProgress = 0;
+    }
+  }
+
+  debounce(): boolean {
+    return (new Date()).getTime() - this.lastKeyPressTimeStamp > this.debounceTime;
+  }
+
+  drawCard() {
+    this.gameService.draw().subscribe(() => {
+      // NOOP
+    });
   }
 
   playIDLSound() {

@@ -21,6 +21,10 @@ import { PlayersItemComponent } from './components/players-item/players-item.com
 import { InfoBarComponent } from './components/info-bar/info-bar.component';
 import { CardTableComponent } from './components/card-table/card-table.component';
 import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { ChartsModule } from 'ng2-charts';
+import { CardDeckComponent } from './components/card-deck/card-deck.component';
+import { CardDeckItemComponent } from './components/card-deck-item/card-deck-item.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,10 @@ import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.
     PlayersItemComponent,
     InfoBarComponent,
     CardTableComponent,
-    SpinnerModalComponent
+    SpinnerModalComponent,
+    ChartComponent,
+    CardDeckComponent,
+    CardDeckItemComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,8 @@ import { SpinnerModalComponent } from './components/spinner-modal/spinner-modal.
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [
     {

@@ -1,13 +1,12 @@
 <table>
-  <!--
-    <tr>
-
-      <th>Round</th>
-      <th *ngFor="let u of userNames">{{ u }}</th>
-    </tr>
-    <tr *ngFor="let row of matrix; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td *ngFor="let c of row">{{ c.value }}</td>
-    </tr>
-  -->
+  <tr>
+    <th>Round</th>
+    <th *ngFor="let u of usersService.users">{{ u.username }}</th>
+  </tr>
+  <tr *ngFor="let row of matrix; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td *ngFor="let c of row">
+      {{ c }}
+    </td>
+  </tr>
 </table>

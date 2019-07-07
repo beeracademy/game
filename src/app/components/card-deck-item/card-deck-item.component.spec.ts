@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpinnerModalComponent } from './spinner-modal.component';
+import { CardDeckItemComponent } from './card-deck-item.component';
 
-describe('SpinnerModalComponent', () => {
-  let component: SpinnerModalComponent;
-  let fixture: ComponentFixture<SpinnerModalComponent>;
+describe('CardDeckItemComponent', () => {
+  let component: CardDeckItemComponent;
+  let fixture: ComponentFixture<CardDeckItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpinnerModalComponent ]
+      declarations: [ CardDeckItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SpinnerModalComponent);
+    fixture = TestBed.createComponent(CardDeckItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
