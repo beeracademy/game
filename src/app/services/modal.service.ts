@@ -30,11 +30,12 @@ export class ModalService {
     }).afterClosed();
   }
 
-  public openChug(username: string) {
+  public openChug(user: User, chugs: number) {
     return this.dialog.open(ChugModalComponent, {
       disableClose: true,
       data: {
-        username
+        user,
+        chugs
       }
     }).afterClosed();
   }

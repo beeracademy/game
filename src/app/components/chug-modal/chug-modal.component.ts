@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
 import { UsersService } from '../../services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-chug-modal',
@@ -14,7 +15,8 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   public time = 0;
   public isRunning = false;
 
-  public username: string;
+  public user: User;
+  public chugs: number;
 
   private startTime: number;
   private intervalRef: any;
@@ -24,30 +26,31 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     private dialogRef:MatDialogRef<ChugModalComponent>,
     private sounds: SoundService,
     public users: UsersService) {
-      this.username = data.username;
+      this.user = data.user;
+      this.chugs = data.chugs;
     }
 
   ngOnInit() {
-    let chucks = 1; //Fix it: retreive from service
-
-    switch (chucks) {
-      case 1:
+    switch (this.chugs) {
+      case 0:
         this.sounds.play('mkd_finishim.wav');
         break;
-      case 2:
+      case 1:
         this.sounds.play('doublekill.wav');
         break;
-      case 3:
+      case 2:
         this.sounds.play('triplekill.wav');
         break;
-      case 4:
+      case 3:
         this.sounds.play('ultrakill.wav');
         break;
-      case 5:
+      case 4:
         this.sounds.play('megakill.wav');
         break;
-      default:
+      case 5:
         this.sounds.play('monsterkill.wav');
+        break;
+      default:
         break;
       }
   }
@@ -60,7 +63,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.keyCode === 32) {
+    if (event.code === 'Space') {
       this.isRunning ? this.stop() : this.start();
       event.preventDefault();
     }

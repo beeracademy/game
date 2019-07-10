@@ -134,7 +134,16 @@ export class GameService {
       if (card.value === 14) {
         this.isChugging = true;
 
-        this.modal.openChug(this.usersService.users[playerIndex].username).subscribe((res) => {
+        let chugs = 0;
+        const userCards = this.game.cardsDrawn.filter((_, i) => i % this.game.playerCount === playerIndex);
+
+        for (const c of userCards) {
+          if (c.value === 14) {
+            chugs++;
+          }
+        }
+
+        this.modal.openChug(this.usersService.users[playerIndex], chugs).subscribe((res) => {
           const newChug = new Chug(
             res,
             playerIndex,
