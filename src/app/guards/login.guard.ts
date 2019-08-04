@@ -13,7 +13,7 @@ export class LoginGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (this.gameService.game.startTime) {
+      if (this.gameService.game.start_datetime) {
         return true;
       } else {
         this.router.navigate(['login']);

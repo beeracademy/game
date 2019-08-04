@@ -1,8 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Router } from '@angular/router';
-import { GameService } from 'src/app/services/game.service';
-import { UsersService } from 'src/app/services/users.service';
+import { Game } from 'src/app/models/game';
 
 @Component({
   selector: 'app-finish-modal',
@@ -12,12 +10,15 @@ import { UsersService } from 'src/app/services/users.service';
 export class FinishModalComponent implements OnInit {
 
   public duration: number;
-  public description = '';
+  public description: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef:MatDialogRef<FinishModalComponent>) {
-    this.duration = this.data.duration;
+    const game: Game = this.data.game;
+
+    this.description = game.description;
+    this.duration = game.end_datetime - game.start_datetime;
   }
 
   ngOnInit() {

@@ -1,9 +1,6 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { SoundService } from 'src/app/services/sound.service';
-import { Card } from 'src/app/models/card';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-game',
@@ -22,7 +19,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private intervalRef;
 
-  constructor(private gameService: GameService, private sound: SoundService, private snackBar: MatSnackBar) {
+  constructor(private gameService: GameService, private sound: SoundService) {
     this.lastKeyPressTimeStamp = (new Date()).getTime();
   }
 
@@ -44,7 +41,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.code === 'Space' && this.gameService.getCardsLeft() !== 0 && !this.gameService.isChugging && this.debounce()) {
+    if (event.code === 'Space' && this.gameService.getCardsLeft() !== 0 && !this.gameService.isChugging() && this.debounce()) {
       this.drawCard();
 
       event.preventDefault();
@@ -66,9 +63,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   drawCard() {
-    this.gameService.draw().subscribe(() => {
-      // NOOP
-    });
+    this.gameService.draw();
   }
 
   playIDLSound() {

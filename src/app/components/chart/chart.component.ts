@@ -47,7 +47,7 @@ export class ChartComponent implements OnInit {
     }
 
     for (const u of this.usersService.users) {
-      const cards = this.meta.getUserCards(u.index);
+      const cards = this.gameService.getCardsForPlayer(u);
 
       this.chartData[u.index] = {
         data: this.meta.getCummulativeSips(cards),

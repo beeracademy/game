@@ -27,7 +27,7 @@ export class PlayersItemComponent implements OnInit {
   }
 
   getCards() {
-    this.cards = this.meta.getUserCards(this.user.index);
+    this.cards = this.gameService.getCardsForPlayer(this.user);
   }
 
   isActive(): boolean {

@@ -1,13 +1,17 @@
 import { Card } from './card';
-import { Chug } from './chug';
 
 export class Game {
   constructor(
-    public id: number = 0,
-    public startTime: number = 0,
-    public endTime: number = 0,
-    public playerCount: number = 2,
-    public cardsDrawn: Card[] = [],
-    public chugs: Chug[] = [],
+    public start_datetime: number = 0,
+    public end_datetime: number = 0,
+    public description: string = '',
+    public official: boolean = true,
+    public player_names: string[] = [],
+    public seed: number[] = [],
+    public draws: Card[] = [],
+
+    // Not needed for offline
+    public id?: number,
+    public player_ids?: number[]
   ) {}
 }

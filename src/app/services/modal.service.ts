@@ -7,6 +7,7 @@ import { User } from '../models/user';
 import { ChugModalComponent } from '../components/chug-modal/chug-modal.component';
 import { FinishModalComponent } from '../components/finish-modal/finish-modal.component';
 import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal.component';
+import { Game } from '../models/game';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +41,11 @@ export class ModalService {
     }).afterClosed();
   }
 
-  public openFinish(duration: number) {
+  public openFinish(game: Game) {
     return this.dialog.open(FinishModalComponent, {
       disableClose: true,
       data: {
-        duration
+        game
       }
     }).afterClosed();
   }

@@ -37,8 +37,4 @@ export class MetaService {
     cards.reduce((a, b, i) => res[i] = a + b.value, 0);
     return [0].concat(res);
   }
-
-  public getUserCards(userIndex): Card[] {
-    return this.gameService.game.cardsDrawn.filter((_, i) => i % this.gameService.game.playerCount === userIndex);
-  }
 }

@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 import { Card } from '../models/card';
 import { ModalService } from './modal.service';
 import { UsersService } from './users.service';
-import { Chug } from '../models/chug';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { CardsService } from './cards.service';
+import { User } from '../models/user';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -19,151 +21,172 @@ export class GameService {
   @Output() onCardDrawn: EventEmitter<any> = new EventEmitter();
 
   public game: Game;
-  public isChugging = false;
+  public deck: Card[];
+
+  public offline = false;
+
   public dickMode = false;
-
-  private roundStartTime: number;
-  private draws = 0;
-
-  private drawnCards = {};
 
   constructor(
     private http: HttpClient,
     private sounds: SoundService,
-    private modal:ModalService,
+    private modal: ModalService,
     private usersService: UsersService,
+    private cardsService: CardsService,
     private router: Router) {
     this.game = new Game();
   }
 
-  public start() {
-    return this.http.post(`${environment.url}/api/games/`, {
-      tokens: this.usersService.users.map(u => u.token)
-    }).pipe(map((game: Game) => {
-        this.game.id = game.id;
+  public start(): Observable<void> {
+    // Check if game already started
+    if (this.game.start_datetime) {
+      return;
+    }
 
-        this.router.navigate(['game']);
-        this.sounds.play('baladada.wav');
+    // Fill in user ids and names
+    this.game.player_ids = this.usersService.users.map(u => u.id);
+    this.game.player_names = this.usersService.users.map(u => u.username);
 
-        this.game.startTime = (new Date()).getTime();
-        this.roundStartTime = this.game.startTime;
+    // Generate seed and deck
+    this.game.seed = this.cardsService.generateSeedForPlayers(this.getNumberOfPlayers());
+    this.deck = this.cardsService.generateCardsFromSeed(this.getNumberOfPlayers(), this.game.seed);
 
+    // Tell the server we are starting
+    return this.postStart().pipe(map((game: Game) => {
+      this.game.id = game.id;
+      this.game.start_datetime = game.start_datetime;
 
-        return game;
+      this.router.navigate(['game']);
+      this.sounds.play('baladada.wav');
     }));
   }
 
   public draw() {
-    const playerIndex = this.getActiveIndex();
+    // Draw a card from the deck
+    const draw = this.deck[this.game.draws.length];
+    draw.drawn_datetime = Date.now();
+    this.game.draws.push(draw);
 
-    return this.http.post(`${environment.url}/api/games/` + this.game.id + '/draw_card/', null).pipe(map((card: Card) => {
-      this.draws++;
+    this.onCardDrawn.emit();
+    this.postUpdate();
 
-      this.checkForChug(card, playerIndex).subscribe(() => {
-        this.game.cardsDrawn.push(card);
-        this.drawnCards[card.suit + card.value] = card;
+    // Check if ace
+    if (draw.value === 14) {
+      const activePlayer = this.getActivePlayer();
+      const playerAces = this.getAcesForPlayer(activePlayer);
 
+      this.modal.openChug(this.getActivePlayer(), playerAces.length).subscribe((duration) => {
+        this.game.draws[this.game.draws.length - 1].chug_duration = duration;
+
+        // Check if the game is done
         if (this.getCardsLeft() <= 0) {
           this.endGame();
-        } else {
-          this.roundStartTime = (new Date()).getTime();
         }
-
-        // This needs to be done as the last thing!
-        this.onCardDrawn.emit();
       });
 
-      return card;
-    }));
-  }
-
-    public endGame() {
-    if(!this.game.endTime) {
-      this.game.endTime = (new Date()).getTime();
-
-      this.modal.openFinish(this.game.endTime - this.game.startTime).subscribe((description) => {
-        this.http.post(`${environment.url}/api/games/` + this.game.id + '/end_game/', {
-          description,
-          end_datetime: new Date(this.game.endTime)
-        }).subscribe(() => {
-          // this.newGame();
-        }, (err: HttpErrorResponse) => {
-          // TODO
-        });
-      });
+    } else if (this.getCardsLeft() <= 0) {
+      this.endGame();
     }
   }
 
-  public newGame() {
-    this.game = new Game();
-    this.draws = 0;
-    this.isChugging = false;
-    this.roundStartTime = 0;
+  private endGame() {
+    if (this.game.end_datetime) {
+      return;
+    }
 
-    this.usersService.clearAll();
+    this.game.end_datetime = Date.now();
 
-    this.router.navigate(['login']);
+    this.modal.openFinish(this.game).subscribe((description) => {
+      this.game.description = description;
+      this.postUpdate();
+      this.localClear();
+    });
+  }
+
+  /*
+    Requests
+  */
+
+  private postStart(): Observable<Game> {
+    this.localSave();
+    return this.http.post<Game>(`${environment.url}/api/games/`, {
+      tokens: this.usersService.users.map(u => u.token)
+    });
+  }
+
+  private postUpdate(): Observable<any> {
+    this.localSave();
+    return this.http.post(`${environment.url}/api/games/` + this.game.id + '/update/', this.game);
+  }
+
+  /*
+    Local storage
+  */
+
+  public localSave() {
+    localStorage.setItem('academy:game', JSON.stringify(this.game));
+    localStorage.setItem('academy:users', JSON.stringify(this.usersService.users));
+  }
+
+  public localLoad() {
+    this.game = JSON.parse(localStorage.getItem('academy:game'));
+    this.usersService.users = JSON.parse(localStorage.getItem('academy:users'));
+  }
+
+  public localClear() {
+    localStorage.clear();
+  }
+
+  public hasLocalActiveGame() {
+    return !!localStorage.getItem('academy:game') && !!localStorage.getItem('academy:users') ;
+  }
+
+  /*
+    Game meta
+  */
+
+  public getNumberOfPlayers(): number {
+    return this.game.player_names.length;
   }
 
   public getActiveIndex(): number {
-    return this.game.cardsDrawn.length % this.game.playerCount;
+   return this.game.draws.length % this.getNumberOfPlayers();
+  }
+
+  public getActivePlayer(): User {
+    return this.usersService.users[this.getActiveIndex()];
   }
 
   public getCardsLeft(): number {
-    return (13 * this.game.playerCount) - this.draws;
-  }
-
-  public isCardDrawn(suit: string, value: number) {
-    return (suit + value) in this.drawnCards;
+    return (13 * this.getNumberOfPlayers()) - this.game.draws.length;
   }
 
   public getRound(): number {
-    return Math.min(Math.floor((this.game.cardsDrawn.length / this.game.playerCount)) + 1, 13);
+    return Math.min(Math.floor((this.game.draws.length / this.getNumberOfPlayers())) + 1, 13);
   }
 
-  public getGameDuration() {
-    return (new Date()).getTime() - this.game.startTime;
+  public getGameDuration(): number {
+    return Date.now() - this.game.start_datetime;
   }
 
-  public getRoundDuration() {
-    return (new Date()).getTime() - this.roundStartTime;
+  public getRoundDuration(): number {
+    return Date.now() - this.game.draws[this.game.draws.length - 1].drawn_datetime;
   }
 
-  private checkForChug(card: Card, playerIndex: number): Observable<void> {
-    return new Observable((obs) => {
-      if (card.value === 14) {
-        this.isChugging = true;
+  public getCardsForPlayer(player: User): Card[] {
+    return this.game.draws.filter((_, i) => i % this.getNumberOfPlayers() === player.index);
+  }
 
-        let chugs = 0;
-        const userCards = this.game.cardsDrawn.filter((_, i) => i % this.game.playerCount === playerIndex);
+  public getAcesForPlayer(player: User): Card[] {
+    return this.getCardsForPlayer(player).filter(c => c.value === 14);
+  }
 
-        for (const c of userCards) {
-          if (c.value === 14) {
-            chugs++;
-          }
-        }
+  public isChugging(): boolean {
+    const latestCard = this.game.draws[this.game.draws.length - 1];
+    return latestCard.value === 14 && !latestCard.chug_duration;
+  }
 
-        this.modal.openChug(this.usersService.users[playerIndex], chugs).subscribe((res) => {
-          const newChug = new Chug(
-            res,
-            playerIndex,
-          );
-
-          this.game.chugs.push(newChug);
-
-          this.isChugging = false;
-
-          this.http.post(`${environment.url}/api/games/` + this.game.id + '/register_chug/', {
-            duration_in_milliseconds: res
-          }).subscribe(() => {
-            obs.next();
-          }, (err: HttpErrorResponse) => {
-            // TODO
-          });
-        });
-      } else {
-        obs.next();
-      }
-    });
+  public isCardDrawn(suit: string, value: number): boolean {
+    return this.game.draws.filter(c => c.suit === suit && c.value === value).length > 0;
   }
 }

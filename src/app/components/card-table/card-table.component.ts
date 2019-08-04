@@ -11,7 +11,7 @@ export class CardTableComponent implements OnInit {
 
   public matrix: any[][];
 
-  private c = this.gameService.game.playerCount;
+  private c = this.gameService.getNumberOfPlayers();
   private r = 13;
 
   constructor(public gameService: GameService, public usersService: UsersService) {
@@ -34,10 +34,10 @@ export class CardTableComponent implements OnInit {
 
         const cardIndex = this.c * i + j;
 
-        if (this.gameService.game.cardsDrawn.length < cardIndex + 1) {
+        if (this.gameService.game.draws.length < cardIndex + 1) {
           m[i][j] = ' ';
         } else {
-          m[i][j] = this.gameService.game.cardsDrawn[cardIndex].value;
+          m[i][j] = this.gameService.game.draws[cardIndex].value;
         }
       }
     }

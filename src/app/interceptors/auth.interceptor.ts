@@ -11,10 +11,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.usersService.users.length > 0 && this.gameService.game.startTime) {
+    if (this.usersService.users.length > 0 && this.gameService.game.start_datetime) {
       request = request.clone({
         setHeaders: {
-          'Authorization':  'Token ' + this.usersService.users[this.gameService.getActiveIndex()].token
+          'Authorization':  'Token ' + this.gameService.getActivePlayer().token
         }
       });
     }

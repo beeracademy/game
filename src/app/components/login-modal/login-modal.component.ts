@@ -12,18 +12,19 @@ import { MatSnackBar } from '@angular/material';
 })
 export class LoginModalComponent implements OnInit {
 
+  public numberOfPlayers = 2;
+
   constructor(
     public gameService: GameService,
     public usersService: UsersService,
     private modal: ModalService,
     private snackBar: MatSnackBar
-    ) { }
+    ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public sliderChange(val) {
-    console.log(val);
+    this.usersService.users = this.usersService.users.slice(0, val);
   }
 
   public startGame() {

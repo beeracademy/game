@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { ModalService } from 'src/app/services/modal.service';
 import { MatSnackBar } from '@angular/material';
 import { environment } from 'src/environments/environment';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-login-modal-item',
@@ -44,9 +45,11 @@ export class LoginModalItemComponent implements OnInit {
 
     this.usersService.login(username, password).subscribe(
       (user: User) => {
+        this.usersService.users[this.index] = user;
+
         this.indicatorColor = this.indicatorSuccess;
         if (user.image) {
-          this.image = environment.url + '/' + user.image;
+          this.image = environment.url + user.image;
         }
       },
       (err: HttpErrorResponse) => {

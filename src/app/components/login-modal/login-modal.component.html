@@ -7,13 +7,14 @@
 
   <br>
 
-  <mat-slider min="2" max="6" value="4" step="1" tickInterval="1" color="primary" thumbLabel="thumbLabel" [(ngModel)]="gameService.game.playerCount" (change)="sliderChange($event.value)"></mat-slider>
+  <mat-slider min="2" max="6" value="4" step="1" tickInterval="1" color="primary" thumbLabel="thumbLabel" [(ngModel)]="numberOfPlayers" (change)="sliderChange($event.value)"></mat-slider>
 
   <mat-divider></mat-divider>
 
-  <app-login-modal-item *ngFor="let p of ' '.repeat(gameService.game.playerCount).split(''); let i = index;" [index]="i">
+  <app-login-modal-item *ngFor="let p of ' '.repeat(numberOfPlayers).split(''); let i = index;" [index]="i">
   </app-login-modal-item>
 
   <mat-divider></mat-divider>
-  <button mat-raised-button color="primary" (click)="startGame()" [disabled]="gameService.game.playerCount != usersService.users.length">Start Game</button>
+
+  <button mat-raised-button color="primary" (click)="startGame()" [disabled]="numberOfPlayers != usersService.users.length">Start Game</button>
 </mat-card>

@@ -6,8 +6,7 @@ import { Injectable } from '@angular/core';
 export class SoundService {
   private soundpath = 'assets/sounds/';
 
-  constructor() {
-  }
+  constructor() {}
 
   public play(soundName: string) {
     const audio = new Audio();

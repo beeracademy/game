@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 
@@ -28,15 +28,18 @@ export class UsersService {
   }
 
   public login(username: string, password: string): Observable<User> {
+    if (this.isAlreadyLoggedIn(username)) {
+      return throwError('Already logged in');
+    }
+
     return this.http.post(`${environment.url}/api-token-auth/`, {
       username,
       password
-    }).pipe(map((user: User, index: number) => {
+    }).pipe(map((user: User) => {
       user.username = username;
       user.color = this.userColors.splice(Math.floor(Math.random() * this.userColors.length), 1)[0];
       user.index = this.users.length;
 
-      this.users.push(user);
       return user;
     }));
   }
@@ -48,7 +51,7 @@ export class UsersService {
     });
   }
 
-  public clearAll() {
-    this.users = [];
+  public isAlreadyLoggedIn(username: string): boolean {
+    return this.users.filter(u => u.username === username).length > 0;
   }
 }
