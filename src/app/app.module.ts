@@ -25,6 +25,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { ChartsModule } from 'ng2-charts';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { CardDeckItemComponent } from './components/card-deck-item/card-deck-item.component';
+import { RetryUploadModalComponent } from './components/retry-upload-modal/retry-upload-modal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CardDeckItemComponent } from './components/card-deck-item/card-deck-ite
     SpinnerModalComponent,
     ChartComponent,
     CardDeckComponent,
-    CardDeckItemComponent
+    CardDeckItemComponent,
+    RetryUploadModalComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ import { CardDeckItemComponent } from './components/card-deck-item/card-deck-ite
     CreateNewUserModalComponent,
     ChugModalComponent,
     FinishModalComponent,
-    SpinnerModalComponent
+    SpinnerModalComponent,
+    RetryUploadModalComponent
   ],
   bootstrap: [AppComponent]
 })

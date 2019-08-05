@@ -22,6 +22,8 @@ export class InfoBarComponent implements OnInit, OnDestroy {
     this.gameService.onCardDrawn.subscribe(_ => {
       this.updateTime();
     });
+
+    this.updateTime();
   }
 
   ngOnDestroy(): void {
@@ -29,10 +31,8 @@ export class InfoBarComponent implements OnInit, OnDestroy {
   }
 
   private updateTime() {
-    if (!this.gameService.game.end_datetime) {
       this.duration = this.gameService.getGameDuration();
       this.roundDuration = this.gameService.getRoundDuration();
-    }
   }
 
 }

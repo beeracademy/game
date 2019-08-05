@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 500px;
+
+  p {
+    font-weight: 200;
+    text-align: center;
+
+    &.title {
+      font-size: 3em;
+      margin: 12px 0 12px;
+      text-transform: uppercase;
+      color: #ac181c;
+    }
+  }
+
+  button {
+    font-size: 18px;
+    padding: 10px;
+    text-transform: uppercase;
+  }
+
+  mat-spinner {
+    margin: auto;
+  }
+}

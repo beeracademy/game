@@ -18,7 +18,9 @@ export class LoginModalComponent implements OnInit {
     public gameService: GameService,
     public usersService: UsersService,
     private modal: ModalService
-    ) {}
+    ) {
+      this.usersService.reset();
+    }
 
   ngOnInit() {}
 
@@ -31,6 +33,7 @@ export class LoginModalComponent implements OnInit {
 
     ref.afterOpened().subscribe(()=> {
       this.gameService.start().subscribe((game) => {
+        this.usersService.save();
         ref.close();
       }, (err: HttpErrorResponse) => {
         ref.close();

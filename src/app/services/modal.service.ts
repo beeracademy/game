@@ -8,6 +8,7 @@ import { ChugModalComponent } from '../components/chug-modal/chug-modal.componen
 import { FinishModalComponent } from '../components/finish-modal/finish-modal.component';
 import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal.component';
 import { Game } from '../models/game';
+import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,15 @@ export class ModalService {
 
   public openFinish(game: Game) {
     return this.dialog.open(FinishModalComponent, {
+      disableClose: true,
+      data: {
+        game
+      }
+    }).afterClosed();
+  }
+
+  public openRetryUpload(game: Game) {
+    return this.dialog.open(RetryUploadModalComponent, {
       disableClose: true,
       data: {
         game

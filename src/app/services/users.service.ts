@@ -10,7 +10,7 @@ import { User } from '../models/user';
 })
 export class UsersService {
 
-  public users: User[];
+  public users: User[] = [];
 
   public userColors = [
     '#16a085',
@@ -24,7 +24,7 @@ export class UsersService {
   ];
 
   constructor(private http: HttpClient) {
-    this.users = [];
+    this.resume();
   }
 
   public login(username: string, password: string): Observable<User> {
@@ -51,7 +51,23 @@ export class UsersService {
     });
   }
 
+  public reset() {
+    this.users = [];
+  }
+
   public isAlreadyLoggedIn(username: string): boolean {
     return this.users.filter(u => u.username === username).length > 0;
+  }
+
+    /*
+    Persistence
+  */
+
+  public save() {
+    localStorage.setItem('academy:users', JSON.stringify(this.users));
+  }
+
+  public resume() {
+    this.users = JSON.parse(localStorage.getItem('academy:users')) || this.users;
   }
 }

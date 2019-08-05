@@ -32,22 +32,22 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     switch (this.chugs) {
-      case 0:
+      case 1:
         this.sounds.play('mkd_finishim.wav');
         break;
-      case 1:
+      case 2:
         this.sounds.play('doublekill.wav');
         break;
-      case 2:
+      case 3:
         this.sounds.play('triplekill.wav');
         break;
-      case 3:
+      case 4:
         this.sounds.play('ultrakill.wav');
         break;
-      case 4:
+      case 5:
         this.sounds.play('megakill.wav');
         break;
-      case 5:
+      case 6:
         this.sounds.play('monsterkill.wav');
         break;
       default:
