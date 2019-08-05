@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { Router } from '@angular/router';
+import { SoundService } from 'src/app/services/sound.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-info-bar',
@@ -13,7 +17,7 @@ export class InfoBarComponent implements OnInit, OnDestroy {
 
   private intervalRef;
 
-  constructor(public gameService: GameService) {
+  constructor(public gameService: GameService, public modal: ModalService, private sounds: SoundService) {
   }
 
   ngOnInit() {
@@ -35,4 +39,22 @@ export class InfoBarComponent implements OnInit, OnDestroy {
       this.roundDuration = this.gameService.getRoundDuration();
   }
 
+  public abort() {
+    this.modal.openAbort().subscribe((res) => {
+      if (res) {
+        this.modal.showSpinner();
+        this.sounds.play('loser.ogg');
+
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.reload();
+
+        }, 3500);
+      }
+    });
+  }
+
+  public goToGame() {
+    window.location.href = environment.url + '/games/' + this.gameService.game.id + '/';
+  }
 }

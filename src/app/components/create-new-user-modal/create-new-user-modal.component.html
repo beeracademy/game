@@ -3,7 +3,9 @@
 <div *ngIf="!showSpinner">
 
   <p>Create new user {{username}}?</p>
-
+  <br>
+  <mat-divider></mat-divider>
+  <br>
   <button mat-raised-button color="secondary" (click)="no()">No</button>
   <button mat-raised-button color="primary" class="right" (click)="yes()" autofocus>Yes</button>
 </div>

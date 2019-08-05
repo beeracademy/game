@@ -20,6 +20,29 @@
     font-size: 24px;
     flex: 1;
 
+    &.controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      div {
+        display: flex;
+        align-items: center;
+        padding-right: 12px;
+        color: #fff;
+        opacity: 0.5;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        i {
+          margin-left: 4px;
+        }
+      }
+    }
+
     p{
       text-align: center;
       margin: 0px;

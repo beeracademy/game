@@ -26,6 +26,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { CardDeckItemComponent } from './components/card-deck-item/card-deck-item.component';
 import { RetryUploadModalComponent } from './components/retry-upload-modal/retry-upload-modal.component';
+import { AbortModalComponent } from './components/abort-modal/abort-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { RetryUploadModalComponent } from './components/retry-upload-modal/retry
     ChartComponent,
     CardDeckComponent,
     CardDeckItemComponent,
-    RetryUploadModalComponent
+    RetryUploadModalComponent,
+    AbortModalComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,8 @@ import { RetryUploadModalComponent } from './components/retry-upload-modal/retry
     ChugModalComponent,
     FinishModalComponent,
     SpinnerModalComponent,
-    RetryUploadModalComponent
+    RetryUploadModalComponent,
+    AbortModalComponent
   ],
   bootstrap: [AppComponent]
 })

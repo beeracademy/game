@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { ModalService } from 'src/app/services/modal.service';
 import { MatSnackBar } from '@angular/material';
 import { environment } from 'src/environments/environment';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-login-modal-item',
@@ -25,6 +26,7 @@ export class LoginModalItemComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
+    private gameService: GameService,
     private modalService: ModalService,
     private snackBar: MatSnackBar) {
     this.indicatorColor = '#fff';

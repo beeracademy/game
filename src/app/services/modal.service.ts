@@ -9,6 +9,7 @@ import { FinishModalComponent } from '../components/finish-modal/finish-modal.co
 import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal.component';
 import { Game } from '../models/game';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
+import { AbortModalComponent } from '../components/abort-modal/abort-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,12 @@ export class ModalService {
       data: {
         game
       }
+    }).afterClosed();
+  }
+
+  public openAbort() {
+    return this.dialog.open(AbortModalComponent, {
+      disableClose: true
     }).afterClosed();
   }
 }

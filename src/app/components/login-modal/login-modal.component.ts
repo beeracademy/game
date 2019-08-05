@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { UsersService } from 'src/app/services/users.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login-modal',
@@ -13,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 export class LoginModalComponent implements OnInit {
 
   public numberOfPlayers = 2;
+  public shuffle = true;
 
   constructor(
     public gameService: GameService,
@@ -40,7 +40,15 @@ export class LoginModalComponent implements OnInit {
 
         this.modal.showSnack('Failed to create game');
       });
-    })
+    });
+  }
 
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.code === 'Space' || event.code === 'Enter') {
+      if (this.numberOfPlayers === this.usersService.users.length) {
+        this.startGame();
+      }
+    }
   }
 }

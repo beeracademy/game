@@ -23,7 +23,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef:MatDialogRef<ChugModalComponent>,
+    private dialogRef: MatDialogRef<ChugModalComponent>,
     private sounds: SoundService,
     public users: UsersService) {
       this.user = data.user;
@@ -79,7 +79,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   }
 
   stop() {
-    if(this.time > 500) {
+    if(this.time > 200) {
       clearInterval(this.intervalRef);
       this.isRunning = false;
       this.playFinishSound();

@@ -16,5 +16,14 @@
 
   <mat-divider></mat-divider>
 
-  <button mat-raised-button color="primary" (click)="startGame()" [disabled]="numberOfPlayers != usersService.users.length">Start Game</button>
+  <div class="center">
+    <mat-checkbox [(ngModel)]="gameService.game.official" color="primary" tabIndex="-1">Official</mat-checkbox>
+    <mat-checkbox [(ngModel)]="shuffle" color="primary" tabIndex="-1">Shuffle players</mat-checkbox>
+    <mat-checkbox [(ngModel)]="gameService.offline" color="primary" tabIndex="-1">Offline</mat-checkbox>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <button mat-raised-button color="primary" (click)="startGame()" [disabled]="numberOfPlayers != usersService.users.length" #startButton>Start Game</button>
 </mat-card>

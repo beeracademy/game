@@ -59,7 +59,7 @@ export class UsersService {
     return this.users.filter(u => u.username === username).length > 0;
   }
 
-    /*
+  /*
     Persistence
   */
 

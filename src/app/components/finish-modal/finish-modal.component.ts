@@ -18,7 +18,7 @@ export class FinishModalComponent implements OnInit {
     const game: Game = this.data.game;
 
     this.description = game.description;
-    this.duration = game.end_datetime - game.start_datetime;
+    this.duration = new Date(game.end_datetime).getTime() - new Date(game.start_datetime).getTime();
   }
 
   ngOnInit() {

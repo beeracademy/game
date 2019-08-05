@@ -22,6 +22,8 @@ export class GameService {
   public game: Game =  new Game();
   public deck: Card[] = [];
 
+  public offline = false;
+
   public dickMode = false;
 
   constructor(
@@ -109,7 +111,11 @@ export class GameService {
       this.game.description = description;
       this.save();
 
-      this.showRetryModal();
+      this.postUpdate().subscribe(() => {
+        localStorage.clear();
+      }, error => {
+        this.showRetryModal();
+      });
     });
   }
 
@@ -142,12 +148,14 @@ export class GameService {
   public save() {
     localStorage.setItem('academy:game', JSON.stringify(this.game));
     localStorage.setItem('academy:deck', JSON.stringify(this.deck));
+    localStorage.setItem('academy:offline', JSON.stringify(this.offline));
     localStorage.setItem('academy:dickMode', JSON.stringify(this.dickMode));
   }
 
   public resume() {
     this.game = JSON.parse(localStorage.getItem('academy:game')) || this.game;
     this.deck = JSON.parse(localStorage.getItem('academy:deck')) || this.deck;
+    this.offline = JSON.parse(localStorage.getItem('academy:offline')) || this.offline;
     this.dickMode = JSON.parse(localStorage.getItem('academy:dickMode')) || this.dickMode;
 
     // Check if chug modal should be open

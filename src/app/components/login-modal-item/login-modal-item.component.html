@@ -1,8 +1,8 @@
 <mat-form-field [hideRequiredMarker]="true">
-  <input matInput placeholder="Username" required #username [disabled]="disabled" required>
+  <input matInput placeholder="Username" required #username [disabled]="disabled" autofocus>
 </mat-form-field>
 
-<mat-form-field [hideRequiredMarker]="true" flex>
+<mat-form-field [hideRequiredMarker]="true" flex *ngIf="!gameService.offline">
   <input matInput placeholder="Password" type="password" required #password (blur)="login(username.value, password.value)" [disabled]="disabled" required>
 </mat-form-field>
 
