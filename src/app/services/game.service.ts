@@ -7,11 +7,10 @@ import { ModalService } from './modal.service';
 import { UsersService } from './users.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { CardsService } from './cards.service';
 import { User } from '../models/user';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +36,7 @@ export class GameService {
     this.game = new Game();
   }
 
-  public start(): Observable<void> {
+  public start() {
     // Check if game already started
     if (this.game.start_datetime) {
       return;
@@ -63,12 +62,16 @@ export class GameService {
 
   public draw() {
     // Draw a card from the deck
-    const draw = this.deck[this.game.draws.length];
-    draw.drawn_datetime = Date.now();
-    this.game.draws.push(draw);
+    const draw = this.deck[this.game.cards.length];
+
+    draw.drawn_datetime = (new Date()).toISOString();
+
+    this.game.cards.push(draw);
 
     this.onCardDrawn.emit();
-    this.postUpdate();
+    this.postUpdate().subscribe({ error: e => {
+      // NOOP
+    }});
 
     // Check if ace
     if (draw.value === 14) {
@@ -76,11 +79,15 @@ export class GameService {
       const playerAces = this.getAcesForPlayer(activePlayer);
 
       this.modal.openChug(this.getActivePlayer(), playerAces.length).subscribe((duration) => {
-        this.game.draws[this.game.draws.length - 1].chug_duration = duration;
+        this.game.cards[this.game.cards.length - 1].chug_duration_ms = duration;
 
         // Check if the game is done
         if (this.getCardsLeft() <= 0) {
           this.endGame();
+        } else {
+          this.postUpdate().subscribe({ error: e => {
+            // TODO: handle
+          }});
         }
       });
 
@@ -94,12 +101,15 @@ export class GameService {
       return;
     }
 
-    this.game.end_datetime = Date.now();
+    this.game.end_datetime = (new Date()).toISOString();
 
     this.modal.openFinish(this.game).subscribe((description) => {
       this.game.description = description;
-      this.postUpdate();
-      this.localClear();
+      this.postUpdate().subscribe({ error: e => {
+        this.modal.showSnack('Failed to send game update to server.');
+
+        // TODO: handle errors better
+      }});
     });
   }
 
@@ -108,15 +118,14 @@ export class GameService {
   */
 
   private postStart(): Observable<Game> {
-    this.localSave();
     return this.http.post<Game>(`${environment.url}/api/games/`, {
-      tokens: this.usersService.users.map(u => u.token)
+      tokens: this.usersService.users.map(u => u.token),
+      official: this.game.official
     });
   }
 
   private postUpdate(): Observable<any> {
-    this.localSave();
-    return this.http.post(`${environment.url}/api/games/` + this.game.id + '/update/', this.game);
+    return this.http.post(`${environment.url}/api/games/` + this.game.id + '/update_state/', this.game);
   }
 
   /*
@@ -150,7 +159,7 @@ export class GameService {
   }
 
   public getActiveIndex(): number {
-   return this.game.draws.length % this.getNumberOfPlayers();
+   return this.game.cards.length % this.getNumberOfPlayers();
   }
 
   public getActivePlayer(): User {
@@ -158,23 +167,27 @@ export class GameService {
   }
 
   public getCardsLeft(): number {
-    return (13 * this.getNumberOfPlayers()) - this.game.draws.length;
+    return (13 * this.getNumberOfPlayers()) - this.game.cards.length;
   }
 
   public getRound(): number {
-    return Math.min(Math.floor((this.game.draws.length / this.getNumberOfPlayers())) + 1, 13);
+    return Math.min(Math.floor((this.game.cards.length / this.getNumberOfPlayers())) + 1, 13);
   }
 
   public getGameDuration(): number {
-    return Date.now() - this.game.start_datetime;
+    return Date.now() - (new Date(this.game.start_datetime)).getTime();
   }
 
   public getRoundDuration(): number {
-    return Date.now() - this.game.draws[this.game.draws.length - 1].drawn_datetime;
+    if (this.game.cards.length === 0) {
+      return Date.now() - (new Date(this.game.start_datetime).getTime());
+    } else {
+      return Date.now() - (new Date(this.game.cards[this.game.cards.length - 1].drawn_datetime)).getTime();
+    }
   }
 
   public getCardsForPlayer(player: User): Card[] {
-    return this.game.draws.filter((_, i) => i % this.getNumberOfPlayers() === player.index);
+    return this.game.cards.filter((_, i) => i % this.getNumberOfPlayers() === player.index);
   }
 
   public getAcesForPlayer(player: User): Card[] {
@@ -182,11 +195,15 @@ export class GameService {
   }
 
   public isChugging(): boolean {
-    const latestCard = this.game.draws[this.game.draws.length - 1];
-    return latestCard.value === 14 && !latestCard.chug_duration;
+    if (this.game.cards.length === 0) {
+      return false;
+    } else {
+      const latestCard = this.game.cards[this.game.cards.length - 1];
+      return latestCard.value === 14 && !latestCard.chug_duration_ms;
+    }
   }
 
   public isCardDrawn(suit: string, value: number): boolean {
-    return this.game.draws.filter(c => c.suit === suit && c.value === value).length > 0;
+    return this.game.cards.filter(c => c.suit === suit && c.value === value).length > 0;
   }
 }

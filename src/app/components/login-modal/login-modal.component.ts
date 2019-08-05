@@ -17,8 +17,7 @@ export class LoginModalComponent implements OnInit {
   constructor(
     public gameService: GameService,
     public usersService: UsersService,
-    private modal: ModalService,
-    private snackBar: MatSnackBar
+    private modal: ModalService
     ) {}
 
   ngOnInit() {}
@@ -36,9 +35,7 @@ export class LoginModalComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         ref.close();
 
-        this.snackBar.open('Failed to create game', null, {
-          duration: 5000
-        });
+        this.modal.showSnack('Failed to create game');
       });
     })
 

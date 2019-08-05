@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { CreateNewUserModalComponent } from '../components/create-new-user-modal/create-new-user-modal.component';
 import { UsersService } from './users.service';
 import { Observable } from 'rxjs';
@@ -14,7 +14,13 @@ import { Game } from '../models/game';
 })
 export class ModalService {
 
-  constructor(private dialog: MatDialog, private userService: UsersService) { }
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private userService: UsersService) { }
+
+  public showSnack(text: string) {
+    this.snackBar.open(text, null, {
+      duration: 5000
+    });
+  }
 
   public showSpinner()  {
     return this.dialog.open(SpinnerModalComponent, {

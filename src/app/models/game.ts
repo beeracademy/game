@@ -3,12 +3,13 @@ import { Card } from './card';
 export class Game {
   constructor(
     public start_datetime: number = 0,
-    public end_datetime: number = 0,
-    public description: string = '',
     public official: boolean = true,
     public player_names: string[] = [],
     public seed: number[] = [],
-    public draws: Card[] = [],
+    public cards: Card[] = [],
+
+    public end_datetime?,
+    public description?,
 
     // Not needed for offline
     public id?: number,

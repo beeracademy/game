@@ -34,10 +34,10 @@ export class CardTableComponent implements OnInit {
 
         const cardIndex = this.c * i + j;
 
-        if (this.gameService.game.draws.length < cardIndex + 1) {
+        if (this.gameService.game.cards.length < cardIndex + 1) {
           m[i][j] = ' ';
         } else {
-          m[i][j] = this.gameService.game.draws[cardIndex].value;
+          m[i][j] = this.gameService.game.cards[cardIndex].value;
         }
       }
     }

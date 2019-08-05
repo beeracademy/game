@@ -2,8 +2,8 @@ export class Card {
   constructor(
     public value: number,
     public suit: string,
-    public drawn_datetime?: number,
-    public chug_duration?: number
+    public drawn_datetime?: string,
+    public chug_duration_ms?: number
   ) {}
 
   get image(): string {
