@@ -26,7 +26,11 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.intervalRef = setInterval(() => {
       if ((new Date()).getTime() - this.lastKeyPressTimeStamp > this.IDLTime ) {
-        this.playIDLSound();
+
+        // Check if game is over
+        if (this.gameService.getCardsLeft() > 0) {
+          this.playIDLSound();
+        }
       }
     }, 1000);
 

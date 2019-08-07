@@ -1,25 +1,38 @@
 :host {
-  display: flex;
-
   height: 100%;
   width: 100%;
 
-  flex-direction: column;
+  display: grid;
 
-  .fill {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 70px auto 240px;
 
-    & .horizontal {
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-    }
+  align-items: center;
+  justify-content: center;
+
+  grid-template-areas:
+    "header  header  header"
+    "deck    table   chart"
+    "players players players";
+
+  app-info-bar {
+    grid-area: header;
   }
 
-  .flex * {
-    flex: 1;
-    margin: 10px;
+  app-chart {
+    grid-area: chart;
+
+  }
+
+  app-card-table {
+    grid-area: table;
+  }
+
+  app-card-deck {
+    grid-area: deck;
+  }
+
+  app-players {
+    grid-area: players;
   }
 }
