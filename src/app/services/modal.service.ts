@@ -17,8 +17,6 @@ import { SoundService } from './sound.service';
 })
 export class ModalService {
 
-  @Output() onFlashText: EventEmitter<string> = new EventEmitter();
-
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private sounds: SoundService) { }
 
   public showSnack(text: string) {
@@ -76,11 +74,5 @@ export class ModalService {
     return this.dialog.open(AbortModalComponent, {
       disableClose: true
     }).afterClosed();
-  }
-
-  public flashText(text: string) {
-    setTimeout(() => {
-      this.onFlashText.emit(text);
-    }, 0);
   }
 }

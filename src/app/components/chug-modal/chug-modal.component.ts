@@ -5,6 +5,7 @@ import { UsersService } from '../../services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { User } from 'src/app/models/user';
 import { ModalService } from 'src/app/services/modal.service';
+import { FlashService } from 'src/app/services/flash.service';
 
 @Component({
   selector: 'app-chug-modal',
@@ -22,13 +23,12 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   private startTime: number;
   private intervalRef: any;
 
-  private modal;
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    public users: UsersService,
     private dialogRef: MatDialogRef<ChugModalComponent>,
     private sounds: SoundService,
-    public users: UsersService) {
+    private flashService: FlashService) {
       this.user = data.user;
       this.chugs = data.chugs;
     }
@@ -40,21 +40,27 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
     switch (this.chugs) {
       case 1:
+        this.flashService.flashText('FINISH HIM!');
         this.sounds.play('mkd_finishim.wav');
         break;
       case 2:
+        this.flashService.flashText('DOUBLE KILL!');
         this.sounds.play('doublekill.wav');
         break;
       case 3:
+        this.flashService.flashText('TRIPLE KILL!');
         this.sounds.play('triplekill.wav');
         break;
       case 4:
+        this.flashService.flashText('ULTRA KILL!');
         this.sounds.play('ultrakill.wav');
         break;
       case 5:
+        this.flashService.flashText('MEGA KILL!');
         this.sounds.play('megakill.wav');
         break;
       case 6:
+        this.flashService.flashText('MONSTER KILL!');
         this.sounds.play('monsterkill.wav');
         break;
       default:
@@ -104,8 +110,10 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   playFinishSound(){
     if (this.time < 5000) {
+      this.flashService.flashText('FlAWLESS VICTORY!');
       this.sounds.play('mkd_flawless.wav');
     } else if(this.time < 7000) {
+      this.flashService.flashText('FATALITY!');
       this.sounds.play('mkd_fatality.wav');
     } else if(this.time < 20000) {
       this.sounds.play('mkd_laugh.wav');

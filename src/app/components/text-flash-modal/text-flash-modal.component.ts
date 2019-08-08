@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, SimpleChange } from '@angular/cor
 import { ModalService } from 'src/app/services/modal.service';
 import { fadeOut, rubberBand } from 'ng-animate';
 import { useAnimation, transition, trigger } from '@angular/animations';
+import { FlashService } from 'src/app/services/flash.service';
 
 @Component({
   selector: 'app-text-flash-modal',
@@ -23,12 +24,10 @@ export class TextFlashModalComponent implements OnInit {
   public show = false;
   public text = '';
 
-  constructor(public modal: ModalService) { }
+  constructor(public flashService: FlashService) { }
 
   ngOnInit() {
-    this.modal.onFlashText.subscribe((text) => {
-      console.log(text);
-
+    this.flashService.onFlashText.subscribe((text) => {
       this.text = text;
       this.show = true;
 

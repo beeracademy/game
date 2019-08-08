@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { CardsService } from 'src/app/services/cards.service';
-import { ModalService } from 'src/app/services/modal.service';
+import { FlashService } from 'src/app/services/flash.service';
 
 @Component({
   selector: 'app-game',
@@ -21,7 +21,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private intervalRef;
 
-  constructor(private gameService: GameService, private sound: SoundService, private cardsService: CardsService, private modal: ModalService) {
+  constructor(private gameService: GameService, private sound: SoundService, private cardsService: CardsService, private flashService: FlashService) {
     this.lastKeyPressTimeStamp = (new Date()).getTime();
   }
 
@@ -60,7 +60,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.cardsService.setDickMode(!this.cardsService.dickMode);
         this.theDProgress = 0;
 
-        this.modal.flashText('DICK MODE ' + (this.cardsService.dickMode ? 'ON' : 'OFF'));
+        this.flashService.flashText('DICK MODE ' + (this.cardsService.dickMode ? 'ON' : 'OFF'));
 
         this.sound.play('click.mp3');
 
