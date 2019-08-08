@@ -17,5 +17,9 @@ export class AppComponent {
     } else {
       localStorage.clear();
     }
+
+    setTimeout(() => {
+      (window as any).cold = false;
+    }, 500);
   }
 }

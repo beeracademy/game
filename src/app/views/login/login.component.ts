@@ -10,5 +10,6 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    localStorage.clear();
   }
 }

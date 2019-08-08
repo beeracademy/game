@@ -10,15 +10,18 @@ import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal
 import { Game } from '../models/game';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
 import { AbortModalComponent } from '../components/abort-modal/abort-modal.component';
+import { SoundService } from './sound.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private userService: UsersService) { }
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private sounds: SoundService) { }
 
   public showSnack(text: string) {
+    this.sounds.play('snack.mp3');
+
     this.snackBar.open(text, null, {
       duration: 5000
     });

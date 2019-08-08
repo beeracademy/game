@@ -54,10 +54,13 @@
     }
   }
 
-  svg {
-    transform: scale(3.1) rotate(-30deg);
+  .crown {
     position: absolute;
     top: -12px;
     left: 2px;
+
+    svg {
+      transform: scale(3.1) rotate(-30deg);
+    }
   }
 }

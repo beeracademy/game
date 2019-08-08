@@ -4,20 +4,15 @@ import { User } from 'src/app/models/user';
 import { GameService } from 'src/app/services/game.service';
 import { MetaService } from 'src/app/services/meta.service';
 import { Card } from 'src/app/models/card';
-import { bounceIn, bounceOut } from 'src/app/views/animations/bounce';
+import { rubberBand } from 'ng-animate';
+import { SoundService } from 'src/app/services/sound.service';
 
 @Component({
   selector: 'app-players-item',
   templateUrl: './players-item.component.html',
   styleUrls: ['./players-item.component.scss'],
   animations: [
-    trigger(
-      'bounce', [
-        transition(':enter', useAnimation(bounceIn)),
-        transition(':leave', useAnimation(bounceOut)),
-
-      ]
-    )
+    trigger('crownAnimation', [transition(':enter', useAnimation(rubberBand))])
   ]
 })
 export class PlayersItemComponent implements OnInit {
@@ -28,7 +23,7 @@ export class PlayersItemComponent implements OnInit {
 
   public isLeading = false;
 
-  constructor(public gameService: GameService, public meta: MetaService) { }
+  constructor(public gameService: GameService, public meta: MetaService, private sounds: SoundService) { }
 
   ngOnInit() {
     this.gameService.onCardDrawn.subscribe(() => {
@@ -39,7 +34,14 @@ export class PlayersItemComponent implements OnInit {
   }
 
   getCards() {
-    this.isLeading = this.meta.getLeadingPlayer() === this.user.index && this.gameService.game.cards.length !== 0;
+    const isLeading = this.meta.getLeadingPlayer() === this.user.index && this.gameService.game.cards.length !== 0;
+
+    if (!this.isLeading && isLeading && !(window as any).cold) {
+      this.sounds.play('crown.mp3');
+    }
+
+    this.isLeading = isLeading;
+
     this.cards = this.gameService.getCardsForPlayer(this.user);
   }
 

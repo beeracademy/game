@@ -9,7 +9,25 @@ export class CardsService {
 
   private engine = Random.browserCrypto;
 
-  constructor() {}
+  public cardBack = 'cardback.png';
+  public dickMode = false;
+
+  constructor() {
+    this.resume();
+    this.setDickMode(this.dickMode);
+  }
+
+  public setDickMode(b: boolean) {
+    this.dickMode = b;
+
+    if (b) {
+      this.cardBack = 'cardback-au.png';
+    } else {
+      this.cardBack = 'cardback.png';
+    }
+
+    this.save();
+  }
 
   private getOrderedCards(players: number): Card[] {
     const cards = [];
@@ -62,4 +80,13 @@ export class CardsService {
     this.shuffleWithSeed(cards, seed);
     return cards;
   }
+
+  public save() {
+    localStorage.setItem('academy:dickMode', JSON.stringify(this.dickMode));
+  }
+
+  public resume() {
+    this.dickMode = JSON.parse(localStorage.getItem('academy:dickMode')) || this.dickMode;
+  }
+
 }

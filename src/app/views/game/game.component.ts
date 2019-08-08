@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { SoundService } from 'src/app/services/sound.service';
+import { CardsService } from 'src/app/services/cards.service';
 
 @Component({
   selector: 'app-game',
@@ -19,7 +20,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private intervalRef;
 
-  constructor(private gameService: GameService, private sound: SoundService) {
+  constructor(private gameService: GameService, private sound: SoundService, private cardsService: CardsService) {
     this.lastKeyPressTimeStamp = (new Date()).getTime();
   }
 
@@ -55,7 +56,8 @@ export class GameComponent implements OnInit, OnDestroy {
       this.theDProgress++;
 
       if (this.theDProgress >= this.theDWord.length) {
-        this.gameService.dickMode = true;
+        this.cardsService.setDickMode(!this.cardsService.dickMode);
+        this.theDProgress = 0;
       }
     } else {
       this.theDProgress = 0;

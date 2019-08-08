@@ -64,9 +64,7 @@ export class LoginModalItemComponent implements OnInit {
         } else {
           this.resetIndicator();
 
-          this.snackBar.open(this.parseFieldErrors(err.error), null, {
-            duration: 5000
-          });
+          this.modalService.showSnack(this.parseFieldErrors(err.error));
         }
       }
     );
@@ -76,9 +74,7 @@ export class LoginModalItemComponent implements OnInit {
     this.usersService.create(username, password).subscribe((result) => {
       this.login(username, password);
     }, (err: HttpErrorResponse) => {
-      this.snackBar.open(this.parseFieldErrors(err.error), null, {
-        duration: 5000
-      });
+      this.modalService.showSnack(this.parseFieldErrors(err.error));
 
       this.resetIndicator();
     });

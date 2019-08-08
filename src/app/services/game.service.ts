@@ -24,8 +24,6 @@ export class GameService {
 
   public offline = false;
 
-  public dickMode = false;
-
   constructor(
     private http: HttpClient,
     private sounds: SoundService,
@@ -149,14 +147,12 @@ export class GameService {
     localStorage.setItem('academy:game', JSON.stringify(this.game));
     localStorage.setItem('academy:deck', JSON.stringify(this.deck));
     localStorage.setItem('academy:offline', JSON.stringify(this.offline));
-    localStorage.setItem('academy:dickMode', JSON.stringify(this.dickMode));
   }
 
   public resume() {
     this.game = JSON.parse(localStorage.getItem('academy:game')) || this.game;
     this.deck = JSON.parse(localStorage.getItem('academy:deck')) || this.deck;
     this.offline = JSON.parse(localStorage.getItem('academy:offline')) || this.offline;
-    this.dickMode = JSON.parse(localStorage.getItem('academy:dickMode')) || this.dickMode;
 
     // Check if chug modal should be open
     const latestCard = this.getLatestCard();

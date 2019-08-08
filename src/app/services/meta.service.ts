@@ -8,13 +8,13 @@ import { GameService } from './game.service';
 })
 export class MetaService {
 
-  constructor(private usersService: UsersService, private gameService: GameService) {}
+  constructor(private gameService: GameService) {}
 
-  public getTheoraticalMax(cards: Card[]): number {
+  public getTheoraticalMax(index: number): number {
     return 0;
   }
 
-  public getTheoraticalMin(cards: Card[]): number {
+  public getTheoraticalMin(index: number): number {
     return 0;
   }
 

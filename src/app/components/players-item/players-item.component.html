@@ -1,6 +1,7 @@
 
 <mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''" (mouseover)="moreInfo = false" (mouseleave)="moreInfo = false">
-    <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="20" height="20" id="svg2" *ngIf="isLeading">
+  <div class="crown" *ngIf="isLeading" [@crownAnimation]>
+    <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="20" height="20" id="svg2">
       <defs id="defs4"/>
       <g transform="translate(-24.02083,4.5516112)" id="g3214">
         <path d="M 24.02083,-4.5516112 L 44.02083,-4.5516112 L 44.02083,15.448389 L 24.02083,15.448389 L 24.02083,-4.5516112 z" id="rect2441" style="opacity:0;fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"/>
@@ -9,6 +10,7 @@
         </g>
       </g>
     </svg>
+  </div>
   <h3>{{ user?.username }}</h3>
   <div class="stats-wrap">
     <div>

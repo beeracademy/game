@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
+import { CardsService } from 'src/app/services/cards.service';
 
 @Component({
   selector: 'app-card-deck-item',
@@ -10,22 +11,23 @@ export class CardDeckItemComponent implements OnInit {
   @Input() suit: string;
   @Input() value: number;
 
-  public image = '';
+  public isDrawn = false;
+  public image;
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, public cardsService: CardsService) {
   }
 
   ngOnInit() {
-    this.gameService.onCardDrawn.subscribe(this.setImage.bind(this));
-    this.setImage();
+    this.image = this.suit + '-' + this.value + '.png';
+
+    this.gameService.onCardDrawn.subscribe(this.updateIsDrawn);
+
+    this.updateIsDrawn();
   }
 
-  setImage() {
-    if (this.gameService.isCardDrawn(this.suit, this.value)) {
-      this.image = 'assets/cards/' + (this.gameService.dickMode ? 'cardback-au.png' : 'cardback.png');
-    } else {
-      this.image = 'assets/cards/' + this.suit + '-' + this.value + '.png';
+  private updateIsDrawn() {
+    if (!this.isDrawn) {
+      this.isDrawn = this.gameService.isCardDrawn(this.suit, this.value);
     }
   }
-
 }

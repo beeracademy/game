@@ -31,6 +31,10 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
+    if ((window as any).cold) {
+      return;
+    }
+
     switch (this.chugs) {
       case 1:
         this.sounds.play('mkd_finishim.wav');
