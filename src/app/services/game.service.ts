@@ -85,6 +85,29 @@ export class GameService {
     const activePlayer = this.getActivePlayer();
     const playerAces = this.getAcesForPlayer(activePlayer);
 
+    switch (playerAces.length) {
+      case 1:
+        this.modal.flashText('FINISH HIM!');
+        break;
+      case 2:
+        this.modal.flashText('DOUBLE KILL!');
+        break;
+      case 3:
+        this.modal.flashText('TRIPLE KILL!');
+        break;
+      case 4:
+        this.modal.flashText('ULTRA KILL!');
+        break;
+      case 5:
+        this.modal.flashText('MEGA KILL!');
+        break;
+      case 6:
+        this.modal.flashText('MONSTER KILL!');
+        break;
+      default:
+        break;
+    }
+
     this.modal.openChug(activePlayer, playerAces.length).subscribe((duration) => {
       this.game.cards[this.game.cards.length - 1].chug_duration_ms = duration;
 
@@ -109,9 +132,13 @@ export class GameService {
       this.game.description = description;
       this.save();
 
+      const spinner = this.modal.showSpinner();
+
       this.postUpdate().subscribe(() => {
         localStorage.clear();
+        spinner.close();
       }, error => {
+        spinner.close();
         this.showRetryModal();
       });
     });

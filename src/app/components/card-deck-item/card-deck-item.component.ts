@@ -20,7 +20,7 @@ export class CardDeckItemComponent implements OnInit {
   ngOnInit() {
     this.image = this.suit + '-' + this.value + '.png';
 
-    this.gameService.onCardDrawn.subscribe(this.updateIsDrawn);
+    this.gameService.onCardDrawn.subscribe(this.updateIsDrawn.bind(this));
 
     this.updateIsDrawn();
   }

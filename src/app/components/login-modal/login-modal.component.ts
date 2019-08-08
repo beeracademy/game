@@ -3,6 +3,7 @@ import { GameService } from 'src/app/services/game.service';
 import { UsersService } from 'src/app/services/users.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SoundService } from 'src/app/services/sound.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -17,8 +18,8 @@ export class LoginModalComponent implements OnInit {
   constructor(
     public gameService: GameService,
     public usersService: UsersService,
-    private modal: ModalService
-    ) {
+    private modal: ModalService,
+    private sound: SoundService) {
       this.usersService.reset();
     }
 

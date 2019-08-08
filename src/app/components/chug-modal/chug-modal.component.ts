@@ -1,9 +1,10 @@
-import { Component, OnInit, HostListener, Inject, OnDestroy} from '@angular/core';
+import { Component, OnInit, HostListener, Inject, OnDestroy, Injector} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
 import { UsersService } from '../../services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { User } from 'src/app/models/user';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-chug-modal',
@@ -20,6 +21,8 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   private startTime: number;
   private intervalRef: any;
+
+  private modal;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,7 +59,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
         break;
       default:
         break;
-      }
+    }
   }
 
   ngOnDestroy(): void {

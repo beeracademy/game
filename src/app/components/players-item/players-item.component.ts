@@ -6,6 +6,7 @@ import { MetaService } from 'src/app/services/meta.service';
 import { Card } from 'src/app/models/card';
 import { rubberBand } from 'ng-animate';
 import { SoundService } from 'src/app/services/sound.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-players-item',
@@ -23,7 +24,7 @@ export class PlayersItemComponent implements OnInit {
 
   public isLeading = false;
 
-  constructor(public gameService: GameService, public meta: MetaService, private sounds: SoundService) { }
+  constructor(public gameService: GameService, public meta: MetaService, private sounds: SoundService, private modal: ModalService) { }
 
   ngOnInit() {
     this.gameService.onCardDrawn.subscribe(() => {
@@ -38,6 +39,7 @@ export class PlayersItemComponent implements OnInit {
 
     if (!this.isLeading && isLeading && !(window as any).cold) {
       this.sounds.play('crown.mp3');
+      this.modal.flashText(this.user.username + ' in the lead!');
     }
 
     this.isLeading = isLeading;

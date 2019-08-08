@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { CreateNewUserModalComponent } from '../components/create-new-user-modal/create-new-user-modal.component';
 import { UsersService } from './users.service';
@@ -16,6 +16,8 @@ import { SoundService } from './sound.service';
   providedIn: 'root'
 })
 export class ModalService {
+
+  @Output() onFlashText: EventEmitter<string> = new EventEmitter();
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private sounds: SoundService) { }
 
@@ -74,5 +76,11 @@ export class ModalService {
     return this.dialog.open(AbortModalComponent, {
       disableClose: true
     }).afterClosed();
+  }
+
+  public flashText(text: string) {
+    setTimeout(() => {
+      this.onFlashText.emit(text);
+    }, 0);
   }
 }

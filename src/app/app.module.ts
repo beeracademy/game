@@ -27,6 +27,7 @@ import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { CardDeckItemComponent } from './components/card-deck-item/card-deck-item.component';
 import { RetryUploadModalComponent } from './components/retry-upload-modal/retry-upload-modal.component';
 import { AbortModalComponent } from './components/abort-modal/abort-modal.component';
+import { TextFlashModalComponent } from './components/text-flash-modal/text-flash-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AbortModalComponent } from './components/abort-modal/abort-modal.compon
     CardDeckComponent,
     CardDeckItemComponent,
     RetryUploadModalComponent,
-    AbortModalComponent
+    AbortModalComponent,
+    TextFlashModalComponent
   ],
   imports: [
     BrowserModule,
