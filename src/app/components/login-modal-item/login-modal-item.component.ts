@@ -25,10 +25,9 @@ export class LoginModalItemComponent implements OnInit {
   private indicatorDenied  = '#e74c3c';
 
   constructor(
+    public gameService: GameService,
     private usersService: UsersService,
-    private gameService: GameService,
-    private modalService: ModalService,
-    private snackBar: MatSnackBar) {
+    private modalService: ModalService) {
     this.indicatorColor = '#fff';
     this.disabled = false;
   }

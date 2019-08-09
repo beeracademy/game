@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { UsersService } from './users.service';
 import { Card } from '../models/card';
 import { GameService } from './game.service';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,22 @@ export class MetaService {
 
   constructor(private gameService: GameService) {}
 
-  public getTheoraticalMax(index: number): number {
-    return 0;
+  private getTheoratical(user: User, sort: (a: number, b: number) => number) {
+      let remaining = this.gameService.getCardsLeft().map(c => c.value).sort(sort);
+
+      remaining = remaining.slice(remaining.length - this.gameService.getDrawsLeftForPlayer(user), remaining.length);
+      remaining.push(...this.gameService.getCardsForPlayer(user).map(c => c.value));
+
+      return remaining.reduce((a, b) => a + b, 0);
   }
 
-  public getTheoraticalMin(index: number): number {
-    return 0;
+  public getTheoraticalMax(user: User): number {
+      return this.getTheoratical(user, (a, b) => b - a);
+  }
+
+  public getTheoraticalMin(user: User): number {
+    return this.getTheoratical(user, (a, b) => a - b);
+
   }
 
   public getBeers(cards: Card[]): number {

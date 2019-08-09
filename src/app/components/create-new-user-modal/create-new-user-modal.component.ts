@@ -11,19 +11,10 @@ export class CreateNewUserModalComponent implements OnInit {
 
   public username: string;
 
-  constructor(private dialogRef: MatDialogRef<CreateNewUserModalComponent>, @Inject(MAT_DIALOG_DATA) data) {
+  constructor(@Inject(MAT_DIALOG_DATA) data) {
     this.username = data.username;
   }
 
   ngOnInit() {
   }
-
-  public yes() {
-    this.dialogRef.close(true);
-  }
-
-  public no() {
-    this.dialogRef.close(false);
-  }
-
 }

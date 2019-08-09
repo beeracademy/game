@@ -3,17 +3,17 @@
   <div class="item"></div>
   <div class="item">Round {{ gameService.getRound() }}</div>
   <div class="item">
-    <p style="font-size: 36px;" *ngIf="gameService.getCardsLeft() === 0">GAME OVER</p>
-    <p style="font-size: 36px;" *ngIf="gameService.getCardsLeft() !== 0">{{ roundDuration | date: "HH:mm:ss":"+0000" }}</p>
+    <p style="font-size: 36px;" *ngIf="gameService.getNumberOfCardsLeft() === 0">GAME OVER</p>
+    <p style="font-size: 36px;" *ngIf="gameService.getNumberOfCardsLeft() !== 0">{{ roundDuration | date: "HH:mm:ss":"+0000" }}</p>
     <p style="font-size: 16px">{{ duration | date: "HH:mm:ss":"+0000" }}</p>
   </div>
-  <div class="item">{{ gameService.getCardsLeft() }} card{{ gameService.getCardsLeft() === 1 ? '' : 's' }} left</div>
+  <div class="item">{{ gameService.getNumberOfCardsLeft() }} card{{ gameService.getNumberOfCardsLeft() === 1 ? '' : 's' }} left</div>
   <div class="item"></div>
   <div class="item controls">
-    <div (click)="abort()" *ngIf="gameService.getCardsLeft() !== 0">
+    <div (click)="abort()" *ngIf="gameService.getNumberOfCardsLeft() !== 0">
       Abort <i class="material-icons">exit_to_app</i>
     </div>
-    <div (click)="goToGame()" *ngIf="gameService.getCardsLeft() === 0">
+    <div (click)="goToGame()" *ngIf="gameService.getNumberOfCardsLeft() === 0">
       Go to game <i class="material-icons">play_arrow</i>
     </div>
   </div>

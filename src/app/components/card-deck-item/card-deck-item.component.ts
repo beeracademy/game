@@ -14,7 +14,7 @@ export class CardDeckItemComponent implements OnInit {
   public isDrawn = false;
   public image;
 
-  constructor(private gameService: GameService, public cardsService: CardsService) {
+  constructor(public gameService: GameService, public cardsService: CardsService) {
   }
 
   ngOnInit() {

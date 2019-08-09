@@ -13,9 +13,9 @@ export class RetryUploadModalComponent implements OnInit {
   private intervalRef: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<RetryUploadModalComponent>,
-    private http: HttpClient) {
+    public dialogRef: MatDialogRef<RetryUploadModalComponent>,
+    private http: HttpClient,
+    @Inject(MAT_DIALOG_DATA) private data: any) {
     // Retry every 5s
     this.intervalRef = setInterval(this.upload.bind(this), 5000);
 

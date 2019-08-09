@@ -8,16 +8,8 @@ import { MatDialogRef } from '@angular/material';
 })
 export class AbortModalComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<AbortModalComponent>) {}
+  constructor() {}
 
   ngOnInit() {
-  }
-
-  public yes() {
-    this.dialogRef.close(true);
-  }
-
-  public no() {
-    this.dialogRef.close(false);
   }
 }

@@ -30,7 +30,7 @@ export class GameComponent implements OnInit, OnDestroy {
       if ((new Date()).getTime() - this.lastKeyPressTimeStamp > this.IDLTime ) {
 
         // Check if game is over
-        if (this.gameService.getCardsLeft() > 0) {
+        if (this.gameService.getNumberOfCardsLeft() > 0) {
           this.playIDLSound();
         }
       }
@@ -47,7 +47,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.code === 'Space' && this.gameService.getCardsLeft() !== 0 && !this.gameService.isChugging() && this.debounce()) {
+    if (event.code === 'Space' && !this.gameService.isChugging() && this.debounce()) {
       this.drawCard();
 
       event.preventDefault();

@@ -1,5 +1,5 @@
 
-<mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''" (mouseover)="moreInfo = false" (mouseleave)="moreInfo = false">
+<mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''">
   <div class="crown" *ngIf="isLeading" [@crownAnimation]>
     <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="20" height="20" id="svg2">
       <defs id="defs4"/>
@@ -17,16 +17,16 @@
       <p>Sips left</p>
       <p>Beers</p>
       <p>Total sips</p>
-      <p>Min sips</p>
       <p>Max sips</p>
+      <p>Min sips</p>
     </div>
     <div class="right-flex">
       <p></p>
       <p>{{ meta.getSipsLeftInBeer(cards) }}</p>
       <p>{{ meta.getBeers(cards) }}</p>
       <p>{{ meta.getSips(cards) }}</p>
-      <p>{{ meta.getTheoraticalMax(cards) }}</p>
-      <p>{{ meta.getTheoraticalMin(cards) }}</p>
+      <p>{{ meta.getTheoraticalMin(user) }}</p>
+      <p>{{ meta.getTheoraticalMax(user) }}</p>
     </div>
   </div>
 </mat-card>

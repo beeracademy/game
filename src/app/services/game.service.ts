@@ -61,6 +61,10 @@ export class GameService {
   }
 
   public draw() {
+    if (this.getNumberOfCardsLeft() === 0) {
+      return;
+    }
+
     // Draw a card from the deck
     const draw = this.deck[this.game.cards.length];
 
@@ -76,7 +80,7 @@ export class GameService {
     // Check if ace or game done
     if (draw.value === 14) {
       this.showChugModal();
-    } else if (this.getCardsLeft() <= 0) {
+    } else if (this.getNumberOfCardsLeft() <= 0) {
       this.endGame();
     }
   }
@@ -91,7 +95,7 @@ export class GameService {
       this.postUpdate();
 
       // Check if the game is done
-      if (this.getCardsLeft() <= 0) {
+      if (this.getNumberOfCardsLeft() <= 0) {
         this.endGame();
       }
     });
@@ -166,13 +170,13 @@ export class GameService {
     }
 
     // Check if end game modal should be open
-    if (this.getCardsLeft() <= 0 && this.game.start_datetime && !this.game.description) {
+    if (this.getNumberOfCardsLeft() <= 0 && this.game.start_datetime && !this.game.description) {
       this.showEndModal();
       return;
     }
 
     // Check if retry modal should be open
-    if (this.getCardsLeft() <= 0 && this.game.end_datetime && this.game.description) {
+    if (this.getNumberOfCardsLeft() <= 0 && this.game.end_datetime && this.game.description) {
       this.showRetryModal();
     }
   }
@@ -197,8 +201,16 @@ export class GameService {
     return this.usersService.users[this.getActiveIndex()];
   }
 
-  public getCardsLeft(): number {
+  public getNumberOfCardsLeft(): number {
     return (13 * this.getNumberOfPlayers()) - this.game.cards.length;
+  }
+
+  public getCardsLeft(): Card[] {
+    return this.deck.slice(this.game.cards.length, this.deck.length);
+  }
+
+  public getDrawsLeftForPlayer(user: User) {
+    return 13 - this.getCardsForPlayer(user).length;
   }
 
   public getRound(): number {
@@ -216,7 +228,7 @@ export class GameService {
 
   public getRoundDuration(): number {
     // Game is done
-    if (this.getCardsLeft() === 0) {
+    if (this.getNumberOfCardsLeft() === 0) {
       return (new Date(this.game.end_datetime).getTime()) - (new Date(this.getLatestCard().drawn_datetime)).getTime();
     } else {
       const latestCard = this.getLatestCard();
@@ -234,7 +246,7 @@ export class GameService {
     return this.getCardsForPlayer(player).filter(c => c.value === 14);
   }
 
-  public getLatestCard() {
+  public getLatestCard(): Card {
     if (this.game.cards.length > 0) {
       return this.game.cards[this.game.cards.length - 1];
     }
