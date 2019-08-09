@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: window.location.origin
+  url: 'https://academy.beer'
 };
