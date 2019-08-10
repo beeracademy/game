@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { CardsService } from './cards.service';
 import { User } from '../models/user';
 import { map } from 'rxjs/operators';
+import { Chug } from '../models/chug';
 
 @Injectable({
   providedIn: 'root'
@@ -92,7 +93,7 @@ export class GameService {
     this.modal.openChug(activePlayer, playerAces.length).subscribe((duration) => {
       this.game.cards[this.game.cards.length - 1].chug_duration_ms = duration;
 
-      this.postUpdate();
+      this.postUpdate().subscribe(() => {});
 
       // Check if the game is done
       if (this.getNumberOfCardsLeft() <= 0) {
@@ -244,6 +245,21 @@ export class GameService {
 
   public getAcesForPlayer(player: User): Card[] {
     return this.getCardsForPlayer(player).filter(c => c.value === 14);
+  }
+
+  public getChugs(): Chug[] {
+    let chugs = [];
+
+    for (let i = 0; i < this.game.cards.length; i++) {
+      if (this.game.cards[i].value === 14) {
+        chugs.push(new Chug(
+          this.usersService.users[i % this.getNumberOfPlayers()],
+          this.game.cards[i]
+        ));
+      }
+    }
+
+    return chugs;
   }
 
   public getLatestCard(): Card {

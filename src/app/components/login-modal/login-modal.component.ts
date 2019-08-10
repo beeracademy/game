@@ -11,7 +11,7 @@ import { SoundService } from 'src/app/services/sound.service';
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
-  public numberOfPlayers = 2;
+  public numberOfPlayers = 4;
 
   public readyPlayers: boolean[] = [];
   public isReady = false;

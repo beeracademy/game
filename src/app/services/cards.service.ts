@@ -81,6 +81,44 @@ export class CardsService {
     return cards;
   }
 
+  public getSymbol(card: Card): string {
+    switch (card.suit) {
+      case 'S':
+        return '♠';
+      case 'C':
+        return '♣';
+      case 'H':
+        return '♥';
+      case 'D':
+        return '♦';
+      case 'A':
+        return '☘';
+      case 'I':
+        return '☘';
+      default:
+        return '';
+    }
+  }
+
+  public getColor(card: Card): string {
+    switch (card.suit) {
+      case 'S':
+        return '#000';
+      case 'C':
+        return '#000';
+      case 'H':
+        return '#e74c3c';
+      case 'D':
+        return '#e74c3c';
+      case 'A':
+        return '#2ecc71';
+      case 'I':
+        return '#2ecc71';
+      default:
+        return '';
+    }
+  }
+
   public save() {
     localStorage.setItem('academy:dickMode', JSON.stringify(this.dickMode));
   }

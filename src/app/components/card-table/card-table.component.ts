@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { UsersService } from 'src/app/services/users.service';
+import { CardsService } from 'src/app/services/cards.service';
 
 @Component({
   selector: 'app-card-table',
@@ -14,14 +15,20 @@ export class CardTableComponent implements OnInit {
   private c = this.gameService.getNumberOfPlayers();
   private r = 13;
 
-  constructor(public gameService: GameService, public usersService: UsersService) {
+  public playerInTurn = 0;
+  public round = 0;
+
+  constructor(public gameService: GameService, public usersService: UsersService, private cardsService: CardsService) {
   }
 
   ngOnInit() {
-    this.gameService.onCardDrawn.subscribe(() => {
-      this.matrix = this.getMatrix();
-    });
+    this.gameService.onCardDrawn.subscribe(this.update.bind(this));
+    this.update();
+  }
 
+  update() {
+    this.playerInTurn = this.gameService.game.cards.length % this.gameService.getNumberOfPlayers();
+    this.round = this.gameService.getRound();
     this.matrix = this.getMatrix();
   }
 
@@ -37,7 +44,8 @@ export class CardTableComponent implements OnInit {
         if (this.gameService.game.cards.length < cardIndex + 1) {
           m[i][j] = ' ';
         } else {
-          m[i][j] = this.gameService.game.cards[cardIndex].value;
+          const card = this.gameService.game.cards[cardIndex];
+          m[i][j] = '<span style="width: 1rem; display: inline-block;">' + this.cardsService.getSymbol(card) + '</span> ' + card.value;
         }
       }
     }

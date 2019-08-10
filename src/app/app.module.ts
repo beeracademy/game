@@ -28,6 +28,8 @@ import { CardDeckItemComponent } from './components/card-deck-item/card-deck-ite
 import { RetryUploadModalComponent } from './components/retry-upload-modal/retry-upload-modal.component';
 import { AbortModalComponent } from './components/abort-modal/abort-modal.component';
 import { TextFlashModalComponent } from './components/text-flash-modal/text-flash-modal.component';
+import { ChugsComponent } from './components/chugs/chugs.component';
+import { ChugsItemComponent } from './components/chugs-item/chugs-item.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { TextFlashModalComponent } from './components/text-flash-modal/text-flas
     CardDeckItemComponent,
     RetryUploadModalComponent,
     AbortModalComponent,
-    TextFlashModalComponent
+    TextFlashModalComponent,
+    ChugsComponent,
+    ChugsItemComponent
   ],
   imports: [
     BrowserModule,

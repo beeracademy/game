@@ -1,0 +1,20 @@
+:host {
+  text-align: center;
+  margin: 10px;
+  min-width: 110px;
+
+  p, mat-card {
+    max-height: 110px;
+    padding: 4px;
+    margin: 0px;
+  }
+
+  .name {
+    font-weight: bold;
+  }
+
+  .symbol {
+    font-size: 38px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
