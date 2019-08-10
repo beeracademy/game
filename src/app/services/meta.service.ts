@@ -52,6 +52,10 @@ export class MetaService {
     return 14 - (this.getSips(cards) % 14);
   }
 
+  public getPercentageLeftInBeer(cards: Card[]) {
+    return (this.getSipsLeftInBeer(cards) / 14) * 100;
+  }
+
   public getLeadingPlayer() {
     const numPlayers = this.gameService.getNumberOfPlayers();
     const cards = this.gameService.game.cards;
