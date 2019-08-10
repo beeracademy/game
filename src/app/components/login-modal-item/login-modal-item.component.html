@@ -1,11 +1,11 @@
 <mat-form-field [hideRequiredMarker]="true">
-  <input matInput placeholder="Username" required #username [disabled]="disabled" autofocus>
+  <input matInput placeholder="Username" required #username [(ngModel)]="usersService.users[index].username" [disabled]="disabled" autofocus>
 </mat-form-field>
 
 <mat-form-field [hideRequiredMarker]="true" flex *ngIf="!gameService.offline">
   <input matInput placeholder="Password" type="password" required #password (blur)="login(username.value, password.value)" [disabled]="disabled" required>
 </mat-form-field>
 
-<div class="login-image" [ngStyle]="{'background-image': 'url(' + ( image || 'assets/user.jpg') + ')'}"></div>
+<div class="login-image" [ngStyle]="{'background-image': 'url(' + ( usersService.users[index].image ? envUrl + usersService.users[index].image : 'assets/user.jpg') + ')'}"></div>
 
 <div class="login-dicator" [ngStyle]="{'background-color': indicatorColor }"></div>

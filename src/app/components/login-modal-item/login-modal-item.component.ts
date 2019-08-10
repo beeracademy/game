@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user';
 import { ModalService } from 'src/app/services/modal.service';
-import { MatSnackBar } from '@angular/material';
 import { environment } from 'src/environments/environment';
 import { GameService } from 'src/app/services/game.service';
 
@@ -15,10 +14,12 @@ import { GameService } from 'src/app/services/game.service';
 export class LoginModalItemComponent implements OnInit {
 
   @Input() index: number;
+  @Output() ready = new EventEmitter<void>();
 
-  public image: string;
   public indicatorColor: string;
   public disabled: boolean;
+
+  public envUrl = environment.url;
 
   private indicatorSuccess = '#2ecc71';
   private indicatorWaiting = '#f1c40f';
@@ -26,7 +27,7 @@ export class LoginModalItemComponent implements OnInit {
 
   constructor(
     public gameService: GameService,
-    private usersService: UsersService,
+    public usersService: UsersService,
     private modalService: ModalService) {
     this.indicatorColor = '#fff';
     this.disabled = false;
@@ -44,12 +45,13 @@ export class LoginModalItemComponent implements OnInit {
     this.disabled = true;
 
     this.usersService.login(username, password).subscribe((user: User) => {
-        this.usersService.users.push(user);
-
         this.indicatorColor = this.indicatorSuccess;
-        if (user.image) {
-          this.image = environment.url + user.image;
-        }
+
+        user.index = this.index;
+
+        Object.assign(this.usersService.users[this.index], user);
+
+        this.ready.emit();
       },
       (err: HttpErrorResponse) => {
         if (err.status === 404) {
