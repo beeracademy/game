@@ -62,10 +62,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
         this.flashService.flashText('DICK MODE ' + (this.cardsService.dickMode ? 'ON' : 'OFF'));
 
-        this.sound.play('click.mp3');
+        this.sound.play('click');
 
         if (this.cardsService.dickMode) {
-          this.sound.play('dick.mp3');
+          this.sound.play('dick');
         }
       }
     } else {

@@ -70,7 +70,7 @@ export class LoginModalComponent implements OnInit {
   public shuffle() {
     this.isShuffling = true;
 
-    const sound = this.soundService.play('slot_machine.mp3');
+    const sound = this.soundService.play('slot_machine');
 
     const interval = setInterval(() => {
       this.usersService.assignPlayerIndexes(true);
@@ -79,7 +79,7 @@ export class LoginModalComponent implements OnInit {
     setTimeout(() => {
       clearInterval(interval);
       sound.pause();
-      this.soundService.play('slot_machine_winner.mp3');
+      this.soundService.play('slot_machine_winner');
       this.isShuffling = false;
     }, this.shuffleTimeTotal);
   }

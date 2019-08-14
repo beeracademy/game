@@ -41,27 +41,27 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     switch (this.chugs) {
       case 1:
         this.flashService.flashText('FINISH HIM!');
-        this.sounds.play('mkd_finishim.wav');
+        this.sounds.play('mkd_finishim');
         break;
       case 2:
         this.flashService.flashText('DOUBLE KILL!');
-        this.sounds.play('doublekill.wav');
+        this.sounds.play('doublekill');
         break;
       case 3:
         this.flashService.flashText('TRIPLE KILL!');
-        this.sounds.play('triplekill.wav');
+        this.sounds.play('triplekill');
         break;
       case 4:
         this.flashService.flashText('ULTRA KILL!');
-        this.sounds.play('ultrakill.wav');
+        this.sounds.play('ultrakill');
         break;
       case 5:
         this.flashService.flashText('MEGA KILL!');
-        this.sounds.play('megakill.wav');
+        this.sounds.play('megakill');
         break;
       case 6:
         this.flashService.flashText('MONSTER KILL!');
-        this.sounds.play('monsterkill.wav');
+        this.sounds.play('monsterkill');
         break;
       default:
         break;
@@ -111,14 +111,14 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   playFinishSound(){
     if (this.time < 5000) {
       this.flashService.flashText('FlAWLESS VICTORY!');
-      this.sounds.play('mkd_flawless.wav');
+      this.sounds.play('mkd_flawless');
     } else if(this.time < 7000) {
       this.flashService.flashText('FATALITY!');
-      this.sounds.play('mkd_fatality.wav');
+      this.sounds.play('mkd_fatality');
     } else if(this.time < 20000) {
-      this.sounds.play('mkd_laugh.wav');
+      this.sounds.play('mkd_laugh');
     } else {
-      this.sounds.play('humiliation.wav');
+      this.sounds.play('humiliation');
     }
   }
 }

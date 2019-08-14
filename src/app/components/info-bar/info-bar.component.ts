@@ -43,7 +43,7 @@ export class InfoBarComponent implements OnInit, OnDestroy {
     this.modal.openAbort().subscribe((res) => {
       if (res) {
         this.modal.showSpinner();
-        this.sounds.play('loser.ogg');
+        this.sounds.play('loser');
 
         setTimeout(() => {
           localStorage.clear();

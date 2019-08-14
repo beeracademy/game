@@ -20,7 +20,7 @@ export class ModalService {
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private sounds: SoundService) { }
 
   public showSnack(text: string) {
-    this.sounds.play('snack.mp3');
+    this.sounds.play('snack');
 
     this.snackBar.open(text, null, {
       duration: 5000
