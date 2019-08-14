@@ -1,5 +1,6 @@
 <mat-card *ngIf="chug.card.chug_duration_ms">
   <p [style.color]="color" class="symbol">{{ symbol }}</p>
   <p class="name">{{ username }}</p>
-  <p>{{ duration  }} ms</p>
+  <p>{{ duration | date:"mm:ss.SSS" }}</p>
+
 </mat-card>
