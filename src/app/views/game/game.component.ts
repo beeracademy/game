@@ -83,6 +83,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
   playIDLSound() {
     this.lastKeyPressTimeStamp = (new Date()).getTime();
-    this.sound.play('tryk_paa_den_lange_tast.wav');
+    this.sound.play('tryk_paa_den_lange_tast');
   }
 }
