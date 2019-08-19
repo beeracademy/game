@@ -1,2 +1,2 @@
 #!/bin/bash
-rsync --archive --verbose --delete dist/AcademyWebGame/ http@academy.beer:game.academy.beer
+rsync --archive --verbose --delete dist/AcademyWebGame/ ubuntu@game.academy.beer:game.academy.beer/dist

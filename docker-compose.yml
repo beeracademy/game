@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  app:
+    image: nginx:alpine
+    volumes:
+      - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
+      - ./dist:/usr/share/nginx/html
+    restart: always
+    networks:
+      - web
+    expose:
+      - "80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=game.academy.beer"
+      - "traefik.frontend.rule=Host:game.academy.beer"
+      - "traefik.port=80"
+      - "traefik.docker.network=web"
+      - "traefik.domain=game.academy.beer"
+    container_name: game.academy.beer
+
+networks:
+  web:
+    external: true
