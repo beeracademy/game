@@ -5,7 +5,11 @@
   </tr>
   <tr *ngFor="let row of matrix; let i = index">
     <td>{{ i + 1 }}</td>
-    <td *ngFor="let c of row; let j = index" [class.active]='j === playerInTurn && i === round-1 && gameService.getNumberOfCardsLeft() != 0' [innerHTML]="c">
+    <td *ngFor="let c of row; let j = index" [class.active]='j === playerInTurn && i === round-1 && gameService.getNumberOfCardsLeft() != 0'>
+      <span [style.color]="cardsService.getColor(c)">
+        {{ cardsService.getSymbol(c) }}
+      </span>
+      {{ c.value}}
     </td>
   </tr>
 </table>

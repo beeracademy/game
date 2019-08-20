@@ -57,7 +57,7 @@ export class GameService {
       this.save();
 
       this.router.navigate(['game']);
-      this.sounds.play('baladada.wav');
+      this.sounds.play('baladada');
     }));
   }
 

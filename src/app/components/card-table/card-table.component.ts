@@ -18,7 +18,7 @@ export class CardTableComponent implements OnInit {
   public playerInTurn = 0;
   public round = 0;
 
-  constructor(public gameService: GameService, public usersService: UsersService, private cardsService: CardsService) {
+  constructor(public gameService: GameService, public usersService: UsersService, public cardsService: CardsService) {
   }
 
   ngOnInit() {
@@ -45,7 +45,7 @@ export class CardTableComponent implements OnInit {
           m[i][j] = ' ';
         } else {
           const card = this.gameService.game.cards[cardIndex];
-          m[i][j] = '<span style="width: 1rem; display: inline-block;">' + this.cardsService.getSymbol(card) + '</span> ' + card.value;
+          m[i][j] = card;
         }
       }
     }
