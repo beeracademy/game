@@ -3,6 +3,7 @@ import { GameService } from 'src/app/services/game.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { CardsService } from 'src/app/services/cards.service';
 import { FlashService } from 'src/app/services/flash.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-game',
@@ -43,6 +44,13 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.intervalRef);
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  reloadWarning($event) {
+    if (environment.production) {
+      return $event.returnValue = 'Game is active, do you want to reload?';
+    }
   }
 
   @HostListener('window:keyup', ['$event'])
