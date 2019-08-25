@@ -55,7 +55,7 @@ export class LoginModalItemComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         if (err.status === 404) {
-          this.modalService.openCreateNewUser(username, password).subscribe((result) => {
+          this.modalService.openConfirm('Create new user ' + username + '?').subscribe((result) => {
             if (result) {
               this.createNewUser(username, password);
             } else {

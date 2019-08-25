@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { GameService } from 'src/app/services/game.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-retry-upload-modal',
@@ -14,6 +15,7 @@ export class RetryUploadModalComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<RetryUploadModalComponent>,
+    private modal: ModalService,
     private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     // Retry every 5s
@@ -25,6 +27,14 @@ export class RetryUploadModalComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public dismiss() {
+    this.modal.openConfirm('If you dismiss this dialog the game will not be uploaded. Want to dismiss?').subscribe((result) => {
+      if (result) {
+        this.dialogRef.close();
+      }
+    });
   }
 
   public download() {

@@ -1,15 +1,12 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { CreateNewUserModalComponent } from '../components/create-new-user-modal/create-new-user-modal.component';
-import { UsersService } from './users.service';
-import { Observable } from 'rxjs';
+import { ConfirmModalComponent } from '../components/confirm-modal/confirm-modal.component';
 import { User } from '../models/user';
 import { ChugModalComponent } from '../components/chug-modal/chug-modal.component';
 import { FinishModalComponent } from '../components/finish-modal/finish-modal.component';
 import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal.component';
 import { Game } from '../models/game';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
-import { AbortModalComponent } from '../components/abort-modal/abort-modal.component';
 import { SoundService } from './sound.service';
 
 @Injectable({
@@ -33,11 +30,11 @@ export class ModalService {
     });
   }
 
-  public openCreateNewUser(username: string, password: string) {
-    return this.dialog.open(CreateNewUserModalComponent, {
+  public openConfirm(text: string) {
+    return this.dialog.open(ConfirmModalComponent, {
       disableClose: true,
       data: {
-        username
+        text
       }
     }).afterClosed();
   }
@@ -67,12 +64,6 @@ export class ModalService {
       data: {
         game
       }
-    }).afterClosed();
-  }
-
-  public openAbort() {
-    return this.dialog.open(AbortModalComponent, {
-      disableClose: true
     }).afterClosed();
   }
 }

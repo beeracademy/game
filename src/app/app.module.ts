@@ -12,7 +12,7 @@ import { LoginComponent } from './views/login/login.component';
 import { MatInputModule } from '@angular/material';
 import { LoginModalItemComponent } from './components/login-modal-item/login-modal-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateNewUserModalComponent } from './components/create-new-user-modal/create-new-user-modal.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { GameComponent } from './views/game/game.component';
 import { ChugModalComponent } from './components/chug-modal/chug-modal.component';
 import { FinishModalComponent } from './components/finish-modal/finish-modal.component';
@@ -37,7 +37,7 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     LoginModalComponent,
     LoginComponent,
     LoginModalItemComponent,
-    CreateNewUserModalComponent,
+    ConfirmModalComponent,
     GameComponent,
     ChugModalComponent,
     FinishModalComponent,
@@ -74,7 +74,7 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     }
   ],
   entryComponents: [
-    CreateNewUserModalComponent,
+    ConfirmModalComponent,
     ChugModalComponent,
     FinishModalComponent,
     SpinnerModalComponent,
