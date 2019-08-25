@@ -16,6 +16,7 @@ export class LoginModalComponent implements OnInit {
   public readyPlayers: boolean[] = [];
   public isReady = false;
 
+  public shuffleDone = false;
   public isShuffling = false;
   private shuffleTimeTotal = 3000;
   private shuffleEvery = 200;
@@ -81,6 +82,7 @@ export class LoginModalComponent implements OnInit {
       sound.pause();
       this.soundService.play('slot_machine_winner');
       this.isShuffling = false;
+      this.shuffleDone = true;
     }, this.shuffleTimeTotal);
   }
 }

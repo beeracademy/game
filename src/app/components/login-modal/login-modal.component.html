@@ -23,7 +23,7 @@
 
   <mat-divider></mat-divider>
 
-  <button mat-raised-button color="primary" (click)="shuffle()" [disabled]="!isReady || isShuffling" #startButton style="margin-bottom: 5px;">Shuffle Players</button>
+  <button mat-raised-button color="primary" (click)="shuffle()" [disabled]="!isReady || isShuffling || shuffleDone" #startButton style="margin-bottom: 5px;">Shuffle Players</button>
 
   <button mat-raised-button color="primary" (click)="startGame()" [disabled]="!isReady || isShuffling" #startButton>Start Game</button>
 </mat-card>
