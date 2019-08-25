@@ -26,7 +26,6 @@ import { ChartsModule } from 'ng2-charts';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { CardDeckItemComponent } from './components/card-deck-item/card-deck-item.component';
 import { RetryUploadModalComponent } from './components/retry-upload-modal/retry-upload-modal.component';
-import { AbortModalComponent } from './components/abort-modal/abort-modal.component';
 import { TextFlashModalComponent } from './components/text-flash-modal/text-flash-modal.component';
 import { ChugsComponent } from './components/chugs/chugs.component';
 import { ChugsItemComponent } from './components/chugs-item/chugs-item.component';
@@ -50,7 +49,6 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     CardDeckComponent,
     CardDeckItemComponent,
     RetryUploadModalComponent,
-    AbortModalComponent,
     TextFlashModalComponent,
     ChugsComponent,
     ChugsItemComponent
@@ -78,8 +76,7 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     ChugModalComponent,
     FinishModalComponent,
     SpinnerModalComponent,
-    RetryUploadModalComponent,
-    AbortModalComponent
+    RetryUploadModalComponent
   ],
   bootstrap: [AppComponent]
 })

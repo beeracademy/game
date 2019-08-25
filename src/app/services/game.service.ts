@@ -12,6 +12,8 @@ import { CardsService } from './cards.service';
 import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Chug } from '../models/chug';
+import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
+import { MatDialog } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,8 @@ export class GameService {
     private modal: ModalService,
     private usersService: UsersService,
     private cardsService: CardsService,
-    private router: Router) {
+    private router: Router,
+    private dialog: MatDialog) {
       this.resume();
   }
 
@@ -127,7 +130,12 @@ export class GameService {
   }
 
   private showRetryModal() {
-    this.modal.openRetryUpload(this.game).subscribe(() => {
+    this.dialog.open(RetryUploadModalComponent, {
+      disableClose: true,
+      data: {
+        game: this.game
+      }
+    }).afterClosed().subscribe(() => {
       localStorage.clear();
     });
   }

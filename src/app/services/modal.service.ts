@@ -57,13 +57,4 @@ export class ModalService {
       }
     }).afterClosed();
   }
-
-  public openRetryUpload(game: Game) {
-    return this.dialog.open(RetryUploadModalComponent, {
-      disableClose: true,
-      data: {
-        game
-      }
-    }).afterClosed();
-  }
 }
