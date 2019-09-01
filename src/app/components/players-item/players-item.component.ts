@@ -20,6 +20,7 @@ import { FlashService } from 'src/app/services/flash.service';
 export class PlayersItemComponent implements OnInit {
 
   @Input() user: User;
+  @Input() mute = false;
 
   public cards: Card[] = [];
 
@@ -44,7 +45,9 @@ export class PlayersItemComponent implements OnInit {
     const isLeading = this.meta.getLeadingPlayer() === this.user.index && this.gameService.game.cards.length !== 0;
 
     if (!this.isLeading && isLeading && !(window as any).cold) {
-      this.sounds.play('crown');
+      if (!this.mute) {
+        this.sounds.play('crown');
+      }
       this.flashService.flashText(this.user.username + ' in the lead!');
     }
 

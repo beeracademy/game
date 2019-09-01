@@ -54,7 +54,7 @@ export class ChartComponent implements OnInit {
         label: u.username,
         fill: false,
         lineTension: 0
-      }
+      };
     }
   }
 

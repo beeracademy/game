@@ -21,3 +21,11 @@
     text-transform: uppercase;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  :host {
+    .time {
+      font-size: 56px;
+    }
+  }
+}

@@ -82,7 +82,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  start(){
+  start() {
     this.isRunning = true;
     this.startTime = (new Date()).getTime();
 
@@ -92,7 +92,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   }
 
   stop() {
-    if(this.time > 200) {
+    if (this.time > 200) {
       clearInterval(this.intervalRef);
       this.isRunning = false;
       this.playFinishSound();
@@ -108,14 +108,14 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  playFinishSound(){
+  playFinishSound() {
     if (this.time < 5000) {
       this.flashService.flashText('FlAWLESS VICTORY!');
       this.sounds.play('mkd_flawless');
-    } else if(this.time < 7000) {
+    } else if (this.time < 7000) {
       this.flashService.flashText('FATALITY!');
       this.sounds.play('mkd_fatality');
-    } else if(this.time < 20000) {
+    } else if (this.time < 20000) {
       this.sounds.play('mkd_laugh');
     } else {
       this.sounds.play('humiliation');

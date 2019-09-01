@@ -62,7 +62,7 @@ export class MetaService {
 
     const playerSums = new Array(numPlayers).fill(0);
 
-    for(let i = 0; i < cards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
       const playerIndex = i % numPlayers;
       playerSums[playerIndex] += cards[i].value;
     }

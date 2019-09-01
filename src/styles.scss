@@ -87,3 +87,9 @@ html, body, app-root {
 }
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media only screen and (max-width: 600px) {
+  .mhide {
+    display: none;
+  }
+}

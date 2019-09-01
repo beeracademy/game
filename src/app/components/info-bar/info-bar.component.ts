@@ -40,18 +40,7 @@ export class InfoBarComponent implements OnInit, OnDestroy {
   }
 
   public abort() {
-    this.modal.openConfirm('Are you sure you want to quit the game?').subscribe((result) => {
-      if (result) {
-        this.modal.showSpinner();
-        this.sounds.play('loser');
-
-        setTimeout(() => {
-          localStorage.clear();
-          window.location.reload();
-
-        }, 3500);
-      }
-    });
+    this.gameService.abort();
   }
 
   public goToGame() {

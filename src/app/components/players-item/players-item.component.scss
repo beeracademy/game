@@ -82,3 +82,9 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  :host {
+    width: 100%;
+  }
+}

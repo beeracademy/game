@@ -18,3 +18,11 @@
     font-family: Arial, Helvetica, sans-serif;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  :host {
+    mat-card {
+      padding-top: 24px;
+    }
+  }
+}

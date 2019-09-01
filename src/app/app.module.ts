@@ -9,7 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { LoginComponent } from './views/login/login.component';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatBottomSheetModule } from '@angular/material';
 import { LoginModalItemComponent } from './components/login-modal-item/login-modal-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
@@ -29,6 +29,8 @@ import { RetryUploadModalComponent } from './components/retry-upload-modal/retry
 import { TextFlashModalComponent } from './components/text-flash-modal/text-flash-modal.component';
 import { ChugsComponent } from './components/chugs/chugs.component';
 import { ChugsItemComponent } from './components/chugs-item/chugs-item.component';
+import { MobileControlsComponent } from './components/mobile-controls/mobile-controls.component';
+import { StatsModalComponent } from './components/stats-modal/stats-modal.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     RetryUploadModalComponent,
     TextFlashModalComponent,
     ChugsComponent,
-    ChugsItemComponent
+    ChugsItemComponent,
+    MobileControlsComponent,
+    StatsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,7 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     BrowserAnimationsModule,
     MatInputModule,
     MaterialModule,
+    MatBottomSheetModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -76,7 +81,8 @@ import { ChugsItemComponent } from './components/chugs-item/chugs-item.component
     ChugModalComponent,
     FinishModalComponent,
     SpinnerModalComponent,
-    RetryUploadModalComponent
+    RetryUploadModalComponent,
+    StatsModalComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,7 @@ import { UsersService } from '../services/users.service';
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
-  constructor(private router: Router, private gameService: GameService){}
+  constructor(private router: Router, private gameService: GameService) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,

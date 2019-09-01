@@ -14,7 +14,7 @@ export class FinishModalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef:MatDialogRef<FinishModalComponent>) {
+    private dialogRef: MatDialogRef<FinishModalComponent>) {
     const game: Game = this.data.game;
 
     this.description = game.description;

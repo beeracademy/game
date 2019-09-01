@@ -41,4 +41,45 @@
   app-players {
     grid-area: players;
   }
+
+  app-mobile-controls {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+:host {
+    grid-template-columns: 1fr;
+    grid-template-rows: 70px auto 130px;
+
+    grid-template-areas:
+    "header "
+    "table"
+    "mobile";
+  }
+
+  app-chugs {
+    display: none;
+  }
+
+  app-chart {
+    display: none;
+  }
+
+  app-card-table {
+    grid-area: table;
+  }
+
+  app-card-deck {
+    display: none;
+  }
+
+  app-players {
+    display: none;
+  }
+
+  app-mobile-controls {
+    display: block !important;
+    grid-area: mobile;
+  }
 }

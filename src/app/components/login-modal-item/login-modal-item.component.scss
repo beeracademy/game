@@ -3,7 +3,7 @@
 
   mat-form-field {
     margin: 0 10px;
-    flex-grow: 1;
+
     padding-top: 10px;
     margin-bottom: -10px;
   }
@@ -20,5 +20,22 @@
     background-image: url("../../../assets/user.jpg");
     background-position: top;
     background-size: cover;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  :host {
+    justify-content: space-between;
+
+    overflow-x: auto;
+
+    .login-image {
+      display: none;
+    }
+
+    mat-form-field {
+      margin: 0px;
+      width: 48%;
+    }
   }
 }

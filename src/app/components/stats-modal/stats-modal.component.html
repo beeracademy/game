@@ -1,0 +1,20 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Players">
+    <ng-template matTabContent>
+      <app-players-item *ngFor="let u of usersService.users" [user]="u" [mute]="true"></app-players-item>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Chugs">
+    <ng-template matTabContent>
+        <div class="push"></div>
+        <app-chugs-item *ngFor="let c of gameService.getChugs()" [chug]="c"></app-chugs-item>
+        <p *ngIf="gameService.getChugs() <= 0">No chugs yet</p>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Graph">
+      <ng-template matTabContent>
+        <div class="push"></div>
+        <app-chart></app-chart>
+      </ng-template>
+    </mat-tab>
+</mat-tab-group>

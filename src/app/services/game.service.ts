@@ -112,6 +112,21 @@ export class GameService {
     this.showEndModal();
   }
 
+  public abort() {
+    this.modal.openConfirm('Are you sure you want to quit the game?').subscribe((result) => {
+      if (result) {
+        this.modal.showSpinner();
+        this.sounds.play('loser');
+
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.reload();
+
+        }, 3500);
+      }
+    });
+  }
+
   private showEndModal() {
     this.modal.openFinish(this.game).subscribe((description) => {
       this.game.description = description;
@@ -256,7 +271,7 @@ export class GameService {
   }
 
   public getChugs(): Chug[] {
-    let chugs = [];
+    const chugs = [];
 
     for (let i = 0; i < this.game.cards.length; i++) {
       if (this.game.cards[i].value === 14) {
