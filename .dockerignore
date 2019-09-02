@@ -1,0 +1,8 @@
+*
+!src
+!angular.json
+!package.json
+!LICENSE
+!tsconfig.json
+!yarn.lock
+!nginx.conf
