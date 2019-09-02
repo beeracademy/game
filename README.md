@@ -1,6 +1,7 @@
 # Academy Web Game
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
+![Docker Build Status](https://img.shields.io/docker/cloud/build/beeracademy/game?style=for-the-badge)
+![Docker Pulls](https://img.shields.io/docker/pulls/beeracademy/game?style=for-the-badge)
 
 ## Development server
 
