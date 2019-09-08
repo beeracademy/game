@@ -10,6 +10,17 @@
     text-transform: uppercase;
   }
 
+  p, h5 {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  p {
+    margin-bottom: 18px;
+  }
+
   .row   {
     display: flex;
     justify-content: space-between;

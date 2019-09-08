@@ -3,6 +3,9 @@ import { GameService } from 'src/app/services/game.service';
 import { MatBottomSheet } from '@angular/material';
 import { StatsModalComponent } from '../stats-modal/stats-modal.component';
 import { SoundService } from 'src/app/services/sound.service';
+import { UsersService } from 'src/app/services/users.service';
+import { MetaService } from 'src/app/services/meta.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-mobile-controls',
@@ -11,9 +14,27 @@ import { SoundService } from 'src/app/services/sound.service';
 })
 export class MobileControlsComponent implements OnInit {
 
-  constructor(public gameService: GameService, public sounds: SoundService, private bottomSheet: MatBottomSheet) { }
+  public user: User;
+  public beers: number;
+  public sips: number;
+
+  constructor(public gameService: GameService, public sounds: SoundService, public meta: MetaService, private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
+    this.gameService.onCardDrawn.subscribe(() => {
+      this.update();
+    });
+
+    this.update();
+  }
+
+  public update() {
+    this.user = this.gameService.getActivePlayer();
+
+    const cards = this.gameService.getCardsForPlayer(this.user);
+
+    this.beers = this.meta.getBeers(cards);
+    this.sips = this.meta.getSipsLeftInBeer(cards);
   }
 
   public draw() {
@@ -24,5 +45,9 @@ export class MobileControlsComponent implements OnInit {
 
   public stats() {
     this.bottomSheet.open(StatsModalComponent);
+  }
+
+  public exit() {
+    window.location.reload();
   }
 }
