@@ -3,7 +3,6 @@ import { GameService } from 'src/app/services/game.service';
 import { MatBottomSheet } from '@angular/material';
 import { StatsModalComponent } from '../stats-modal/stats-modal.component';
 import { SoundService } from 'src/app/services/sound.service';
-import { UsersService } from 'src/app/services/users.service';
 import { MetaService } from 'src/app/services/meta.service';
 import { User } from 'src/app/models/user';
 
