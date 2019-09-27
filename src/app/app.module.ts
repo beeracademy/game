@@ -31,6 +31,8 @@ import { ChugsComponent } from './components/chugs/chugs.component';
 import { ChugsItemComponent } from './components/chugs-item/chugs-item.component';
 import { MobileControlsComponent } from './components/mobile-controls/mobile-controls.component';
 import { StatsModalComponent } from './components/stats-modal/stats-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { StatsModalComponent } from './components/stats-modal/stats-modal.compon
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {
