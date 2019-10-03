@@ -40,6 +40,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.onCardDrawn.subscribe(() => {
       this.lastKeyPressTimeStamp = (new Date()).getTime();
     });
+
+    document.querySelector('meta[name=theme-color]').setAttribute('content', '#ac181c');
   }
 
   ngOnDestroy(): void {
