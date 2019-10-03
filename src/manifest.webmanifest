@@ -3,6 +3,7 @@
   "short_name": "Academy",
   "theme_color": "#fff",
   "background_color": "#fff",
+  "orientation": "portrait",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
