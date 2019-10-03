@@ -14,3 +14,11 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(() => {
     navigator.serviceWorker.register('/ngsw-worker.js');
   }
 }).catch(err => console.log(err));
+
+window.addEventListener('load', () => {
+  window.history.pushState({}, '');
+});
+
+window.addEventListener('popstate', () => {
+  window.history.pushState({}, '');
+});
