@@ -6,3 +6,4 @@
 !tsconfig.json
 !yarn.lock
 !nginx.conf
+!ngsw-config.json
