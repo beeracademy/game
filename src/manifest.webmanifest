@@ -1,8 +1,8 @@
 {
   "name": "Academy",
   "short_name": "Academy",
-  "theme_color": "#bd2130",
-  "background_color": "#fafafa",
+  "theme_color": "#fff",
+  "background_color": "#fff",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

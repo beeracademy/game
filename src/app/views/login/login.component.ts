@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    document.querySelector('meta[name=theme-color]').setAttribute('content', '#fff');
     localStorage.clear();
   }
 }
