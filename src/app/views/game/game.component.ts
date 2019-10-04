@@ -24,15 +24,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
   constructor(private gameService: GameService, private sound: SoundService, private cardsService: CardsService, private flashService: FlashService) {
     this.lastKeyPressTimeStamp = (new Date()).getTime();
-
-    // Change tab color to red
-    document.querySelector('meta[name=theme-color]').setAttribute('content', '#ac181c');
-
-    // Disable back button
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
   }
 
   ngOnInit() {
@@ -49,6 +40,15 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.onCardDrawn.subscribe(() => {
       this.lastKeyPressTimeStamp = (new Date()).getTime();
     });
+
+    // Change tab color to red
+    document.querySelector('meta[name=theme-color]').setAttribute('content', '#ac181c');
+
+    // Disable back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
   }
 
   ngOnDestroy(): void {
