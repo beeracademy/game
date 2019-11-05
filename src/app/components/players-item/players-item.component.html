@@ -1,4 +1,5 @@
 
+<div *ngFor="let i of meta.getBeersArray(cards)" [style.background-color]="user?.color" class="beer-dot"></div>
 <mat-card [style.background-color]="user?.color" [ngClass]="isActive() ? 'active' : ''">
   <div class="crown" *ngIf="isLeading" [@crownAnimation]>
     <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="20" height="20" id="svg2" class="mhide">
