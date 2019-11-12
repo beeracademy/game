@@ -11,14 +11,26 @@
   }
 
   .active {
-    margin-top: 0px;
+    margin-top: 0px !important;
+  }
+
+  .beer-dots {
+    margin-top: 10px;
+    display: flex;
+    height: 30px;
+    flex-grow: 1;
+    flex-direction: row-reverse;
+    transition: margin 200ms;
+  }
+
+  .beer-dot {
+    display: block;
+    width: 10px;
+    height: 30px;
+    margin-left: 5px;
   }
 
   mat-card {
-    margin-top: 10px;
-
-    transition: margin 200ms;
-
     flex-grow: 1;
     display: flex;
     flex-direction: column;

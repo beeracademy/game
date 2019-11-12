@@ -32,6 +32,10 @@ export class MetaService {
     return Math.floor(this.getSips(cards) / 14);
   }
 
+  public getBeersArray(cards: Card[]): number[] {
+    return new Array(this.getBeers(cards));
+  }
+
   public getSips(cards: Card[]): number {
     let res = 0;
 
