@@ -1,22 +1,20 @@
-version: "3"
+version: "3.7"
 
 services:
   app:
     image: beeracademy/game
     restart: always
     networks:
-      - web
+      - traefik
     expose:
-      - "80"
+      - 80
     labels:
-      - "traefik.enable=true"
-      - "traefik.backend=game.academy.beer"
-      - "traefik.frontend.rule=Host:game.academy.beer"
-      - "traefik.port=80"
-      - "traefik.docker.network=web"
-      - "traefik.domain=game.academy.beer"
+      - traefik.enable=true
+      - traefik.http.routers.game-academy-beer.rule=Host(`game.academy.beer`)
+      - traefik.http.routers.game-academy-beer.tls.certResolver=le
+      - traefik.http.services.game-academy-beer.loadbalancer.server.port=80
     container_name: game.academy.beer
 
 networks:
-  web:
+  traefik:
     external: true
