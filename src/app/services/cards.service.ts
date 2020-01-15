@@ -94,7 +94,7 @@ export class CardsService {
       case 'A':
         return '☘';
       case 'I':
-        return '☘';
+        return '🟊';
       default:
         return '';
     }
