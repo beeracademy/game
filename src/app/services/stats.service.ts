@@ -12,6 +12,10 @@ export class StatsService {
   public GetUserStats(userId: number) {
     return this.http.get<UserStats[]>(`${environment.url}/api/stats/${userId}/`);
   }
+
+  public GetRankedCards() {
+    return this.http.get<any>(`${environment.url}/api/ranked_cards/`);
+  }
 }
 
 export interface UserStats {
