@@ -13,7 +13,7 @@ import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Chug } from '../models/chug';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { StatsModalComponent } from '../stats-modal/stats-modal.component';
 import { SoundService } from 'src/app/services/sound.service';
 import { MetaService } from 'src/app/services/meta.service';

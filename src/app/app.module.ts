@@ -9,7 +9,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { LoginComponent } from './views/login/login.component';
-import { MatInputModule, MatBottomSheetModule } from '@angular/material';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatInputModule } from '@angular/material/input';
 import { LoginModalItemComponent } from './components/login-modal-item/login-modal-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
@@ -33,6 +34,7 @@ import { MobileControlsComponent } from './components/mobile-controls/mobile-con
 import { StatsModalComponent } from './components/stats-modal/stats-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PlayerItemBottleComponent } from './components/player-item-bottle/player-item-bottle.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { environment } from '../environments/environment';
     ChugsComponent,
     ChugsItemComponent,
     MobileControlsComponent,
-    StatsModalComponent
+    StatsModalComponent,
+    PlayerItemBottleComponent
   ],
   imports: [
     BrowserModule,

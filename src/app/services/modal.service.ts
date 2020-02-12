@@ -1,5 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmModalComponent } from '../components/confirm-modal/confirm-modal.component';
 import { User } from '../models/user';
 import { ChugModalComponent } from '../components/chug-modal/chug-modal.component';

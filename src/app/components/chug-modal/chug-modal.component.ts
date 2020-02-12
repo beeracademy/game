@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, Inject, OnDestroy, Injector} from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { UsersService } from '../../services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { User } from 'src/app/models/user';
