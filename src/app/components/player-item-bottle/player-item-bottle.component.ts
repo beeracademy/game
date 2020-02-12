@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { trigger, transition, style, animate, useAnimation } from '@angular/animations';
+import { trigger, transition, useAnimation } from '@angular/animations';
 import { bounce } from 'ng-animate';
-
 
 @Component({
   selector: 'app-player-item-bottle',

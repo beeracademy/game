@@ -4,8 +4,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UsersService } from '../../services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { User } from 'src/app/models/user';
-import { ModalService } from 'src/app/services/modal.service';
 import { FlashService } from 'src/app/services/flash.service';
+import { StatsService , UserStats} from 'src/app/services/stats.service';
 
 @Component({
   selector: 'app-chug-modal',
@@ -22,21 +22,37 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   private startTime: number;
   private intervalRef: any;
+  private bestChug: number;
+  private bestChugSeason: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public users: UsersService,
     private dialogRef: MatDialogRef<ChugModalComponent>,
     private sounds: SoundService,
+    private statsService: StatsService,
     private flashService: FlashService) {
       this.user = data.user;
       this.chugs = data.chugs;
     }
 
   ngOnInit() {
+    this.statsService.GetUserStats(this.user.id).subscribe(res => {
+      if (res.length > 0) {
+        for (let i = 0; i < res.length; i++) {
+          const t = res[i].fastest_chug_duration_ms;
+          if (!this.bestChug || t < this.bestChug) {
+            this.bestChug = t;
+            this.bestChugSeason = res[i].season_number;
+          }
+        }
+      }
+    });
+
     if ((window as any).cold) {
       return;
     }
+
 
     switch (this.chugs) {
       case 1:
