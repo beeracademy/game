@@ -5,10 +5,6 @@ export class Card {
     public drawn_datetime?: string,
     public chug_duration_ms?: number
   ) {}
-
-  get image(): string {
-    return 'assets/' + this.suit[0] + '-' + this.value;
-  }
 }
 
 export const suits = ['S', 'C', 'H', 'D', 'A', 'I'];

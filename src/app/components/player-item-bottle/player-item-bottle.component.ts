@@ -5,7 +5,7 @@ import { bounce } from 'ng-animate';
 @Component({
   selector: 'app-player-item-bottle',
   templateUrl: './player-item-bottle.component.html',
-  styleUrls: ['./player-item-bottle.component.css'],
+  styleUrls: ['./player-item-bottle.component.scss'],
   animations: [
     trigger(
       'EnterAnimation',

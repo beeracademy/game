@@ -35,6 +35,7 @@ import { StatsModalComponent } from './components/stats-modal/stats-modal.compon
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PlayerItemBottleComponent } from './components/player-item-bottle/player-item-bottle.component';
+import { CardFlashModalComponent } from './components/card-flash-modal/card-flash-modal.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { PlayerItemBottleComponent } from './components/player-item-bottle/playe
     ChugsItemComponent,
     MobileControlsComponent,
     StatsModalComponent,
-    PlayerItemBottleComponent
+    PlayerItemBottleComponent,
+    CardFlashModalComponent
   ],
   imports: [
     BrowserModule,

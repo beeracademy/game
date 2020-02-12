@@ -20,7 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class GameService {
 
-  @Output() onCardDrawn: EventEmitter<any> = new EventEmitter();
+  @Output() onCardDrawn: EventEmitter<Card> = new EventEmitter();
 
   public game: Game =  new Game();
   public deck: Card[] = [];
@@ -76,7 +76,7 @@ export class GameService {
 
     this.game.cards.push(draw);
 
-    this.onCardDrawn.emit();
+    this.onCardDrawn.emit(draw);
     this.postUpdate().subscribe({ error: e => {
       // NOOP
     }});

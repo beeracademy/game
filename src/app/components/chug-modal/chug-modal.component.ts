@@ -20,10 +20,11 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   public user: User;
   public chugs: number;
 
+  public bestChug: number;
+  public bestChugSeason: number;
+
   private startTime: number;
   private intervalRef: any;
-  private bestChug: number;
-  private bestChugSeason: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

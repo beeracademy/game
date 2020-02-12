@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, SimpleChange } from '@angular/core';
-import { ModalService } from 'src/app/services/modal.service';
+import { Component, OnInit } from '@angular/core';
 import { fadeOut, rubberBand } from 'ng-animate';
 import { useAnimation, transition, trigger } from '@angular/animations';
 import { FlashService } from 'src/app/services/flash.service';
