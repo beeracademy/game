@@ -4,6 +4,7 @@ import { SoundService } from 'src/app/services/sound.service';
 import { CardsService } from 'src/app/services/cards.service';
 import { FlashService } from 'src/app/services/flash.service';
 import { environment } from 'src/environments/environment';
+import { Card } from 'src/app/models/card';
 
 @Component({
   selector: 'app-game',
@@ -37,7 +38,11 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     }, 1000);
 
-    this.gameService.onCardDrawn.subscribe(() => {
+    this.gameService.onCardDrawn.subscribe((card: Card) => {
+      if (card.value !== 14 && this.gameService.getNumberOfCardsLeft() !== 0) {
+        this.flashService.flashCard(card);
+      }
+
       this.lastKeyPressTimeStamp = (new Date()).getTime();
     });
 

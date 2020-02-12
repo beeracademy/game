@@ -13,14 +13,14 @@ import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Chug } from '../models/chug';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  @Output() onCardDrawn: EventEmitter<any> = new EventEmitter();
+  @Output() onCardDrawn: EventEmitter<Card> = new EventEmitter();
 
   public game: Game =  new Game();
   public deck: Card[] = [];
@@ -76,7 +76,7 @@ export class GameService {
 
     this.game.cards.push(draw);
 
-    this.onCardDrawn.emit();
+    this.onCardDrawn.emit(draw);
     this.postUpdate().subscribe({ error: e => {
       // NOOP
     }});

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { UsersService } from 'src/app/services/users.service';
 import { ModalService } from 'src/app/services/modal.service';
