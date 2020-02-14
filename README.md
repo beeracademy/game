@@ -1,7 +1,6 @@
 # Academy Web Game
 
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/beeracademy/game?style=for-the-badge)](https://hub.docker.com/r/beeracademy/game)
-[![Docker Pulls](https://img.shields.io/docker/pulls/beeracademy/game?style=for-the-badge)](https://hub.docker.com/r/beeracademy/game)
+![Build and Deploy](https://github.com/beeracademy/game/workflows/Build%20and%20Deploy/badge.svg?branch=master)
 
 ## Development server
 
