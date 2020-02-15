@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class GameService {
 
   @Output() onCardDrawn: EventEmitter<Card> = new EventEmitter();
+  @Output() onChugDone: EventEmitter<Card> = new EventEmitter();
 
   public game: Game =  new Game();
   public deck: Card[] = [];
@@ -97,6 +98,8 @@ export class GameService {
       this.game.cards[this.game.cards.length - 1].chug_duration_ms = duration;
 
       this.postUpdate().subscribe(() => {});
+
+      this.onChugDone.emit();
 
       // Check if the game is done
       if (this.getNumberOfCardsLeft() <= 0) {

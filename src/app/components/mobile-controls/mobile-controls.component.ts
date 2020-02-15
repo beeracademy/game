@@ -24,6 +24,10 @@ export class MobileControlsComponent implements OnInit {
       this.update();
     });
 
+    this.gameService.onChugDone.subscribe(() => {
+      this.update();
+    });
+
     this.update();
   }
 
