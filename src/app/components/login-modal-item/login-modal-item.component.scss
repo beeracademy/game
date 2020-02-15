@@ -20,6 +20,25 @@
     background-image: url("../../../assets/user.jpg");
     background-position: top;
     background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      color: #c2282d;
+      opacity: 0;
+    }
+
+    &:hover:not(.locked) {
+      background: #fff !important;
+      cursor: pointer;
+    }
+
+    &:hover:not(.locked) i {
+      opacity: 1;
+    }
+
   }
 }
 
@@ -31,6 +50,7 @@
 
     .login-image {
       display: none;
+
     }
 
     mat-form-field {

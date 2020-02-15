@@ -58,6 +58,11 @@ export class LoginModalComponent implements OnInit {
     this.updateIsReady();
   }
 
+  public notReady(index: number) {
+    this.readyPlayers[index] = false;
+    this.updateIsReady();
+  }
+
   public updateIsReady() {
     for (let i = 0; i < this.numberOfPlayers; i++) {
       if (!this.readyPlayers[i]) {

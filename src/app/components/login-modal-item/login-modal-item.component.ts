@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user';
@@ -13,8 +13,12 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class LoginModalItemComponent implements OnInit {
 
+  @ViewChild('password') passwordField: ElementRef;
+
   @Input() index: number;
+  @Input() locked: number;
   @Output() ready = new EventEmitter<void>();
+  @Output() notReady = new EventEmitter<void>();
 
   public indicatorColor: string;
   public disabled: boolean;
@@ -46,7 +50,6 @@ export class LoginModalItemComponent implements OnInit {
 
     this.usersService.login(username, password).subscribe((user: User) => {
         this.indicatorColor = this.indicatorSuccess;
-
         user.index = this.index;
 
         Object.assign(this.usersService.users[this.index], user);
@@ -79,6 +82,18 @@ export class LoginModalItemComponent implements OnInit {
 
       this.resetIndicator();
     });
+  }
+
+  public resetLogin() {
+    if (this.locked) {
+      return;
+    }
+
+    Object.assign(this.usersService.users[this.index], new User());
+    this.notReady.emit();
+    this.indicatorColor = '';
+    this.disabled = false;
+    this.passwordField.nativeElement.value = '';
   }
 
   public resetIndicator() {

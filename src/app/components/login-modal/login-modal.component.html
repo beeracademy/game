@@ -11,7 +11,7 @@
 
   <mat-divider></mat-divider>
 
-  <app-login-modal-item *ngFor="let u of usersService.users; let i = index;" [index]="i" (ready)="ready(i)">
+  <app-login-modal-item *ngFor="let u of usersService.users; let i = index;" [index]="i" [locked]="shuffleDone || isShuffling" (ready)="ready(i)" (notReady)="notReady(i)">
   </app-login-modal-item>
 
   <mat-divider></mat-divider>
