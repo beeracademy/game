@@ -28,10 +28,13 @@ export class CardFlashModalComponent implements OnInit {
 
   ngOnInit() {
     this.flashService.onFlashCard.subscribe((card) => {
+      if (!card) {
+        this.clear();
+        return;
+      }
+
       if (this.timeout != null) {
-        this.show = false;
-        clearTimeout(this.timeout);
-        this.timeout = null;
+        this.clear();
       }
 
       this.cardURI =  'assets/cards/' + card.suit + '-' + card.value + '.png';
@@ -41,5 +44,11 @@ export class CardFlashModalComponent implements OnInit {
         this.show = false;
       }, 1500);
     });
+  }
+
+  clear() {
+    this.show = false;
+    clearTimeout(this.timeout);
+    this.timeout = null;
   }
 }

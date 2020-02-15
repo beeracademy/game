@@ -119,6 +119,10 @@ export class CardsService {
     }
   }
 
+  public reset() {
+    this.dickMode = false;
+  }
+
   public save() {
     localStorage.setItem('academy:dickMode', JSON.stringify(this.dickMode));
   }

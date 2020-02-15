@@ -32,6 +32,36 @@ export class LoginModalComponent implements OnInit {
 
   ngOnInit() {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
+
+    const elms = document.getElementsByTagName('input');
+
+    document.body.addEventListener('keydown', (e: any) => {
+        if (e.target.tagName !== 'INPUT') {
+          return;
+        }
+
+        if (e.keyCode !== 13) {
+          return;
+        }
+
+        const a = Array.from(elms);
+        const i = a.indexOf(e.target);
+
+        if (i === a.length) {
+          return;
+        }
+
+        const next = a[i + 1];
+
+        if (next.type !== 'text' && next.type !== 'password') {
+          e.target.blur();
+          return;
+        }
+
+        next.focus();
+
+        e.preventDefault();
+    });
   }
 
   public sliderChange(val) {

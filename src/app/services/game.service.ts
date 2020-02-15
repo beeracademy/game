@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 import { Chug } from '../models/chug';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FlashService } from './flash.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,7 @@ export class GameService {
     private modal: ModalService,
     private usersService: UsersService,
     private cardsService: CardsService,
+    private flashService: FlashService,
     private router: Router,
     private dialog: MatDialog) {
       this.resume();
@@ -94,6 +96,8 @@ export class GameService {
     const activePlayer = this.getActivePlayer();
     const playerAces = this.getAcesForPlayer(activePlayer);
 
+    this.flashService.flashCard(null);
+
     this.modal.openChug(activePlayer, playerAces.length).subscribe((duration) => {
       this.game.cards[this.game.cards.length - 1].chug_duration_ms = duration;
 
@@ -118,16 +122,28 @@ export class GameService {
   public abort() {
     this.modal.openConfirm('Are you sure you want to quit the game?').subscribe((result) => {
       if (result) {
-        this.modal.showSpinner();
+        const spinner = this.modal.showSpinner();
         this.sounds.play('loser');
 
         setTimeout(() => {
-          localStorage.clear();
-          window.location.reload();
-
+          this.resetAndGoToLogin();
+          spinner.close();
         }, 3500);
       }
     });
+  }
+
+  public resetAndGoToLogin() {
+    localStorage.clear();
+    this.reset();
+    this.usersService.reset();
+    this.router.navigate(['login']);
+  }
+
+  public reset() {
+    this.game = new Game();
+    this.deck = [];
+    this.offline = false;
   }
 
   private showEndModal() {

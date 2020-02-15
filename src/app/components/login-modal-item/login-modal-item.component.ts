@@ -38,6 +38,7 @@ export class LoginModalItemComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.resetIndicator();
   }
 
   public login(username: string, password: string) {
@@ -67,7 +68,7 @@ export class LoginModalItemComponent implements OnInit {
           });
         } else {
           this.resetIndicator();
-
+          this.passwordField.nativeElement.value = '';
           this.modalService.showSnack(this.parseFieldErrors(err.error));
         }
       }
@@ -91,7 +92,7 @@ export class LoginModalItemComponent implements OnInit {
 
     Object.assign(this.usersService.users[this.index], new User());
     this.notReady.emit();
-    this.indicatorColor = '';
+    this.resetIndicator();
     this.disabled = false;
     this.passwordField.nativeElement.value = '';
   }
