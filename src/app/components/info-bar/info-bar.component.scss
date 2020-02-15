@@ -32,15 +32,18 @@
     font-size: 24px;
     flex: 1;
 
+    &.flex-end {
+      justify-content: flex-end;
+    }
+
     &.controls {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
 
       div {
         display: flex;
         align-items: center;
-        padding-right: 12px;
+        padding: 0px 12px;
         color: #fff;
         opacity: 0.5;
         cursor: pointer;

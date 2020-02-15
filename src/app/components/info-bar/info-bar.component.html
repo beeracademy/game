@@ -1,5 +1,9 @@
 <mat-card>
-  <div class="item mhide"></div>
+  <div class="item controls">
+    <div (click)="replay()">
+      Play again <i class="material-icons">replay</i>
+    </div>
+  </div>
   <div class="item mhide"></div>
   <div class="item">Round {{ gameService.getRound() }}</div>
   <div class="item">
@@ -9,7 +13,7 @@
   </div>
   <div class="item">{{ gameService.getNumberOfCardsLeft() }} card{{ gameService.getNumberOfCardsLeft() === 1 ? '' : 's' }} left</div>
   <div class="item mhide"></div>
-  <div class="item controls">
+  <div class="item controls flex-end">
     <div (click)="abort()" *ngIf="gameService.getNumberOfCardsLeft() !== 0">
       Abort <i class="material-icons">exit_to_app</i>
     </div>

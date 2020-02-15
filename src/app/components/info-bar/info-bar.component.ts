@@ -17,7 +17,7 @@ export class InfoBarComponent implements OnInit, OnDestroy {
 
   private intervalRef;
 
-  constructor(public gameService: GameService, public modal: ModalService, private sounds: SoundService) {
+  constructor(public gameService: GameService, public modal: ModalService, private sounds: SoundService, private router: Router) {
   }
 
   ngOnInit() {
@@ -45,5 +45,10 @@ export class InfoBarComponent implements OnInit, OnDestroy {
 
   public goToGame() {
     window.location.href = environment.url + '/games/' + this.gameService.game.id + '/';
+  }
+
+  public replay() {
+    this.router.navigate(['login']);
+    this.sounds.play('cheering');
   }
 }
