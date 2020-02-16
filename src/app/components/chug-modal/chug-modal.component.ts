@@ -80,6 +80,10 @@ export class ChugModalComponent implements OnInit, OnDestroy {
         this.flashService.flashText('MONSTER KILL!');
         this.sounds.play('monsterkill');
         break;
+      case 9001:
+        this.flashService.flashText('EXTRA CHUG!');
+        this.sounds.play('wicked');
+        break;
       default:
         break;
     }

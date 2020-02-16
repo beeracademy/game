@@ -86,7 +86,15 @@ html, body, app-root {
   flex-direction: column;
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.flip {
+  transform: rotate(180deg);
+}
+
+.black {
+  filter: grayscale(100%);
+}
 
 @media only screen and (max-width: 600px) {
   .mhide {
