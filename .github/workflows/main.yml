@@ -8,11 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      
+
     - name: Build image
       run: docker build -t beeracademy/game .
 
@@ -28,4 +28,4 @@ jobs:
       run: |
         curl -X POST "$WEBHOOK_URL"
       env:
-        WEBHOOK_URLS: ${{ secrets.WEBHOOK_URL }}
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
