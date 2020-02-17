@@ -9,19 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: beeracademy/game
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Call webhook
-      uses: joelwmale/webhook-action@master
+    - name: Build image
+      run: docker build -t beeracademy/web .
+
+    - name: Publish image to Docker Hub
+      run: |
+        echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+        docker push beeracademy/web
       env:
-        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        data: ""
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Deploy image to production
+      run: |
+        curl -X POST "$WEBHOOK_URL"
+      env:
+        WEBHOOK_URLS: ${{ secrets.WEBHOOK_URL }}
