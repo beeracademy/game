@@ -40,8 +40,12 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.statsService.GetUserStats(this.user.id).subscribe(res => {
       if (res.length > 0) {
-        for (let i = 0; i < res.length; i++) {
+        for (let i = 1; i < res.length; i++) {
           const t = res[i].fastest_chug_duration_ms;
+          if (t === null){
+            continue;
+          }
+
           if (!this.bestChug || t < this.bestChug) {
             this.bestChug = t;
             this.bestChugSeason = res[i].season_number;
