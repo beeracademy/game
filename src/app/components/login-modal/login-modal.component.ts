@@ -33,6 +33,8 @@ export class LoginModalComponent implements OnInit {
   ngOnInit() {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
 
+    this.soundService.playLoop("homosangen_fuve");
+
     const elms = document.getElementsByTagName('input');
 
     document.body.addEventListener('keydown', (e: any) => {
@@ -75,6 +77,7 @@ export class LoginModalComponent implements OnInit {
     const ref = this.modal.showSpinner();
 
     this.gameService.start().subscribe((game) => {
+      this.soundService.stopLoop("homosangen_fuve");
       this.usersService.save();
       ref.close();
     }, (err: HttpErrorResponse) => {
