@@ -26,6 +26,8 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   private startTime: number;
   private intervalRef: any;
 
+  private chugMusic: HTMLAudioElement;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public users: UsersService,
@@ -46,7 +48,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
           }
 
           const t = res[i].fastest_chug_duration_ms;
-          if (!t){
+          if (!t) {
             continue;
           }
 
@@ -114,6 +116,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   start() {
     this.isRunning = true;
     this.startTime = (new Date()).getTime();
+    this.chugMusic = this.sounds.play('bubbi_fuve');
 
     this.intervalRef = setInterval(_ => {
       this.time = ((new Date()).getTime() - this.startTime);
@@ -123,6 +126,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   stop() {
     if (this.time > 200) {
       clearInterval(this.intervalRef);
+      this.chugMusic.pause();
       this.isRunning = false;
       this.playFinishSound();
       this.dialogRef.close(this.time);
