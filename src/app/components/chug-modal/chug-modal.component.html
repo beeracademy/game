@@ -7,7 +7,7 @@
 
 <p class="best" *ngIf="bestChug">
   your best <br>
-  {{ bestChug }}ms from season {{ bestChugSeason + 1}}
+  {{ bestChug }}ms from season {{ bestChugSeason }}
 </p>
 
 <button mat-raised-button color="primary" (click)="isRunning ? stop() : start()" tabIndex="-1">{{isRunning ? 'Stop' : 'Start'}}</button>
