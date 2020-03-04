@@ -1,6 +1,6 @@
 # Academy Web Game
 
-![Build and Deploy](https://github.com/beeracademy/game/workflows/Build%20and%20Deploy/badge.svg?branch=master)
+[![Build and Deploy](https://github.com/beeracademy/game/workflows/Build%20and%20Deploy/badge.svg?branch=master)](https://github.com/beeracademy/game/actions)
 
 ## Development server
 
