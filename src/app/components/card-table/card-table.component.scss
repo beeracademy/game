@@ -20,6 +20,8 @@
 
   th {
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   tr {
