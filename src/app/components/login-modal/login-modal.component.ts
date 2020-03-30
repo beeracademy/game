@@ -18,6 +18,7 @@ export class LoginModalComponent implements OnInit {
 
   public shuffleDone = false;
   public isShuffling = false;
+  public isMuted = false;
   private shuffleTimeTotal = 3000;
   private shuffleEvery = 200;
 
@@ -33,7 +34,7 @@ export class LoginModalComponent implements OnInit {
   ngOnInit() {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
 
-    this.soundService.playLoop("homosangen_fuve");
+    this.soundService.playLoop('homosangen_fuve');
 
     const elms = document.getElementsByTagName('input');
 
@@ -77,7 +78,7 @@ export class LoginModalComponent implements OnInit {
     const ref = this.modal.showSpinner();
 
     this.gameService.start().subscribe((game) => {
-      this.soundService.stopLoop("homosangen_fuve");
+      this.soundService.stopLoop('homosangen_fuve');
       this.usersService.save();
       ref.close();
     }, (err: HttpErrorResponse) => {
@@ -122,5 +123,10 @@ export class LoginModalComponent implements OnInit {
       this.isShuffling = false;
       this.shuffleDone = true;
     }, this.shuffleTimeTotal);
+  }
+
+  public toggleMute() {
+    this.soundService.toggleMute('homosangen_fuve');
+    this.isMuted = !this.isMuted;
   }
 }

@@ -16,6 +16,15 @@
     text-transform: uppercase;
   }
 
+  #muteButton {
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    width: initial;
+    padding-right: inherit;
+    padding-left: inherit;
+  }
+
   .center {
     text-align: center;
 
@@ -38,6 +47,10 @@
       border-radius: 0px;
       flex-grow: 1;
       overflow-x: auto;
+    }
+
+    #muteButton {
+      display: none;
     }
   }
 }

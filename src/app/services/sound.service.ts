@@ -50,4 +50,8 @@ export class SoundService {
 
     return audio;
   }
+
+  public toggleMute(soundName: string) {
+    this.loops[soundName].muted = !this.loops[soundName].muted;
+  }
 }

@@ -26,4 +26,13 @@
   <button mat-raised-button color="primary" (click)="shuffle()" [disabled]="!isReady || isShuffling || shuffleDone" #startButton style="margin-bottom: 5px;">Shuffle Players</button>
 
   <button mat-raised-button color="primary" (click)="startGame()" [disabled]="!isReady || isShuffling" #startButton>Start Game</button>
+
+  <button id="muteButton" mat-raised-button color="primary" (click)="toggleMute()">
+    <ng-container *ngIf="!this.isMuted; else muted">
+      Mute lobby
+    </ng-container>
+    <ng-template #muted>
+      Unmute lobby
+    </ng-template>
+  </button>
 </mat-card>
