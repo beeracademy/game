@@ -9,7 +9,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.game-academy-beer.rule=Host(`game.academy.beer`)
-        - traefik.http.routers.game-academy-beer.tls.certResolver=le
         - traefik.http.services.game-academy-beer.loadbalancer.server.port=80
 
 networks:
