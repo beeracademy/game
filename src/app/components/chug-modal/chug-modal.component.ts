@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UsersService } from '../../services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { User } from 'src/app/models/user';
+import { Game } from 'src/app/models/game';
 import { FlashService } from 'src/app/services/flash.service';
 import { StatsService , UserStats} from 'src/app/services/stats.service';
 
@@ -17,13 +18,14 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   public time = 0;
   public isRunning = false;
 
+  public game: Game;
   public user: User;
   public chugs: number;
 
   public bestChug: number;
   public bestChugSeason: number;
 
-  private startTime: number;
+  private start_delta_ms: number;
   private intervalRef: any;
 
   private chugMusic: HTMLAudioElement;
@@ -35,6 +37,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     private sounds: SoundService,
     private statsService: StatsService,
     private flashService: FlashService) {
+      this.game = data.game;
       this.user = data.user;
       this.chugs = data.chugs;
     }
@@ -115,11 +118,11 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   start() {
     this.isRunning = true;
-    this.startTime = (new Date()).getTime();
+    this.start_delta_ms = this.game.getStartDeltaMs();
     this.chugMusic = this.sounds.play('bubbi_fuve');
 
     this.intervalRef = setInterval(_ => {
-      this.time = ((new Date()).getTime() - this.startTime);
+      this.time = this.game.getStartDeltaMs() - this.start_delta_ms;
     }, 1);
   }
 
@@ -129,7 +132,10 @@ export class ChugModalComponent implements OnInit, OnDestroy {
       this.chugMusic.pause();
       this.isRunning = false;
       this.playFinishSound();
-      this.dialogRef.close(this.time);
+      this.dialogRef.close({
+        start_ms: this.start_delta_ms,
+        end_ms: this.game.getStartDeltaMs()
+      });
     }
   }
 

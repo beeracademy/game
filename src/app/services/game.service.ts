@@ -75,7 +75,7 @@ export class GameService {
     // Draw a card from the deck
     const draw = this.deck[this.game.cards.length];
 
-    draw.drawn_datetime = (new Date()).toISOString();
+    draw.start_delta_ms = this.game.getStartDeltaMs();
 
     this.game.cards.push(draw);
 
@@ -98,8 +98,10 @@ export class GameService {
 
     this.flashService.flashCard(null);
 
-    this.modal.openChug(activePlayer, playerAces.length).subscribe((duration) => {
-      this.game.cards[this.game.cards.length - 1].chug_duration_ms = duration;
+    this.modal.openChug(this.game, activePlayer, playerAces.length).subscribe(data => {
+      const c = this.getLatestCard();
+      c.chug_start_start_delta_ms = data.start_ms;
+      c.chug_end_start_delta_ms = data.end_ms;
 
       this.postUpdate().subscribe(() => {});
 
@@ -113,7 +115,7 @@ export class GameService {
   }
 
   private endGame() {
-    this.game.end_datetime = (new Date()).toISOString();
+    this.game.has_ended = true;
     this.save();
 
     this.showEndModal();
@@ -207,7 +209,7 @@ export class GameService {
 
     // Check if chug modal should be open
     const latestCard = this.getLatestCard();
-    if (this.game.cards.length > 0 && latestCard.value === 14 && !latestCard.chug_duration_ms) {
+    if (this.game.cards.length > 0 && latestCard.value === 14 && !latestCard.chug_start_start_delta_ms) {
       this.showChugModal();
       return;
     }
@@ -219,7 +221,7 @@ export class GameService {
     }
 
     // Check if retry modal should be open
-    if (this.getNumberOfCardsLeft() <= 0 && this.game.end_datetime && this.game.description) {
+    if (this.getNumberOfCardsLeft() <= 0 && this.game.has_ended && this.game.description) {
       this.showRetryModal();
     }
   }
@@ -261,9 +263,13 @@ export class GameService {
   }
 
   public getGameDuration(): number {
-    if (this.game.end_datetime) {
-      return (new Date(this.game.end_datetime)).getTime() - (new Date(this.game.start_datetime)).getTime();
-
+    if (this.game.has_ended) {
+      const c = this.getLatestCard();
+      if (c.chug_end_start_delta_ms) {
+        return c.chug_end_start_delta_ms;
+      } else {
+        return c.start_delta_ms;
+      }
     } else {
       return Date.now() - (new Date(this.game.start_datetime)).getTime();
     }
@@ -272,12 +278,11 @@ export class GameService {
   public getRoundDuration(): number {
     // Game is done
     if (this.getNumberOfCardsLeft() === 0) {
-      return (new Date(this.game.end_datetime).getTime()) - (new Date(this.getLatestCard().drawn_datetime)).getTime();
+      return 0;
     } else {
       const latestCard = this.getLatestCard();
-      const drawn_datetime = latestCard ? latestCard.drawn_datetime : this.game.start_datetime;
-
-      return Date.now() - (new Date(drawn_datetime)).getTime();
+      const latest_start_delta_ms = latestCard ? latestCard.start_delta_ms : 0;
+      return this.game.getStartDeltaMs() - latest_start_delta_ms;
     }
   }
 
@@ -315,7 +320,7 @@ export class GameService {
       return false;
     } else {
       const latestCard = this.game.cards[this.game.cards.length - 1];
-      return latestCard.value === 14 && !latestCard.chug_duration_ms;
+      return latestCard.value === 14 && !latestCard.chug_end_start_delta_ms;
     }
   }
 

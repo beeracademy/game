@@ -5,6 +5,7 @@ import { CardsService } from 'src/app/services/cards.service';
 import { FlashService } from 'src/app/services/flash.service';
 import { environment } from 'src/environments/environment';
 import { Card } from 'src/app/models/card';
+import { Game } from 'src/app/models/game';
 import { ModalService } from 'src/app/services/modal.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -23,6 +24,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private disableDraw = false;
 
+  private game: Game;
+
   constructor(
     private gameService: GameService,
     private sound: SoundService,
@@ -33,6 +36,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ) {
     this.lastKeyPressTimeStamp = new Date().getTime();
+    this.game = this.gameService.game;
   }
 
   ngOnInit() {
@@ -140,7 +144,7 @@ export class GameComponent implements OnInit, OnDestroy {
     const i = parseInt(cmd, 10);
     if (0 <= i && i < this.userService.users.length) {
       this.disableDraw = true;
-      this.modalService.openChug(this.userService.users[i], 9001).subscribe(() => {
+      this.modalService.openChug(this.game, this.userService.users[i], 9001).subscribe(() => {
         this.disableDraw = false;
       });
     }

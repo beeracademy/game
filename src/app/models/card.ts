@@ -2,9 +2,14 @@ export class Card {
   constructor(
     public value: number,
     public suit: string,
-    public drawn_datetime?: string,
-    public chug_duration_ms?: number
-  ) {}
+    public start_delta_ms?: number,
+    public chug_start_start_delta_ms?: number,
+    public chug_end_start_delta_ms?: number,
+ ) {}
+
+ public getChugDuration() {
+   return this.chug_end_start_delta_ms - this.chug_start_start_delta_ms;
+ }
 }
 
 export const suits = ['S', 'C', 'H', 'D', 'A', 'I'];

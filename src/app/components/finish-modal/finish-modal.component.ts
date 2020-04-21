@@ -20,7 +20,6 @@ export class FinishModalComponent implements OnInit {
     const game: Game = this.data.game;
 
     this.description = game.description;
-    this.duration = new Date(game.end_datetime).getTime() - new Date(game.start_datetime).getTime();
 
     if (!(window as any).cold) {
       this.sounds.play('cheering');

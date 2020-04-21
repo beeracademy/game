@@ -19,7 +19,7 @@ export class ChugsItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.duration = this.chug.card.chug_duration_ms;
+    this.duration = this.chug.card.getChugDuration();
     this.symbol = this.cardsService.getSymbol(this.chug.card);
     this.color = this.cardsService.getColor(this.chug.card);
     this.username = this.chug.user.username;
