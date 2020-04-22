@@ -41,12 +41,11 @@ export class ModalService {
     }).afterClosed();
   }
 
-  public openChug(gameService: GameService, game: Game, user: User, chugs: number) {
+  public openChug(gameService: GameService, user: User, chugs: number) {
     return this.dialog.open(ChugModalComponent, {
       disableClose: true,
       data: {
         gameService,
-        game,
         user,
         chugs
       }

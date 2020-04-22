@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CardsService } from 'src/app/services/cards.service';
 import { Chug } from 'src/app/models/chug';
-import { getChugDuration } from 'src/app/models/card';
 
 @Component({
   selector: 'app-chugs-item',
@@ -20,9 +19,10 @@ export class ChugsItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.duration = getChugDuration(this.chug.card);
-    this.symbol = this.cardsService.getSymbol(this.chug.card);
-    this.color = this.cardsService.getColor(this.chug.card);
+    const card = this.chug.card;
+    this.duration = card.chug_end_start_delta_ms - card.chug_start_start_delta_ms;
+    this.symbol = this.cardsService.getSymbol(card);
+    this.color = this.cardsService.getColor(card);
     this.username = this.chug.user.username;
   }
 }

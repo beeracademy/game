@@ -16,20 +16,3 @@ export class Game {
     public player_ids?: number[]
   ) {}
 }
-
-export function getStartDeltaMs(game: Game): number {
-  return Date.now() - (new Date(game.start_datetime)).getTime();
-}
-
-export function getDuration(game: Game): number {
-  if (game.has_ended) {
-    const c = game.cards[game.cards.length - 1];
-    if (c.chug_end_start_delta_ms) {
-      return c.chug_end_start_delta_ms;
-    } else {
-      return c.start_delta_ms;
-    }
-  } else {
-    return getDuration(game);
-  }
-}

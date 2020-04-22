@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Game, getStartDeltaMs } from '../models/game';
+import { Game } from '../models/game';
 import { SoundService } from './sound.service';
 import { Router } from '@angular/router';
 import { Card } from '../models/card';
@@ -75,7 +75,7 @@ export class GameService {
     // Draw a card from the deck
     const draw = this.deck[this.game.cards.length];
 
-    draw.start_delta_ms = getStartDeltaMs(this.game);
+    draw.start_delta_ms = this.getStartDeltaMs();
 
     this.game.cards.push(draw);
 
@@ -104,7 +104,7 @@ export class GameService {
 
     this.flashService.flashCard(null);
 
-    this.modal.openChug(this, this.game, activePlayer, playerAces.length).subscribe(end_start_delta_ms => {
+    this.modal.openChug(this, activePlayer, playerAces.length).subscribe(end_start_delta_ms => {
       const c = this.getLatestCard();
       c.chug_end_start_delta_ms = end_start_delta_ms;
 
@@ -267,6 +267,10 @@ export class GameService {
     return Math.min(Math.floor((this.game.cards.length / this.getNumberOfPlayers())) + 1, 13);
   }
 
+  public getStartDeltaMs(): number {
+    return Date.now() - (new Date(this.game.start_datetime)).getTime();
+  }
+
   public getGameDuration(): number {
     if (this.game.has_ended) {
       const c = this.getLatestCard();
@@ -276,7 +280,7 @@ export class GameService {
         return c.start_delta_ms;
       }
     } else {
-      return Date.now() - (new Date(this.game.start_datetime)).getTime();
+      return this.getStartDeltaMs();
     }
   }
 
@@ -287,7 +291,7 @@ export class GameService {
     } else {
       const latestCard = this.getLatestCard();
       const latest_start_delta_ms = latestCard ? latestCard.start_delta_ms : 0;
-      return getStartDeltaMs(this.game) - latest_start_delta_ms;
+      return this.getStartDeltaMs() - latest_start_delta_ms;
     }
   }
 
