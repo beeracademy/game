@@ -24,9 +24,10 @@ export class GameService {
   @Output() onCardDrawn: EventEmitter<Card> = new EventEmitter();
   @Output() onChugDone: EventEmitter<Card> = new EventEmitter();
 
-  public game: Game =  new Game();
+  public game: Game = new Game();
   public deck: Card[] = [];
 
+  public localStartTimestamp: number;
   public offline = false;
 
   constructor(
@@ -57,9 +58,13 @@ export class GameService {
 
     // Tell the server we are starting
     return this.postStart().pipe(map((game: Game) => {
+      this.localStartTimestamp = Date.now();
       this.game.id = game.id;
       this.game.start_datetime = game.start_datetime;
       this.game.token = game.token;
+
+      const timeOffset = this.localStartTimestamp - (new Date(game.start_datetime)).getTime();
+      console.log('Time difference between client and server (including latency):', timeOffset);
 
       this.save();
 
@@ -205,12 +210,14 @@ export class GameService {
   public save() {
     localStorage.setItem('academy:game', JSON.stringify(this.game));
     localStorage.setItem('academy:deck', JSON.stringify(this.deck));
+    localStorage.setItem('academy:localStartTimestamp', JSON.stringify(this.localStartTimestamp));
     localStorage.setItem('academy:offline', JSON.stringify(this.offline));
   }
 
   public resume() {
     this.game = JSON.parse(localStorage.getItem('academy:game')) || this.game;
     this.deck = JSON.parse(localStorage.getItem('academy:deck')) || this.deck;
+    this.localStartTimestamp = JSON.parse(localStorage.getItem('academy:localStartTimestamp')) || this.localStartTimestamp;
     this.offline = JSON.parse(localStorage.getItem('academy:offline')) || this.offline;
 
     // Check if chug modal should be open
@@ -269,7 +276,7 @@ export class GameService {
   }
 
   public getStartDeltaMs(): number {
-    return Date.now() - (new Date(this.game.start_datetime)).getTime();
+    return Date.now() - this.localStartTimestamp;
   }
 
   /*
