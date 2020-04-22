@@ -30,6 +30,6 @@ export function getDuration(game: Game): number {
       return c.start_delta_ms;
     }
   } else {
-    return Date.now() - (new Date(game.start_datetime)).getTime();
+    return getDuration(game);
   }
 }
