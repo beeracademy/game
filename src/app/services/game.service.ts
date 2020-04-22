@@ -275,7 +275,7 @@ export class GameService {
     }
   }
 
-  public getRoundDuration(): number {
+  public getTurnDuration(): number {
     // Game is done
     if (this.getNumberOfCardsLeft() === 0) {
       return 0;

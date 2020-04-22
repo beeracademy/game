@@ -36,7 +36,7 @@ export class InfoBarComponent implements OnInit, OnDestroy {
 
   private updateTime() {
       this.duration = this.gameService.getGameDuration();
-      this.roundDuration = this.gameService.getRoundDuration();
+      this.roundDuration = this.gameService.getTurnDuration();
   }
 
   public abort() {
