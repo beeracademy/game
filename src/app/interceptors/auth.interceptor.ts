@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.usersService.users.length > 0 && this.gameService.game.start_datetime) {
       request = request.clone({
         setHeaders: {
-          'Authorization':  'Token ' + this.gameService.game.token
+          'Authorization':  'GameToken ' + this.gameService.game.token
         }
       });
     }
