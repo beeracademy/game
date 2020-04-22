@@ -299,14 +299,22 @@ export class GameService {
     }
   }
 
+  public getCardEndTime(c: Card): number {
+    if (!c) return 0;
+    if (c.value === 14) {
+      return c.chug_end_start_delta_ms;
+    } else {
+      return c.start_delta_ms;
+    }
+  }
+
   public getTurnDuration(): number {
-    // Game is done
     if (this.isGameDone()) {
       return 0;
     } else {
-      const latestCard = this.getLatestCard();
-      const latest_start_delta_ms = latestCard ? latestCard.start_delta_ms : 0;
-      return this.getStartDeltaMs() - latest_start_delta_ms;
+      var previousCard = this.isChugging()? this.game.cards[this.game.cards.length - 2]: this.getLatestCard();
+      const previous_start_delta_ms = this.getCardEndTime(previousCard);
+      return this.getStartDeltaMs() - previous_start_delta_ms;
     }
   }
 
