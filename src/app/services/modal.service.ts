@@ -7,6 +7,7 @@ import { ChugModalComponent } from '../components/chug-modal/chug-modal.componen
 import { FinishModalComponent } from '../components/finish-modal/finish-modal.component';
 import { SpinnerModalComponent } from '../components/spinner-modal/spinner-modal.component';
 import { Game } from '../models/game';
+import { GameService } from '../services/game.service';
 import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
 import { SoundService } from './sound.service';
 
@@ -40,10 +41,11 @@ export class ModalService {
     }).afterClosed();
   }
 
-  public openChug(game: Game, user: User, chugs: number) {
+  public openChug(gameService: GameService, game: Game, user: User, chugs: number) {
     return this.dialog.open(ChugModalComponent, {
       disableClose: true,
       data: {
+        gameService,
         game,
         user,
         chugs

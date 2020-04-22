@@ -92,16 +92,21 @@ export class GameService {
     }
   }
 
+  public setChugStartTime(start_delta_ms: number) {
+    const c = this.getLatestCard();
+    c.chug_start_start_delta_ms = start_delta_ms;
+    this.postUpdate().subscribe(() => {});
+  }
+
   private showChugModal() {
     const activePlayer = this.getActivePlayer();
     const playerAces = this.getAcesForPlayer(activePlayer);
 
     this.flashService.flashCard(null);
 
-    this.modal.openChug(this.game, activePlayer, playerAces.length).subscribe(data => {
+    this.modal.openChug(this, this.game, activePlayer, playerAces.length).subscribe(end_start_delta_ms => {
       const c = this.getLatestCard();
-      c.chug_start_start_delta_ms = data.start_ms;
-      c.chug_end_start_delta_ms = data.end_ms;
+      c.chug_end_start_delta_ms = end_start_delta_ms;
 
       this.postUpdate().subscribe(() => {});
 

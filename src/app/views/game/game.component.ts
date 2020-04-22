@@ -144,7 +144,7 @@ export class GameComponent implements OnInit, OnDestroy {
     const i = parseInt(cmd, 10);
     if (0 <= i && i < this.userService.users.length) {
       this.disableDraw = true;
-      this.modalService.openChug(this.game, this.userService.users[i], 9001).subscribe(() => {
+      this.modalService.openChug(this.gameService, this.game, this.userService.users[i], 9001).subscribe(() => {
         this.disableDraw = false;
       });
     }
