@@ -120,7 +120,6 @@ export class GameService {
   }
 
   private endGame() {
-    this.game.has_ended = true;
     this.save();
 
     this.showEndModal();
@@ -155,6 +154,7 @@ export class GameService {
 
   private showEndModal() {
     this.modal.openFinish(this.game).subscribe((description) => {
+      this.game.has_ended = true;
       this.game.description = description;
       this.save();
 
@@ -271,8 +271,23 @@ export class GameService {
     return Date.now() - (new Date(this.game.start_datetime)).getTime();
   }
 
+  /*
+   * Indicates whether more actions are required to end the game,
+   * except for writing the description.
+   * This is true before the description has been written,
+   * whereas game.has_ended is only true after the description has been written.
+   */
+  public isGameDone(): boolean {
+    if (this.getNumberOfCardsLeft() > 0) return false;
+
+    const c = this.getLatestCard();
+    if (c.value !== 14) return true;
+
+    return !!c.chug_end_start_delta_ms;
+  }
+
   public getGameDuration(): number {
-    if (this.game.has_ended) {
+    if (this.isGameDone()) {
       const c = this.getLatestCard();
       if (c.chug_end_start_delta_ms) {
         return c.chug_end_start_delta_ms;
@@ -286,7 +301,7 @@ export class GameService {
 
   public getTurnDuration(): number {
     // Game is done
-    if (this.getNumberOfCardsLeft() === 0) {
+    if (this.isGameDone()) {
       return 0;
     } else {
       const latestCard = this.getLatestCard();

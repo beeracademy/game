@@ -43,7 +43,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.intervalRef = setInterval(() => {
       if (new Date().getTime() - this.lastKeyPressTimeStamp > this.IDLTime) {
         // Check if game is over
-        if (this.gameService.getNumberOfCardsLeft() > 0) {
+        if (!this.gameService.isGameDone()) {
           this.playIDLSound();
         }
       }

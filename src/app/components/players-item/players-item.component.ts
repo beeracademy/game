@@ -77,7 +77,7 @@ export class PlayersItemComponent implements OnInit {
   }
 
   isActive(): boolean {
-    return this.gameService.getActiveIndex() === this.user.index && this.gameService.getNumberOfCardsLeft() > 0;
+    return this.gameService.getActiveIndex() === this.user.index && !this.gameService.isGameDone();
   }
 
 }

@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class InfoBarComponent implements OnInit, OnDestroy {
 
   public duration = 0;
-  public roundDuration = 0;
+  public turnDuration = 0;
 
   private intervalRef;
 
@@ -36,7 +36,7 @@ export class InfoBarComponent implements OnInit, OnDestroy {
 
   private updateTime() {
       this.duration = this.gameService.getGameDuration();
-      this.roundDuration = this.gameService.getTurnDuration();
+      this.turnDuration = this.gameService.getTurnDuration();
   }
 
   public abort() {
