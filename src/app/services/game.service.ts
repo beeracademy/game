@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Game } from '../models/game';
+import { Game, getStartDeltaMs } from '../models/game';
 import { SoundService } from './sound.service';
 import { Router } from '@angular/router';
 import { Card } from '../models/card';
@@ -75,7 +75,7 @@ export class GameService {
     // Draw a card from the deck
     const draw = this.deck[this.game.cards.length];
 
-    draw.start_delta_ms = this.game.getStartDeltaMs();
+    draw.start_delta_ms = getStartDeltaMs(this.game);
 
     this.game.cards.push(draw);
 
@@ -282,7 +282,7 @@ export class GameService {
     } else {
       const latestCard = this.getLatestCard();
       const latest_start_delta_ms = latestCard ? latestCard.start_delta_ms : 0;
-      return this.game.getStartDeltaMs() - latest_start_delta_ms;
+      return getStartDeltaMs(this.game) - latest_start_delta_ms;
     }
   }
 

@@ -15,21 +15,21 @@ export class Game {
     public id?: number,
     public player_ids?: number[]
   ) {}
+}
 
-  public getStartDeltaMs() {
-    return Date.now() - (new Date(this.start_datetime)).getTime();
-  }
+export function getStartDeltaMs(game: Game): number {
+  return Date.now() - (new Date(game.start_datetime)).getTime();
+}
 
-  public getDuration() {
-    if (this.has_ended) {
-      const c = this.cards[this.cards.length - 1];
-      if (c.chug_end_start_delta_ms) {
-        return c.chug_end_start_delta_ms;
-      } else {
-        return c.start_delta_ms;
-      }
+export function getDuration(game: Game): number {
+  if (game.has_ended) {
+    const c = game.cards[game.cards.length - 1];
+    if (c.chug_end_start_delta_ms) {
+      return c.chug_end_start_delta_ms;
     } else {
-      return Date.now() - (new Date(this.start_datetime)).getTime();
+      return c.start_delta_ms;
     }
+  } else {
+    return Date.now() - (new Date(game.start_datetime)).getTime();
   }
 }
