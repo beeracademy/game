@@ -59,6 +59,7 @@ export class GameService {
     return this.postStart().pipe(map((game: Game) => {
       this.game.id = game.id;
       this.game.start_datetime = game.start_datetime;
+      this.game.token = game.token;
 
       this.save();
 

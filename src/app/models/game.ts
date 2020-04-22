@@ -13,6 +13,7 @@ export class Game {
 
     // Not needed for offline
     public id?: number,
-    public player_ids?: number[]
+    public player_ids?: number[],
+    public token?: string,
   ) {}
 }
