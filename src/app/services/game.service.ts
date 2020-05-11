@@ -367,4 +367,18 @@ export class GameService {
   public isCardDrawn(suit: string, value: number): boolean {
     return this.game.cards.filter(c => c.suit === suit && c.value === value).length > 0;
   }
+
+  public isDNF(user: User) {
+    return this.game.dnf_player_ids.includes(user.id);
+  }
+
+  public toggleDNF(user: User) {
+    const i = this.game.dnf_player_ids.indexOf(user.id);
+    if (i === -1) {
+      this.game.dnf_player_ids.push(user.id);
+    } else {
+      this.game.dnf_player_ids.splice(i, 1);
+    }
+    this.postUpdate().subscribe(() => {});
+  }
 }

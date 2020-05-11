@@ -3,7 +3,7 @@
     <app-player-item-bottle [color]="user?.color"></app-player-item-bottle>
   </div>
 </div>
-<mat-card [style.background-color]="user?.color">
+<mat-card [style.background-color]="user?.color" [ngClass]="isDNF()? 'dnf' : ''">
   <div class="crown" *ngIf="isLeading" [@crownAnimation]>
     <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="20" height="20" id="svg2" class="mhide">
       <defs id="defs4"/>
@@ -15,6 +15,7 @@
       </g>
     </svg>
   </div>
+  <div class="dnf-button" (click)="toggleDNF()">DNF</div>
   <h3>{{ user?.username }}</h3>
   <div class="stats-wrap">
     <div>
