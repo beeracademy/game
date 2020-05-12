@@ -11,6 +11,8 @@ export class Game {
     public has_ended = false,
     public description?,
 
+    public dnf_player_ids: number[] = [],
+
     // Not needed for offline
     public id?: number,
     public player_ids?: number[],

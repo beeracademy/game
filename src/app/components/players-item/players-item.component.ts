@@ -80,4 +80,11 @@ export class PlayersItemComponent implements OnInit {
     return this.gameService.getActiveIndex() === this.user.index && !this.gameService.isGameDone();
   }
 
+  isDNF(): boolean {
+    return this.gameService.isDNF(this.user);
+  }
+
+  toggleDNF() {
+    this.gameService.toggleDNF(this.user);
+  }
 }
