@@ -53,8 +53,10 @@ export class GameService {
     this.game.player_names = this.usersService.users.map(u => u.username);
 
     // Generate seed and deck
-    this.game.seed = this.cardsService.generateSeedForPlayers(this.getNumberOfPlayers());
-    this.deck = this.cardsService.generateCardsFromSeed(this.getNumberOfPlayers(), this.game.seed);
+    do {
+      this.game.seed = this.cardsService.generateSeedForPlayers(this.getNumberOfPlayers());
+      this.deck = this.cardsService.generateCardsFromSeed(this.getNumberOfPlayers(), this.game.seed);
+    } while(this.deck[this.deck.length - 1].value !== 14);
 
     // Tell the server we are starting
     return this.postStart().pipe(map((game: Game) => {
