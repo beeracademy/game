@@ -220,6 +220,10 @@ export class GameService {
     this.localStartTimestamp = JSON.parse(localStorage.getItem('academy:localStartTimestamp')) || this.localStartTimestamp;
     this.offline = JSON.parse(localStorage.getItem('academy:offline')) || this.offline;
 
+    if (!this.game.dnf_player_ids) {
+      this.game.dnf_player_ids = [];
+    }
+
     // Check if chug modal should be open
     const latestCard = this.getLatestCard();
     if (this.game.cards.length > 0 && latestCard.value === 14 && !latestCard.chug_start_start_delta_ms) {
