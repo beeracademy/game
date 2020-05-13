@@ -58,25 +58,36 @@ $AcademyWebGame-theme: mat-light-theme($AcademyWebGame-primary, $AcademyWebGame-
 
 /* You can add global styles to this file, and also import other style files */
 
+// From https://mitstudie.au.dk/Content/main.css
 @font-face {
-  font-family: AU_Passata;
-  src: url(assets/fonts/AUPassata_Rg.ttf);
-  font-weight: normal;
+	font-family: AUPassataBold;
+	src: url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.eot);
+	src: url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.eot?#iefix) format("embedded-opentype"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.woff2) format("woff2"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.woff) format("woff"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.ttf) format("truetype"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.svg#AUPassataBold) format("svg");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: AU_Passata_bold;
-  src: url(assets/fonts/AUPassata_Bold.ttf);
-  font-weight: bold;
+	font-family: AUPassataLight;
+	src: url(https://www.aucdn.dk/fonts/aupassata_light-webfont.eot);
+	src: url(https://www.aucdn.dk/fonts/aupassata_light-webfont.eot?#iefix) format("embedded-opentype"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.woff2) format("woff2"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.woff) format("woff"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.ttf) format("truetype"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.svg#AUPassataLight) format("svg");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: AU_Passata_light;
-  src: url(assets/fonts/AUPassata_Light.ttf);
+	font-family: AUPassataRegular;
+	src: url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.eot);
+	src: url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.eot?#iefix) format("embedded-opentype"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.woff2) format("woff2"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.woff) format("woff"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.ttf) format("truetype"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.svg#AUPassataRegular) format("svg");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
 }
 
 * {
-  font-family: AU_Passata, "opensans-regular", sans-serif;
+  font-family: AUPassataRegular, "opensans-regular", sans-serif;
 }
 
 html, body, app-root {
