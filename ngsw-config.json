@@ -24,6 +24,7 @@
         ],
         "urls": [
           "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**",
           "https://www.aucdn.dk/fonts/**"
         ]
       }
