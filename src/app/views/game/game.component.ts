@@ -81,13 +81,6 @@ export class GameComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalRef);
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  reloadWarning($event) {
-    if (environment.production) {
-      return ($event.returnValue = 'Game is active, do you want to reload?');
-    }
-  }
-
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (
