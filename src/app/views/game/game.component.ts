@@ -57,6 +57,10 @@ export class GameComponent implements OnInit, OnDestroy {
       this.lastKeyPressTimeStamp = new Date().getTime();
     });
 
+    this.gameService.onChugDone.subscribe((card: Card) => {
+      this.lastKeyPressTimeStamp = new Date().getTime();
+    });
+
     // Change tab color to red
     document
       .querySelector('meta[name=theme-color]')
