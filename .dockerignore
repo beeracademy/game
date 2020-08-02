@@ -4,6 +4,7 @@
 !package.json
 !LICENSE
 !tsconfig.json
+!tsconfig.base.json
 !yarn.lock
 !nginx.conf
 !ngsw-config.json
