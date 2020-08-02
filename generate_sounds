@@ -22,3 +22,11 @@ for f in *.ogg
     ffmpeg -n -i "$f" -vn -ar 44100 -ac 2 -b:a 192k "$filename.mp3"
   end
 end
+
+set sounds_fn ../../app/services/sounds.ts
+echo "export const SOUNDS = [" > "$sounds_fn"
+for f in *.mp3
+  set filename (echo $f | sed 's/\.[^.]*$//')
+  echo "  '$filename'," >> "$sounds_fn"
+end
+echo "];" >> "$sounds_fn"

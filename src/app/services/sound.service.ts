@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SOUNDS } from './sounds';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,38 @@ export class SoundService {
   private soundpath = 'assets/sounds/';
   private loops: {[soundName: string]: HTMLAudioElement} = {};
 
-  constructor() {}
+  constructor() {
+    // Preload all sounds
+    for (const soundName of SOUNDS) {
+      this.createAudio(soundName);
+    }
+  }
+
+  private createAudio(soundName: string) {
+    const audio = new Audio();
+
+    if (audio.canPlayType('audio/ogg;codecs=vorbis') !== '') {
+      // play ogg
+      audio.src = this.soundpath + soundName + '.ogg';
+    } else {
+      // mp3 fallback
+      audio.src = this.soundpath + soundName + '.mp3';
+    }
+
+    audio.preload = 'auto';
+
+    return audio;
+  }
+
+  public play(soundName: string) {
+    const audio = this.createAudio(soundName);
+
+    audio.oncanplaythrough = () => {
+      audio.play();
+    };
+
+    return audio;
+  }
 
   public playLoop(soundName: string) {
     if (this.loops[soundName] === undefined) {
@@ -31,24 +63,6 @@ export class SoundService {
     if (audio !== undefined) {
       audio.pause();
     }
-  }
-
-  public play(soundName: string) {
-    const audio = new Audio();
-
-    if (audio.canPlayType('audio/ogg;codecs=vorbis') !== '') {
-      // play ogg
-      audio.src = this.soundpath + soundName + '.ogg';
-    } else {
-      // mp3 fallback
-      audio.src = this.soundpath + soundName + '.mp3';
-    }
-
-    audio.oncanplaythrough = () => {
-      audio.play();
-    };
-
-    return audio;
   }
 
   public toggleMute(soundName: string) {
