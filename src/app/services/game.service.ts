@@ -28,6 +28,8 @@ export class GameService {
   public deck: Card[] = [];
 
   public localStartTimestamp: number;
+  public lastStartDeltaMs: number;
+  public lastPerformanceNow: number;
   public offline = false;
 
   constructor(
@@ -280,7 +282,17 @@ export class GameService {
   }
 
   public getStartDeltaMs(): number {
-    return Date.now() - this.localStartTimestamp;
+    let startDeltaMs = Date.now() - this.localStartTimestamp;
+    const performanceNow = performance.now();
+    if (this.lastStartDeltaMs && this.lastStartDeltaMs > startDeltaMs) {
+      // Fix non-monotic time
+      const performanceNowDiff = Math.floor(performanceNow - this.lastPerformanceNow);
+      startDeltaMs = this.lastStartDeltaMs + performanceNowDiff;
+      console.log(`Fixed non-monotic time using performance.now(): ${this.lastStartDeltaMs} + ${performanceNowDiff} = ${startDeltaMs}`);
+    }
+    this.lastStartDeltaMs = startDeltaMs;
+    this.lastPerformanceNow = performanceNow;
+    return startDeltaMs;
   }
 
   /*
