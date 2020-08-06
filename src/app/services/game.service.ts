@@ -56,6 +56,20 @@ export class GameService {
     this.game.seed = this.cardsService.generateSeedForPlayers(this.getNumberOfPlayers());
     this.deck = this.cardsService.generateCardsFromSeed(this.getNumberOfPlayers(), this.game.seed);
 
+    // Add position information
+    const location = new Observable((observer) => {
+      if (!navigator.geolocation) {
+        observer.error('Geolocation not available');
+      } else {
+        navigator.geolocation.getCurrentPosition((position: Position) => {
+          observer.next(position);
+          observer.complete();
+        }, (error: PositionError) => {
+          observer.error(error);
+        });
+      }
+    });
+
     // Tell the server we are starting
     return this.postStart().pipe(map((game: Game) => {
       this.localStartTimestamp = Date.now();
@@ -67,6 +81,18 @@ export class GameService {
       console.log('Time difference between client and server (including latency):', timeOffset);
 
       this.save();
+
+      location.subscribe((position: Position) => {
+        const coords = position.coords;
+        this.game.location = {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          accuracy: coords.accuracy,
+        };
+      }, (error) => {
+        this.flashService.flashText('Failed to set geolocation!');
+      });
+
 
       this.router.navigate(['game']);
       this.sounds.play('baladada');

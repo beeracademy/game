@@ -1,5 +1,13 @@
 import { Card } from './card';
 
+class Location {
+  constructor(
+    public latitude: number,
+    public longitude: number,
+    public accuracy: number,
+  ) {}
+}
+
 export class Game {
   constructor(
     public start_datetime: number = 0,
@@ -18,5 +26,7 @@ export class Game {
     public id?: number,
     public player_ids?: number[],
     public token?: string,
+
+    public location?: Location,
   ) {}
 }
