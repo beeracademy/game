@@ -134,6 +134,14 @@ export class GameService {
   public abort() {
     this.modal.openConfirm('Are you sure you want to quit the game?').subscribe((result) => {
       if (result) {
+        this.game.has_ended = true;
+        this.game.dnf = true;
+        this.postUpdate().subscribe(() => {
+          localStorage.clear();
+        }, error => {
+          localStorage.clear();
+        });
+
         const spinner = this.modal.showSpinner();
         this.sounds.play('loser');
 

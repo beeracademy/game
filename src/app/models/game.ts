@@ -10,6 +10,7 @@ export class Game {
 
     public has_ended = false,
     public description?,
+    public dnf = false,
 
     public dnf_player_ids: number[] = [],
 
