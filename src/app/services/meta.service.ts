@@ -19,12 +19,16 @@ export class MetaService {
       return remaining.reduce((a, b) => a + b, 0);
   }
 
-  public getTheoraticalMax(user: User): number {
-      return this.getTheoratical(user, (a, b) => b - a);
+  private toBase14(n: number): string {
+      return n.toString(14).toUpperCase();
   }
 
-  public getTheoraticalMin(user: User): number {
-    return this.getTheoratical(user, (a, b) => a - b);
+  public getTheoraticalMax(user: User): string {
+      return this.toBase14(this.getTheoratical(user, (a, b) => b - a));
+  }
+
+  public getTheoraticalMin(user: User): string {
+    return this.toBase14(this.getTheoratical(user, (a, b) => a - b));
 
   }
 
@@ -44,6 +48,10 @@ export class MetaService {
     }
 
     return res;
+  }
+
+  public getTotalSips(cards: Card[]): string {
+      return this.toBase14(this.getSips(cards));
   }
 
   public getCummulativeSips(cards: Card[]) {

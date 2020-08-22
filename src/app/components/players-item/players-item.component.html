@@ -19,17 +19,13 @@
   <h3>{{ user?.username }}</h3>
   <div class="stats-wrap">
     <div>
-      <p>Sips left</p>
-      <p>Beers</p>
       <p>Total sips</p>
       <p>Max sips</p>
       <p>Min sips</p>
     </div>
     <div class="right-flex">
       <p></p>
-      <p>{{ meta.getSipsLeftInBeer(cards) }}</p>
-      <p>{{ meta.getBeers(cards) }}</p>
-      <p>{{ meta.getSips(cards) }}</p>
+      <p>{{ meta.getTotalSips(cards) }}</p>
       <p>{{ meta.getTheoraticalMin(user) }}</p>
       <p>{{ meta.getTheoraticalMax(user) }}</p>
     </div>
