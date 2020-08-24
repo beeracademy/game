@@ -42,7 +42,7 @@ export class PlayersItemComponent implements OnInit {
   }
 
   getCards() {
-    const isLeading = this.meta.getLeadingPlayer() === this.user.index && this.gameService.game.cards.length !== 0;
+    const isLeading = this.meta.isLeadingPlayer(this.user.index) && this.gameService.game.cards.length !== 0;
 
     if (!this.isLeading && isLeading && !(window as any).cold) {
       if (!this.mute) {

@@ -68,17 +68,18 @@ export class MetaService {
     return (this.getSipsLeftInBeer(cards) / 14) * 100;
   }
 
-  public getLeadingPlayer() {
+  public isLeadingPlayer(i: number): boolean {
     const numPlayers = this.gameService.getNumberOfPlayers();
     const cards = this.gameService.game.cards;
 
     const playerSums = new Array(numPlayers).fill(0);
 
-    for (let i = 0; i < cards.length; i++) {
-      const playerIndex = i % numPlayers;
-      playerSums[playerIndex] += cards[i].value;
+    for (let j = 0; j < cards.length; j++) {
+      const playerIndex = j % numPlayers;
+      playerSums[playerIndex] += cards[j].value;
     }
 
-    return playerSums.indexOf(Math.max(...playerSums));
+    const maxScore = Math.max(...playerSums);
+    return maxScore === playerSums[i];
   }
 }
