@@ -74,12 +74,14 @@ export class MetaService {
 
     const playerSums = new Array(numPlayers).fill(0);
 
-    for (let j = 0; j < cards.length; j++) {
+    const fullRoundCards = cards.length - cards.length % numPlayers;
+
+    for (let j = 0; j < fullRoundCards; j++) {
       const playerIndex = j % numPlayers;
       playerSums[playerIndex] += cards[j].value;
     }
 
     const maxScore = Math.max(...playerSums);
-    return maxScore === playerSums[i];
+    return maxScore > 0 && maxScore === playerSums[i];
   }
 }

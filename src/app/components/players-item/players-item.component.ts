@@ -5,6 +5,7 @@ import { GameService } from 'src/app/services/game.service';
 import { MetaService } from 'src/app/services/meta.service';
 import { Card } from 'src/app/models/card';
 import { rubberBand } from 'ng-animate';
+import { UsersService } from 'src/app/services/users.service';
 import { SoundService } from 'src/app/services/sound.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { FlashService } from 'src/app/services/flash.service';
@@ -24,36 +25,47 @@ export class PlayersItemComponent implements OnInit {
 
   public cards: Card[] = [];
 
-  public isLeading = false;
-
   public indicatorHeight = 0;
   public indicatorTransition = '1s height';
 
-  constructor(public gameService: GameService, public meta: MetaService, private sounds: SoundService, private flashService: FlashService) { }
+  private lastInLeadStr = '';
+
+  constructor(public gameService: GameService, public meta: MetaService, private sounds: SoundService, private flashService: FlashService, public usersService: UsersService) { }
 
   ngOnInit() {
     this.gameService.onCardDrawn.subscribe(() => {
-      this.getCards();
+      this.updateCards();
       this.updateBeerPercentage();
+      if (this.user.index === 0) {
+        this.showLeadingFlash();
+      }
     });
 
-    this.getCards();
+    this.updateCards();
     this.updateBeerPercentage();
   }
 
-  getCards() {
-    const isLeading = this.meta.isLeadingPlayer(this.user.index) && this.gameService.game.cards.length !== 0;
+  updateCards() {
+    this.cards = this.gameService.getCardsForPlayer(this.user);
+  }
 
-    if (!this.isLeading && isLeading && !(window as any).cold) {
+  showLeadingFlash() {
+    const currentInLead = [];
+    for (let i = 0; i < this.gameService.getNumberOfPlayers(); i++) {
+      if (this.meta.isLeadingPlayer(i)) {
+        currentInLead.push(this.usersService.users[i].username);
+      }
+    }
+    const currentInLeadStr = currentInLead.join(', ');
+
+    if (currentInLeadStr !== this.lastInLeadStr && !(window as any).cold) {
       if (!this.mute) {
         this.sounds.play('crown');
       }
-      this.flashService.flashText(this.user.username + ' in the lead!');
+      this.flashService.flashText(currentInLeadStr + ' in the lead!');
     }
 
-    this.isLeading = isLeading;
-
-    this.cards = this.gameService.getCardsForPlayer(this.user);
+    this.lastInLeadStr = currentInLeadStr;
   }
 
   // This method is unholy and should be disregarded
@@ -78,6 +90,10 @@ export class PlayersItemComponent implements OnInit {
 
   isActive(): boolean {
     return this.gameService.getActiveIndex() === this.user.index && !this.gameService.isGameDone();
+  }
+
+  isLeading(): boolean {
+    return this.meta.isLeadingPlayer(this.user.index) && this.gameService.game.cards.length !== 0;
   }
 
   isDNF(): boolean {

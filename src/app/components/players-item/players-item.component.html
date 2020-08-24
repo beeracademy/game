@@ -4,7 +4,7 @@
   </div>
 </div>
 <mat-card [style.background-color]="user?.color" [ngClass]="isDNF()? 'dnf' : ''">
-  <div class="crown" *ngIf="isLeading" [@crownAnimation]>
+  <div class="crown" *ngIf="isLeading()" [@crownAnimation]>
     <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="20" height="20" id="svg2" class="mhide">
       <defs id="defs4"/>
       <g transform="translate(-24.02083,4.5516112)" id="g3214">
