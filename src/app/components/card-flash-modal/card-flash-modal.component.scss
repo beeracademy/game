@@ -8,4 +8,27 @@
     z-index: 9999999;
     align-items: center;
   }
+
+  .image {
+    height: 300px;
+    width: 210px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    .overlay {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 193px;
+      width: 116px;
+
+      border: 1px solid #000;
+    }
+  }
 }

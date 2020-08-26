@@ -14,8 +14,16 @@ export class StatsService {
   }
 
   public GetRankedCards() {
-    return this.http.get<any>(`${environment.url}/api/ranked_cards/`);
+    return this.http.get<{ [card_name: string]:RankedCard; }>(`${environment.url}/api/ranked_cards/`);
   }
+}
+
+export interface RankedCard {
+  user_id: number;
+  user_username: string;
+  user_image: string;
+  ranking_name: string;
+  ranking_value: string;
 }
 
 export interface UserStats {

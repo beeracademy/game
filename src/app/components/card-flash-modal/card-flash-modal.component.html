@@ -1,3 +1,5 @@
 <div class="container" *ngIf="show" [@animation]>
-  <img src="{{cardURI}}" height="300">
+  <div class="image" [ngStyle]="{ 'background-image': 'url(' + cardURI + ')' }">
+    <div class="overlay" *ngIf="rankedPhoto" [ngStyle]="{ 'background-image': 'url(' + rankedPhoto + ')' }"></div>
+  </div>
 </div>
