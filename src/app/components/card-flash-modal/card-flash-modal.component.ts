@@ -56,6 +56,8 @@ export class CardFlashModalComponent implements OnInit {
 
         if (cardName in this.rankedCards) {
           this.rankedPhoto = this.rankedCards[cardName].user_image;
+        } else {
+          this.rankedPhoto = null;
         }
 
         this.cardURI = 'assets/cards/' + cardName + '.png';
@@ -63,6 +65,7 @@ export class CardFlashModalComponent implements OnInit {
 
         this.timeout = setTimeout(() => {
           this.show = false;
+          this.rankedPhoto = null;
         }, 1500);
       });
     });
