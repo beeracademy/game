@@ -9,17 +9,61 @@
 
     &.title {
       font-size: 3em;
-      margin: 12px 0 12px;
+      margin: 0px 0px 0px;
       text-transform: uppercase;
     }
 
     &.time {
       font-size: 24px;
-      margin-bottom: 48px
+      margin-bottom: 48px;
     }
   }
 
-  button {
+  #photo {
+    display: flex;
+    justify-content: center;
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      mat-icon {
+        background: rgba($color: #fff, $alpha: 0.8);
+        padding: 16px;
+        border-radius: 100%;
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    #imagePreview {
+      height: 200px;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      transform: scaleX(-1);
+    }
+  }
+
+  button#okButton {
     font-size: 18px;
     padding: 10px;
     text-transform: uppercase;
@@ -28,7 +72,7 @@
   textarea {
     height: 150px;
     resize: none;
-    overflow-x:hidden;
+    overflow-x: hidden;
     outline: none;
     border: none;
   }

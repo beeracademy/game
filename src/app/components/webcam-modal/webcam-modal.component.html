@@ -1,0 +1,20 @@
+<webcam
+[trigger]="trigger"
+(imageCapture)="handleImage($event)"
+[imageQuality]="1"
+>
+</webcam>
+
+<p *ngIf="internalRef && countDownSeconds !== 0">{{ countDownSeconds }}</p>
+
+<button
+  id="snapButton"
+  mat-raised-button
+  color="primary"
+  (click)="triggerSnapshot()"
+  [disabled]="internalRef"
+>
+  Take photo
+</button>
+
+<button id="discardButton" mat-raised-button (click)="close()">Cancel</button>

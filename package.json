@@ -24,6 +24,7 @@
     "core-js": "^3.6.5",
     "ng-animate": "^0.3.4",
     "ng2-charts": "^2.3.2",
+    "ngx-webcam": "^0.3.0",
     "random-js": "^2.1.0",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.0",

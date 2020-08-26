@@ -6157,6 +6157,11 @@ ng2-charts@^2.3.2:
     lodash-es "^4.17.11"
     tslib "^1.9.0"
 
+ngx-webcam@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ngx-webcam/-/ngx-webcam-0.3.0.tgz#28bd96eec026f7807106b3226290cb0bc5a434cf"
+  integrity sha512-Cya2qBGbzoxjb2Lc3EWPD17KT2JR9NYR3c1+C82836m88a1dh9tEIwjc/SCaOZTw0VyAXO+9072QFMZp6zVfWQ==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

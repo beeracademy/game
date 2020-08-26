@@ -36,6 +36,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PlayerItemBottleComponent } from './components/player-item-bottle/player-item-bottle.component';
 import { CardFlashModalComponent } from './components/card-flash-modal/card-flash-modal.component';
+import { WebcamModalComponent } from './components/webcam-modal/webcam-modal.component';
+import {WebcamModule} from 'ngx-webcam';
 
 @NgModule({
   declarations: [
@@ -62,9 +64,11 @@ import { CardFlashModalComponent } from './components/card-flash-modal/card-flas
     MobileControlsComponent,
     StatsModalComponent,
     PlayerItemBottleComponent,
-    CardFlashModalComponent
+    CardFlashModalComponent,
+    WebcamModalComponent
   ],
   imports: [
+    WebcamModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

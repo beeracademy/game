@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  button {
+    font-size: 18px;
+    margin-top: 24px;
+  }
+
+  p {
+    position: relative;
+    text-align: center;
+    z-index: 9999;
+    color: #fff;
+    font-size: 148px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin-top: -50%;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+  }
+
+  webcam {
+    transform: scaleX(-1) !important;
+  }
+}
