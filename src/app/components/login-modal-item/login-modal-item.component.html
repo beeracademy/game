@@ -3,7 +3,7 @@
 </mat-form-field>
 
 <mat-form-field [hideRequiredMarker]="true" *ngIf="!gameService.offline">
-  <input matInput placeholder="Password" type="password" required #password (blur)="login(username.value, password.value)" [disabled]="disabled" required>
+  <input matInput placeholder="Password" type="password" required #password (blur)="login(username.value, password.value)" [disabled]="disabled" value="test" required>
 </mat-form-field>
 
 <div class="login-image" [ngClass]="{locked: locked}" [ngStyle]="{'background-image': 'url(' + ( usersService.users[index].image ? usersService.users[index].image : 'assets/user.jpg') + ')'}" (click)="resetLogin()">
