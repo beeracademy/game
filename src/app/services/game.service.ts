@@ -419,4 +419,29 @@ export class GameService {
     }
     this.postUpdate().subscribe(() => {});
   }
+
+  private getFinishStartDeltaMs(card: Card): number {
+    if (card.value !== 14) {
+      return card.start_delta_ms;
+    }
+
+    if (card.chug_end_start_delta_ms) {
+      return card.chug_end_start_delta_ms;
+    }
+    return card.chug_start_start_delta_ms;
+  }
+
+  public getCardDurations(): number[] {
+    let prevFinishStartDeltaMs = 0;
+    const durations = [];
+    for (const card of this.game.cards) {
+      const finishStartDeltaMs = this.getFinishStartDeltaMs(card);
+      if (!finishStartDeltaMs) {
+        break;
+      }
+      durations.push(finishStartDeltaMs - prevFinishStartDeltaMs);
+      prevFinishStartDeltaMs = finishStartDeltaMs;
+    }
+    return durations;
+  }
 }

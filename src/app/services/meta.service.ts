@@ -84,4 +84,14 @@ export class MetaService {
     const maxScore = Math.max(...playerSums);
     return maxScore > 0 && maxScore === playerSums[i];
   }
+
+  public getTotalTime(user: User): number {
+    const numPlayers = this.gameService.getNumberOfPlayers();
+    const durations = this.gameService.getCardDurations();
+    let time = 0;
+    for (let j = user.index; j < durations.length; j += numPlayers) {
+      time += durations[j];
+    }
+    return time;
+  }
 }

@@ -20,12 +20,13 @@
   <div class="stats-wrap">
     <div>
       <p>Total sips</p>
+      <p>Total time</p>
       <p>Max sips</p>
       <p>Min sips</p>
     </div>
     <div class="right-flex">
-      <p></p>
       <p>{{ meta.getTotalSips(cards) }}</p>
+      <p>{{ meta.getTotalTime(user) | date: "H:mm:ss":"+0000" }}</p>
       <p>{{ meta.getTheoraticalMin(user) }}</p>
       <p>{{ meta.getTheoraticalMax(user) }}</p>
     </div>
