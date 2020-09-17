@@ -8,3 +8,4 @@
 !yarn.lock
 !nginx.conf
 !ngsw-config.json
+!generate_asset_list
