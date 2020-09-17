@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SOUNDS } from './sounds';
 
 @Injectable({
   providedIn: 'root'
@@ -7,13 +6,6 @@ import { SOUNDS } from './sounds';
 export class SoundService {
   private soundpath = 'assets/sounds/';
   private loops: {[soundName: string]: HTMLAudioElement} = {};
-
-  constructor() {
-    // Preload all sounds
-    for (const soundName of SOUNDS) {
-      this.createAudio(soundName);
-    }
-  }
 
   private createAudio(soundName: string) {
     const audio = new Audio();
