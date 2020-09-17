@@ -38,9 +38,18 @@ export class CardFlashModalComponent implements OnInit {
     private statsService: StatsService
   ) {}
 
+  private preloadImage(src: string) {
+    const image = new Image();
+    image.src = src;
+  }
+
   ngOnInit() {
     this.statsService.GetRankedCards().subscribe((cards) => {
       this.rankedCards = cards;
+
+      for (const card of Object.values(cards)) {
+        this.preloadImage(card.user_image);
+      }
 
       this.flashService.onFlashCard.subscribe((card) => {
         if (!card) {
