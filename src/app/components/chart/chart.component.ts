@@ -15,7 +15,9 @@ export class ChartComponent implements OnInit {
     scales : {
       yAxes: [{
         ticks: {
-          min: 0
+          min: 0,
+          stepSize: 14,
+          callback: this.meta.toBase14,
         }
       }],
       xAxes: [{

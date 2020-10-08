@@ -19,7 +19,7 @@ export class MetaService {
       return remaining.reduce((a, b) => a + b, 0);
   }
 
-  private toBase14(n: number): string {
+  public toBase14(n: number): string {
       return n.toString(14).toUpperCase();
   }
 
