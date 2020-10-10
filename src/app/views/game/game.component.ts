@@ -79,6 +79,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.registerCommand('extrachug?', this.extraChug.bind(this));
     this.registerCommand('downunder', this.flipBody.bind(this));
     this.registerCommand('olderenneger', this.oldErEnNeger.bind(this));
+    this.registerCommand('mimimi', this.mimimi.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -191,6 +192,10 @@ export class GameComponent implements OnInit, OnDestroy {
       this.sound.play('old');
       document.body.classList.add('black');
     }
+  }
+
+  mimimi() {
+    this.gameService.nextChugMusic = 'mimimi';
   }
 
   playIDLSound() {

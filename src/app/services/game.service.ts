@@ -30,6 +30,8 @@ export class GameService {
   public localStartTimestamp: number;
   public offline = false;
 
+  public nextChugMusic: string = null;
+
   constructor(
     private http: HttpClient,
     private sounds: SoundService,

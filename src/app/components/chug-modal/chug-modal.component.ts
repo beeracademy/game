@@ -120,11 +120,17 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   start() {
     this.isRunning = true;
     this.start_delta_ms = this.gameService.getStartDeltaMs();
-    if (Math.random() < 0.05) {
-      this.chugMusic = this.sounds.play('big_chungus');
+    let chugMusic = this.gameService.nextChugMusic;
+    if (chugMusic) {
+      this.gameService.nextChugMusic = null;
     } else {
-      this.chugMusic = this.sounds.play('bubbi_fuve');
+      if (Math.random() < 0.05) {
+        chugMusic = 'big_chungus';
+      } else {
+        chugMusic = 'bubbi_fuve';
+      }
     }
+    this.chugMusic = this.sounds.play(chugMusic);
 
     if (this.chugs !== 9001) {
       this.gameService.setChugStartTime(this.start_delta_ms);
