@@ -25,10 +25,10 @@
       <p>Min sips</p>
     </div>
     <div class="right-flex">
-      <p>{{ meta.getTotalSips(cards) }}</p>
+      <p>{{ meta.getTotalSips(cards) }}<sub>14</sub></p>
       <p>{{ meta.getTotalTime(user) | date: "H:mm:ss":"+0000" }}</p>
-      <p>{{ meta.getTheoraticalMin(user) }}</p>
-      <p>{{ meta.getTheoraticalMax(user) }}</p>
+      <p>{{ meta.getTheoraticalMin(user) }}<sub>14</sub></p>
+      <p>{{ meta.getTheoraticalMax(user) }}<sub>14</sub></p>
     </div>
   </div>
   <div class="indicator" [style.height.%]="indicatorHeight" [style.transition]="indicatorTransition"></div>
