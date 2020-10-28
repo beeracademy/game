@@ -51,33 +51,33 @@ export class CardsService {
     arr[j] = tmp;
   }
 
-  private shuffleWithSeed(arr: any[], seed: number[]) {
+  private shuffleWithIndices(arr: any[], shuffleIndices: number[]) {
     const n = arr.length;
-    if (seed.length + 1 !== n) {
+    if (shuffleIndices.length + 1 !== n) {
       throw new Error('Lengths are wrong!');
     }
 
     for (let i = n - 1; i >= 1; i--) {
-      const j = seed[n - 1 - i];
+      const j = shuffleIndices[n - 1 - i];
       this.swap(arr, i, j);
     }
   }
 
-  private generateSeed(n: number): number[] {
-    const seed = [];
+  private generateShuffleIndices(n: number): number[] {
+    const shuffleIndices = [];
     for (let i = n - 1; i >= 1; i--) {
-      seed.push(this.randInt(0, i));
+      shuffleIndices.push(this.randInt(0, i));
     }
-    return seed;
+    return shuffleIndices;
   }
 
-  public generateSeedForPlayers(players: number): number[] {
-    return this.generateSeed(players * 13);
+  public generateShuffleIndicesForPlayers(players: number): number[] {
+    return this.generateShuffleIndices(players * 13);
   }
 
-  public generateCardsFromSeed(players: number, seed: number[]): Card[] {
+  public generateCardsFromShuffleIndices(players: number, shuffleIndices: number[]): Card[] {
     const cards = this.getOrderedCards(players);
-    this.shuffleWithSeed(cards, seed);
+    this.shuffleWithIndices(cards, shuffleIndices);
     return cards;
   }
 

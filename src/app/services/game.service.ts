@@ -54,10 +54,6 @@ export class GameService {
     this.game.player_ids = this.usersService.users.map(u => u.id);
     this.game.player_names = this.usersService.users.map(u => u.username);
 
-    // Generate seed and deck
-    this.game.seed = this.cardsService.generateSeedForPlayers(this.getNumberOfPlayers());
-    this.deck = this.cardsService.generateCardsFromSeed(this.getNumberOfPlayers(), this.game.seed);
-
     // Add position information
     const location = new Observable((observer) => {
       if (!navigator.geolocation) {
@@ -78,6 +74,8 @@ export class GameService {
       this.game.id = game.id;
       this.game.start_datetime = game.start_datetime;
       this.game.token = game.token;
+      this.game.shuffle_indices = game.shuffle_indices;
+      this.deck = this.cardsService.generateCardsFromShuffleIndices(this.getNumberOfPlayers(), this.game.shuffle_indices);
 
       const timeOffset = this.localStartTimestamp - (new Date(game.start_datetime)).getTime();
       console.log('Time difference between client and server (including latency):', timeOffset);
