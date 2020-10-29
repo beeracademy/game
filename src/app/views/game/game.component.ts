@@ -18,7 +18,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private lastKeyPressTimeStamp: number;
   private IDLTime = 1000 * 60 * 15; // Every 15 min
 
-  private debounceTime = 200;
+  private debounceTime = 1000;
 
   private intervalRef;
 
