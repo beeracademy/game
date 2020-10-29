@@ -1,4 +1,5 @@
-:host, mat-card {
+:host,
+mat-card {
   width: 100%;
 
   display: flex;
@@ -55,7 +56,7 @@
       }
     }
 
-    p{
+    p {
       text-align: center;
       margin: 0px;
     }
@@ -67,7 +68,8 @@
 }
 
 @media only screen and (max-width: 600px) {
-  :host, mat-card {
+  :host,
+  mat-card {
     mat-card {
       height: 70px;
 

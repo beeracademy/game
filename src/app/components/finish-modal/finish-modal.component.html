@@ -1,26 +1,42 @@
-<p class="title">
-  Game is done!
-</p>
+<p class="title">Game is done!</p>
 
 <p class="time">{{ duration | date: "HH:mm:ss":"+0000" }}</p>
 
 <mat-divider></mat-divider>
-<br>
+<br />
 <div id="photo">
   <mat-spinner [diameter]="32" *ngIf="showImageSpinner"></mat-spinner>
-  <button mat-button (click)="addPhoto()" *ngIf="!webcamImage && !showImageSpinner">
+  <button
+    mat-button
+    (click)="addPhoto()"
+    *ngIf="!webcamImage && !showImageSpinner"
+  >
     <mat-icon>add_a_photo</mat-icon>
   </button>
-  <div id="imagePreview" *ngIf="webcamImage && !showImageSpinner" [ngStyle]="{'background-image': 'url(' + webcamImage.imageAsDataUrl + ')'}" (click)="removePhoto()">
+  <div
+    id="imagePreview"
+    *ngIf="webcamImage && !showImageSpinner"
+    [ngStyle]="{
+      'background-image': 'url(' + webcamImage.imageAsDataUrl + ')'
+    }"
+    (click)="removePhoto()"
+  >
     <div class="overlay">
       <mat-icon color="primary">delete</mat-icon>
     </div>
   </div>
 </div>
-<br>
+<br />
 <mat-divider></mat-divider>
-<br>
-<textarea matInput placeholder="Write a description" [(ngModel)]="description" maxlength="1000"></textarea>
-<br>
-<br>
-<button id="okButton" mat-raised-button color="primary" (click)="done()">OK</button>
+<br />
+<textarea
+  matInput
+  placeholder="Write a description"
+  [(ngModel)]="description"
+  maxlength="1000"
+></textarea>
+<br />
+<br />
+<button id="okButton" mat-raised-button color="primary" (click)="done()">
+  OK
+</button>

@@ -1,20 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class StatsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public GetUserStats(userId: number) {
-    return this.http.get<UserStats[]>(`${environment.url}/api/stats/${userId}/`);
+    return this.http.get<UserStats[]>(
+      `${environment.url}/api/stats/${userId}/`
+    );
   }
 
   public GetRankedCards() {
-    return this.http.get<{ [card_name: string]:RankedCard; }>(`${environment.url}/api/ranked_cards/`);
+    return this.http.get<{ [card_name: string]: RankedCard }>(
+      `${environment.url}/api/ranked_cards/`
+    );
   }
 }
 

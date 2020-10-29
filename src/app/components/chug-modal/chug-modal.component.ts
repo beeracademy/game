@@ -1,21 +1,27 @@
-import { Component, OnInit, HostListener, Inject, OnDestroy, Injector} from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogRef } from '@angular/material/dialog';
-import { UsersService } from '../../services/users.service';
-import { SoundService } from 'src/app/services/sound.service';
-import { GameService } from 'src/app/services/game.service';
-import { User } from 'src/app/models/user';
-import { Game } from 'src/app/models/game';
-import { FlashService } from 'src/app/services/flash.service';
-import { StatsService , UserStats} from 'src/app/services/stats.service';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  Inject,
+  OnDestroy,
+  Injector,
+} from "@angular/core";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
+import { UsersService } from "../../services/users.service";
+import { SoundService } from "src/app/services/sound.service";
+import { GameService } from "src/app/services/game.service";
+import { User } from "src/app/models/user";
+import { Game } from "src/app/models/game";
+import { FlashService } from "src/app/services/flash.service";
+import { StatsService, UserStats } from "src/app/services/stats.service";
 
 @Component({
-  selector: 'app-chug-modal',
-  templateUrl: './chug-modal.component.html',
-  styleUrls: ['./chug-modal.component.scss']
+  selector: "app-chug-modal",
+  templateUrl: "./chug-modal.component.html",
+  styleUrls: ["./chug-modal.component.scss"],
 })
 export class ChugModalComponent implements OnInit, OnDestroy {
-
   public time = 0;
   public isRunning = false;
 
@@ -37,14 +43,15 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<ChugModalComponent>,
     private sounds: SoundService,
     private statsService: StatsService,
-    private flashService: FlashService) {
-      this.gameService = data.gameService;
-      this.user = data.user;
-      this.chugs = data.chugs;
-    }
+    private flashService: FlashService
+  ) {
+    this.gameService = data.gameService;
+    this.user = data.user;
+    this.chugs = data.chugs;
+  }
 
   ngOnInit() {
-    this.statsService.GetUserStats(this.user.id).subscribe(res => {
+    this.statsService.GetUserStats(this.user.id).subscribe((res) => {
       if (res.length > 0) {
         for (let i = 0; i < res.length; i++) {
           if (res[i].season_number === 0) {
@@ -68,35 +75,34 @@ export class ChugModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-
     switch (this.chugs) {
       case 1:
-        this.flashService.flashText('FINISH HIM!');
-        this.sounds.play('mkd_finishim');
+        this.flashService.flashText("FINISH HIM!");
+        this.sounds.play("mkd_finishim");
         break;
       case 2:
-        this.flashService.flashText('DOUBLE KILL!');
-        this.sounds.play('doublekill');
+        this.flashService.flashText("DOUBLE KILL!");
+        this.sounds.play("doublekill");
         break;
       case 3:
-        this.flashService.flashText('TRIPLE KILL!');
-        this.sounds.play('triplekill');
+        this.flashService.flashText("TRIPLE KILL!");
+        this.sounds.play("triplekill");
         break;
       case 4:
-        this.flashService.flashText('ULTRA KILL!');
-        this.sounds.play('ultrakill');
+        this.flashService.flashText("ULTRA KILL!");
+        this.sounds.play("ultrakill");
         break;
       case 5:
-        this.flashService.flashText('MEGA KILL!');
-        this.sounds.play('megakill');
+        this.flashService.flashText("MEGA KILL!");
+        this.sounds.play("megakill");
         break;
       case 6:
-        this.flashService.flashText('MONSTER KILL!');
-        this.sounds.play('monsterkill');
+        this.flashService.flashText("MONSTER KILL!");
+        this.sounds.play("monsterkill");
         break;
       case 9001:
-        this.flashService.flashText('EXTRA CHUG!');
-        this.sounds.play('wicked');
+        this.flashService.flashText("EXTRA CHUG!");
+        this.sounds.play("wicked");
         break;
       default:
         break;
@@ -109,9 +115,9 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener("window:keyup", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    if (event.code === 'Space') {
+    if (event.code === "Space") {
       this.isRunning ? this.stop() : this.start();
       event.preventDefault();
     }
@@ -125,9 +131,9 @@ export class ChugModalComponent implements OnInit, OnDestroy {
       this.gameService.nextChugMusic = null;
     } else {
       if (Math.random() < 0.05) {
-        chugMusic = 'big_chungus';
+        chugMusic = "big_chungus";
       } else {
-        chugMusic = 'bubbi_fuve';
+        chugMusic = "bubbi_fuve";
       }
     }
     this.chugMusic = this.sounds.play(chugMusic);
@@ -136,7 +142,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
       this.gameService.setChugStartTime(this.start_delta_ms);
     }
 
-    this.intervalRef = setInterval(_ => {
+    this.intervalRef = setInterval((_) => {
       this.time = this.gameService.getStartDeltaMs() - this.start_delta_ms;
     }, 1);
   }
@@ -152,7 +158,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   }
 
   formatString(ms: number): string {
-    let res = '';
+    let res = "";
 
     res += ms;
 
@@ -161,15 +167,15 @@ export class ChugModalComponent implements OnInit, OnDestroy {
 
   playFinishSound() {
     if (this.time < 5000) {
-      this.flashService.flashText('FlAWLESS VICTORY!');
-      this.sounds.play('mkd_flawless');
+      this.flashService.flashText("FlAWLESS VICTORY!");
+      this.sounds.play("mkd_flawless");
     } else if (this.time < 7000) {
-      this.flashService.flashText('FATALITY!');
-      this.sounds.play('mkd_fatality');
+      this.flashService.flashText("FATALITY!");
+      this.sounds.play("mkd_fatality");
     } else if (this.time < 20000) {
-      this.sounds.play('mkd_laugh');
+      this.sounds.play("mkd_laugh");
     } else {
-      this.sounds.play('humiliation');
+      this.sounds.play("humiliation");
     }
   }
 }

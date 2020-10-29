@@ -1,23 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { zoomIn, zoomOut } from 'ng-animate';
-import { useAnimation, transition, trigger } from '@angular/animations';
-import { FlashService } from 'src/app/services/flash.service';
-import { StatsService, RankedCard } from 'src/app/services/stats.service';
+import { Component, OnInit } from "@angular/core";
+import { zoomIn, zoomOut } from "ng-animate";
+import { useAnimation, transition, trigger } from "@angular/animations";
+import { FlashService } from "src/app/services/flash.service";
+import { StatsService, RankedCard } from "src/app/services/stats.service";
 
 @Component({
-  selector: 'app-card-flash-modal',
-  templateUrl: './card-flash-modal.component.html',
-  styleUrls: ['./card-flash-modal.component.scss'],
+  selector: "app-card-flash-modal",
+  templateUrl: "./card-flash-modal.component.html",
+  styleUrls: ["./card-flash-modal.component.scss"],
   animations: [
-    trigger('animation', [
+    trigger("animation", [
       transition(
-        ':enter',
+        ":enter",
         useAnimation(zoomIn, {
           params: { timing: 0.3 },
         })
       ),
       transition(
-        ':leave',
+        ":leave",
         useAnimation(zoomOut, {
           params: { timing: 0.3 },
         })
@@ -61,7 +61,7 @@ export class CardFlashModalComponent implements OnInit {
           this.clear();
         }
 
-        const cardName = card.suit + '-' + card.value;
+        const cardName = card.suit + "-" + card.value;
 
         if (cardName in this.rankedCards) {
           this.rankedPhoto = this.rankedCards[cardName].user_image;
@@ -69,7 +69,7 @@ export class CardFlashModalComponent implements OnInit {
           this.rankedPhoto = null;
         }
 
-        this.cardURI = 'assets/cards/' + cardName + '.png';
+        this.cardURI = "assets/cards/" + cardName + ".png";
         this.show = true;
 
         this.timeout = setTimeout(() => {

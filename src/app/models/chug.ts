@@ -1,9 +1,6 @@
-import { Card } from './card';
-import { User } from './user';
+import { Card } from "./card";
+import { User } from "./user";
 
 export class Chug {
-  constructor(
-    public user: User,
-    public card: Card
-  ) {}
+  constructor(public user: User, public card: Card) {}
 }

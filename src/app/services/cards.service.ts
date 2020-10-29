@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import * as Random from 'random-js';
-import { Card, suits, values } from '../models/card';
+import { Injectable } from "@angular/core";
+import * as Random from "random-js";
+import { Card, suits, values } from "../models/card";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CardsService {
-
   private engine = Random.browserCrypto;
 
-  public cardBack = 'cardback.png';
+  public cardBack = "cardback.png";
   public dickMode = false;
 
   constructor() {
@@ -21,9 +20,9 @@ export class CardsService {
     this.dickMode = b;
 
     if (b) {
-      this.cardBack = 'cardback-au.png';
+      this.cardBack = "cardback-au.png";
     } else {
-      this.cardBack = 'cardback.png';
+      this.cardBack = "cardback.png";
     }
 
     this.save();
@@ -54,7 +53,7 @@ export class CardsService {
   private shuffleWithIndices(arr: any[], shuffleIndices: number[]) {
     const n = arr.length;
     if (shuffleIndices.length + 1 !== n) {
-      throw new Error('Lengths are wrong!');
+      throw new Error("Lengths are wrong!");
     }
 
     for (let i = n - 1; i >= 1; i--) {
@@ -75,7 +74,10 @@ export class CardsService {
     return this.generateShuffleIndices(players * 13);
   }
 
-  public generateCardsFromShuffleIndices(players: number, shuffleIndices: number[]): Card[] {
+  public generateCardsFromShuffleIndices(
+    players: number,
+    shuffleIndices: number[]
+  ): Card[] {
     const cards = this.getOrderedCards(players);
     this.shuffleWithIndices(cards, shuffleIndices);
     return cards;
@@ -83,39 +85,39 @@ export class CardsService {
 
   public getSymbol(card: Card): string {
     switch (card.suit) {
-      case 'S':
-        return '♠';
-      case 'C':
-        return '♣';
-      case 'H':
-        return '♥';
-      case 'D':
-        return '♦';
-      case 'A':
-        return '☘';
-      case 'I':
-        return '🟊';
+      case "S":
+        return "♠";
+      case "C":
+        return "♣";
+      case "H":
+        return "♥";
+      case "D":
+        return "♦";
+      case "A":
+        return "☘";
+      case "I":
+        return "🟊";
       default:
-        return '';
+        return "";
     }
   }
 
   public getColor(card: Card): string {
     switch (card.suit) {
-      case 'S':
-        return '#000';
-      case 'C':
-        return '#000';
-      case 'H':
-        return '#e74c3c';
-      case 'D':
-        return '#e74c3c';
-      case 'A':
-        return '#2ecc71';
-      case 'I':
-        return '#2ecc71';
+      case "S":
+        return "#000";
+      case "C":
+        return "#000";
+      case "H":
+        return "#e74c3c";
+      case "D":
+        return "#e74c3c";
+      case "A":
+        return "#2ecc71";
+      case "I":
+        return "#2ecc71";
       default:
-        return '';
+        return "";
     }
   }
 
@@ -124,11 +126,11 @@ export class CardsService {
   }
 
   public save() {
-    localStorage.setItem('academy:dickMode', JSON.stringify(this.dickMode));
+    localStorage.setItem("academy:dickMode", JSON.stringify(this.dickMode));
   }
 
   public resume() {
-    this.dickMode = JSON.parse(localStorage.getItem('academy:dickMode')) || this.dickMode;
+    this.dickMode =
+      JSON.parse(localStorage.getItem("academy:dickMode")) || this.dickMode;
   }
-
 }

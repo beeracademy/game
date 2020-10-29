@@ -1,19 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { User } from 'src/app/models/user';
-import { ModalService } from 'src/app/services/modal.service';
-import { environment } from 'src/environments/environment';
-import { GameService } from 'src/app/services/game.service';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
+import { UsersService } from "src/app/services/users.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { User } from "src/app/models/user";
+import { ModalService } from "src/app/services/modal.service";
+import { environment } from "src/environments/environment";
+import { GameService } from "src/app/services/game.service";
 
 @Component({
-  selector: 'app-login-modal-item',
-  templateUrl: './login-modal-item.component.html',
-  styleUrls: ['./login-modal-item.component.scss']
+  selector: "app-login-modal-item",
+  templateUrl: "./login-modal-item.component.html",
+  styleUrls: ["./login-modal-item.component.scss"],
 })
 export class LoginModalItemComponent implements OnInit {
-
-  @ViewChild('password') passwordField: ElementRef;
+  @ViewChild("password") passwordField: ElementRef;
 
   @Input() index: number;
   @Input() locked: number;
@@ -25,15 +32,16 @@ export class LoginModalItemComponent implements OnInit {
 
   public envUrl = environment.url;
 
-  private indicatorSuccess = '#2ecc71';
-  private indicatorWaiting = '#f1c40f';
-  private indicatorDenied  = '#e74c3c';
+  private indicatorSuccess = "#2ecc71";
+  private indicatorWaiting = "#f1c40f";
+  private indicatorDenied = "#e74c3c";
 
   constructor(
     public gameService: GameService,
     public usersService: UsersService,
-    private modalService: ModalService) {
-    this.indicatorColor = '#fff';
+    private modalService: ModalService
+  ) {
+    this.indicatorColor = "#fff";
     this.disabled = false;
   }
 
@@ -49,7 +57,8 @@ export class LoginModalItemComponent implements OnInit {
     this.indicatorColor = this.indicatorWaiting;
     this.disabled = true;
 
-    this.usersService.login(username, password).subscribe((user: User) => {
+    this.usersService.login(username, password).subscribe(
+      (user: User) => {
         this.indicatorColor = this.indicatorSuccess;
         user.index = this.index;
 
@@ -59,16 +68,18 @@ export class LoginModalItemComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         if (err.status === 404) {
-          this.modalService.openConfirm('Create new user ' + username + '?').subscribe((result) => {
-            if (result) {
-              this.createNewUser(username, password);
-            } else {
-              this.resetIndicator();
-            }
-          });
+          this.modalService
+            .openConfirm("Create new user " + username + "?")
+            .subscribe((result) => {
+              if (result) {
+                this.createNewUser(username, password);
+              } else {
+                this.resetIndicator();
+              }
+            });
         } else {
           this.resetIndicator();
-          this.passwordField.nativeElement.value = '';
+          this.passwordField.nativeElement.value = "";
           this.modalService.showSnack(this.parseFieldErrors(err.error));
         }
       }
@@ -76,13 +87,16 @@ export class LoginModalItemComponent implements OnInit {
   }
 
   public createNewUser(username: string, password: string) {
-    this.usersService.create(username, password).subscribe((result) => {
-      this.login(username, password);
-    }, (err: HttpErrorResponse) => {
-      this.modalService.showSnack(this.parseFieldErrors(err.error));
+    this.usersService.create(username, password).subscribe(
+      (result) => {
+        this.login(username, password);
+      },
+      (err: HttpErrorResponse) => {
+        this.modalService.showSnack(this.parseFieldErrors(err.error));
 
-      this.resetIndicator();
-    });
+        this.resetIndicator();
+      }
+    );
   }
 
   public resetLogin() {
@@ -94,7 +108,7 @@ export class LoginModalItemComponent implements OnInit {
     this.notReady.emit();
     this.resetIndicator();
     this.disabled = false;
-    this.passwordField.nativeElement.value = '';
+    this.passwordField.nativeElement.value = "";
   }
 
   public resetIndicator() {
@@ -104,22 +118,21 @@ export class LoginModalItemComponent implements OnInit {
 
   public parseFieldErrors(json: any) {
     try {
-
       if (json.non_field_errors) {
-        return json.non_field_errors.join('\n');
+        return json.non_field_errors.join("\n");
       }
 
-      let res = '';
+      let res = "";
 
       for (const k in json) {
         if (json.hasOwnProperty(k)) {
-          res += k + ': ' + json[k].join(' ') + ' ';
+          res += k + ": " + json[k].join(" ") + " ";
         }
       }
 
       return res.trim();
     } catch (e) {
-      return 'Login failed';
+      return "Login failed";
     }
   }
 }

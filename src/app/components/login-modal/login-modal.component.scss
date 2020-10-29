@@ -56,7 +56,6 @@
 }
 
 ::ng-deep {
-
   .mat-slider-thumb-label {
     transform: rotate(45deg) !important;
     border-radius: 50% 50% 0 !important;
@@ -68,10 +67,9 @@
 
   .mat-slider-horizontal .mat-slider-ticks {
     opacity: 1 !important;
- }
+  }
 
   .mat-slider-thumb-label-text {
     opacity: 1 !important;
   }
-
 }

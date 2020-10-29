@@ -1,5 +1,9 @@
 <div *ngFor="let s of suits">
   <div class="suit">
-    <app-card-deck-item *ngFor="let v of values" [suit]="s" [value]="v"></app-card-deck-item>
+    <app-card-deck-item
+      *ngFor="let v of values"
+      [suit]="s"
+      [value]="v"
+    ></app-card-deck-item>
   </div>
 </div>

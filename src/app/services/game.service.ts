@@ -1,26 +1,25 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Game } from '../models/game';
-import { SoundService } from './sound.service';
-import { Router } from '@angular/router';
-import { Card } from '../models/card';
-import { ModalService } from './modal.service';
-import { UsersService } from './users.service';
-import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { CardsService } from './cards.service';
-import { User } from '../models/user';
-import { map } from 'rxjs/operators';
-import { Chug } from '../models/chug';
-import { RetryUploadModalComponent } from '../components/retry-upload-modal/retry-upload-modal.component';
-import { MatDialog } from '@angular/material/dialog';
-import { FlashService } from './flash.service';
+import { Injectable, Output, EventEmitter } from "@angular/core";
+import { Game } from "../models/game";
+import { SoundService } from "./sound.service";
+import { Router } from "@angular/router";
+import { Card } from "../models/card";
+import { ModalService } from "./modal.service";
+import { UsersService } from "./users.service";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { CardsService } from "./cards.service";
+import { User } from "../models/user";
+import { map } from "rxjs/operators";
+import { Chug } from "../models/chug";
+import { RetryUploadModalComponent } from "../components/retry-upload-modal/retry-upload-modal.component";
+import { MatDialog } from "@angular/material/dialog";
+import { FlashService } from "./flash.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class GameService {
-
   @Output() onCardDrawn: EventEmitter<Card> = new EventEmitter();
   @Output() onChugDone: EventEmitter<Card> = new EventEmitter();
 
@@ -40,8 +39,9 @@ export class GameService {
     private cardsService: CardsService,
     private flashService: FlashService,
     private router: Router,
-    private dialog: MatDialog) {
-      this.resume();
+    private dialog: MatDialog
+  ) {
+    this.resume();
   }
 
   public start() {
@@ -51,52 +51,66 @@ export class GameService {
     }
 
     // Fill in user ids and names
-    this.game.player_ids = this.usersService.users.map(u => u.id);
-    this.game.player_names = this.usersService.users.map(u => u.username);
+    this.game.player_ids = this.usersService.users.map((u) => u.id);
+    this.game.player_names = this.usersService.users.map((u) => u.username);
 
     // Add position information
     const location = new Observable((observer) => {
       if (!navigator.geolocation) {
-        observer.error('Geolocation not available');
+        observer.error("Geolocation not available");
       } else {
-        navigator.geolocation.getCurrentPosition((position: Position) => {
-          observer.next(position);
-          observer.complete();
-        }, (error: PositionError) => {
-          observer.error(error);
-        });
+        navigator.geolocation.getCurrentPosition(
+          (position: Position) => {
+            observer.next(position);
+            observer.complete();
+          },
+          (error: PositionError) => {
+            observer.error(error);
+          }
+        );
       }
     });
 
     // Tell the server we are starting
-    return this.postStart().pipe(map((game: Game) => {
-      this.localStartTimestamp = Date.now();
-      this.game.id = game.id;
-      this.game.start_datetime = game.start_datetime;
-      this.game.token = game.token;
-      this.game.shuffle_indices = game.shuffle_indices;
-      this.deck = this.cardsService.generateCardsFromShuffleIndices(this.getNumberOfPlayers(), this.game.shuffle_indices);
+    return this.postStart().pipe(
+      map((game: Game) => {
+        this.localStartTimestamp = Date.now();
+        this.game.id = game.id;
+        this.game.start_datetime = game.start_datetime;
+        this.game.token = game.token;
+        this.game.shuffle_indices = game.shuffle_indices;
+        this.deck = this.cardsService.generateCardsFromShuffleIndices(
+          this.getNumberOfPlayers(),
+          this.game.shuffle_indices
+        );
 
-      const timeOffset = this.localStartTimestamp - (new Date(game.start_datetime)).getTime();
-      console.log('Time difference between client and server (including latency):', timeOffset);
+        const timeOffset =
+          this.localStartTimestamp - new Date(game.start_datetime).getTime();
+        console.log(
+          "Time difference between client and server (including latency):",
+          timeOffset
+        );
 
-      this.save();
+        this.save();
 
-      location.subscribe((position: Position) => {
-        const coords = position.coords;
-        this.game.location = {
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          accuracy: coords.accuracy,
-        };
-      }, (error) => {
-        this.flashService.flashText('Failed to set geolocation!');
-      });
+        location.subscribe(
+          (position: Position) => {
+            const coords = position.coords;
+            this.game.location = {
+              latitude: coords.latitude,
+              longitude: coords.longitude,
+              accuracy: coords.accuracy,
+            };
+          },
+          (error) => {
+            this.flashService.flashText("Failed to set geolocation!");
+          }
+        );
 
-
-      this.router.navigate(['game']);
-      this.sounds.play('baladada');
-    }));
+        this.router.navigate(["game"]);
+        this.sounds.play("baladada");
+      })
+    );
   }
 
   public draw() {
@@ -112,9 +126,11 @@ export class GameService {
     this.game.cards.push(draw);
 
     this.onCardDrawn.emit(draw);
-    this.postUpdate().subscribe({ error: e => {
-      // NOOP
-    }});
+    this.postUpdate().subscribe({
+      error: (e) => {
+        // NOOP
+      },
+    });
 
     // Check if ace or game done
     if (draw.value === 14) {
@@ -136,19 +152,21 @@ export class GameService {
 
     this.flashService.flashCard(null);
 
-    this.modal.openChug(this, activePlayer, playerAces.length).subscribe(end_start_delta_ms => {
-      const c = this.getLatestCard();
-      c.chug_end_start_delta_ms = end_start_delta_ms;
+    this.modal
+      .openChug(this, activePlayer, playerAces.length)
+      .subscribe((end_start_delta_ms) => {
+        const c = this.getLatestCard();
+        c.chug_end_start_delta_ms = end_start_delta_ms;
 
-      this.postUpdate().subscribe(() => {});
+        this.postUpdate().subscribe(() => {});
 
-      this.onChugDone.emit();
+        this.onChugDone.emit();
 
-      // Check if the game is done
-      if (this.getNumberOfCardsLeft() <= 0) {
-        this.endGame();
-      }
-    });
+        // Check if the game is done
+        if (this.getNumberOfCardsLeft() <= 0) {
+          this.endGame();
+        }
+      });
   }
 
   private endGame() {
@@ -158,32 +176,37 @@ export class GameService {
   }
 
   public abort() {
-    this.modal.openConfirm('Are you sure you want to quit the game?').subscribe((result) => {
-      if (result) {
-        this.game.has_ended = true;
-        this.game.dnf = true;
-        this.postUpdate().subscribe(() => {
-          localStorage.clear();
-        }, error => {
-          localStorage.clear();
-        });
+    this.modal
+      .openConfirm("Are you sure you want to quit the game?")
+      .subscribe((result) => {
+        if (result) {
+          this.game.has_ended = true;
+          this.game.dnf = true;
+          this.postUpdate().subscribe(
+            () => {
+              localStorage.clear();
+            },
+            (error) => {
+              localStorage.clear();
+            }
+          );
 
-        const spinner = this.modal.showSpinner();
-        this.sounds.play('loser');
+          const spinner = this.modal.showSpinner();
+          this.sounds.play("loser");
 
-        setTimeout(() => {
-          this.resetAndGoToLogin();
-          spinner.close();
-        }, 3500);
-      }
-    });
+          setTimeout(() => {
+            this.resetAndGoToLogin();
+            spinner.close();
+          }, 3500);
+        }
+      });
   }
 
   public resetAndGoToLogin() {
     localStorage.clear();
     this.reset();
     this.usersService.reset();
-    this.router.navigate(['login']);
+    this.router.navigate(["login"]);
   }
 
   public reset() {
@@ -200,25 +223,31 @@ export class GameService {
 
       const spinner = this.modal.showSpinner();
 
-      this.postUpdate().subscribe(() => {
-        localStorage.clear();
-        spinner.close();
-      }, error => {
-        spinner.close();
-        this.showRetryModal();
-      });
+      this.postUpdate().subscribe(
+        () => {
+          localStorage.clear();
+          spinner.close();
+        },
+        (error) => {
+          spinner.close();
+          this.showRetryModal();
+        }
+      );
     });
   }
 
   private showRetryModal() {
-    this.dialog.open(RetryUploadModalComponent, {
-      disableClose: true,
-      data: {
-        game: this.game
-      }
-    }).afterClosed().subscribe(() => {
-      localStorage.clear();
-    });
+    this.dialog
+      .open(RetryUploadModalComponent, {
+        disableClose: true,
+        data: {
+          game: this.game,
+        },
+      })
+      .afterClosed()
+      .subscribe(() => {
+        localStorage.clear();
+      });
   }
 
   /*
@@ -227,14 +256,17 @@ export class GameService {
 
   private postStart(): Observable<Game> {
     return this.http.post<Game>(`${environment.url}/api/games/`, {
-      tokens: this.usersService.users.map(u => u.token),
-      official: this.game.official
+      tokens: this.usersService.users.map((u) => u.token),
+      official: this.game.official,
     });
   }
 
   private postUpdate(): Observable<any> {
     this.save();
-    return this.http.post(`${environment.url}/api/games/` + this.game.id + '/update_state/', this.game);
+    return this.http.post(
+      `${environment.url}/api/games/` + this.game.id + "/update_state/",
+      this.game
+    );
   }
 
   /*
@@ -242,17 +274,23 @@ export class GameService {
   */
 
   public save() {
-    localStorage.setItem('academy:game', JSON.stringify(this.game));
-    localStorage.setItem('academy:deck', JSON.stringify(this.deck));
-    localStorage.setItem('academy:localStartTimestamp', JSON.stringify(this.localStartTimestamp));
-    localStorage.setItem('academy:offline', JSON.stringify(this.offline));
+    localStorage.setItem("academy:game", JSON.stringify(this.game));
+    localStorage.setItem("academy:deck", JSON.stringify(this.deck));
+    localStorage.setItem(
+      "academy:localStartTimestamp",
+      JSON.stringify(this.localStartTimestamp)
+    );
+    localStorage.setItem("academy:offline", JSON.stringify(this.offline));
   }
 
   public resume() {
-    this.game = JSON.parse(localStorage.getItem('academy:game')) || this.game;
-    this.deck = JSON.parse(localStorage.getItem('academy:deck')) || this.deck;
-    this.localStartTimestamp = JSON.parse(localStorage.getItem('academy:localStartTimestamp')) || this.localStartTimestamp;
-    this.offline = JSON.parse(localStorage.getItem('academy:offline')) || this.offline;
+    this.game = JSON.parse(localStorage.getItem("academy:game")) || this.game;
+    this.deck = JSON.parse(localStorage.getItem("academy:deck")) || this.deck;
+    this.localStartTimestamp =
+      JSON.parse(localStorage.getItem("academy:localStartTimestamp")) ||
+      this.localStartTimestamp;
+    this.offline =
+      JSON.parse(localStorage.getItem("academy:offline")) || this.offline;
 
     if (!this.game.dnf_player_ids) {
       this.game.dnf_player_ids = [];
@@ -260,19 +298,31 @@ export class GameService {
 
     // Check if chug modal should be open
     const latestCard = this.getLatestCard();
-    if (this.game.cards.length > 0 && latestCard.value === 14 && !latestCard.chug_start_start_delta_ms) {
+    if (
+      this.game.cards.length > 0 &&
+      latestCard.value === 14 &&
+      !latestCard.chug_start_start_delta_ms
+    ) {
       this.showChugModal();
       return;
     }
 
     // Check if end game modal should be open
-    if (this.getNumberOfCardsLeft() <= 0 && this.game.start_datetime && !this.game.description) {
+    if (
+      this.getNumberOfCardsLeft() <= 0 &&
+      this.game.start_datetime &&
+      !this.game.description
+    ) {
       this.showEndModal();
       return;
     }
 
     // Check if retry modal should be open
-    if (this.getNumberOfCardsLeft() <= 0 && this.game.has_ended && this.game.description) {
+    if (
+      this.getNumberOfCardsLeft() <= 0 &&
+      this.game.has_ended &&
+      this.game.description
+    ) {
       this.showRetryModal();
     }
   }
@@ -298,7 +348,7 @@ export class GameService {
   }
 
   public getNumberOfCardsLeft(): number {
-    return (13 * this.getNumberOfPlayers()) - this.game.cards.length;
+    return 13 * this.getNumberOfPlayers() - this.game.cards.length;
   }
 
   public getCardsLeft(): Card[] {
@@ -310,7 +360,10 @@ export class GameService {
   }
 
   public getRound(): number {
-    return Math.min(Math.floor((this.game.cards.length / this.getNumberOfPlayers())) + 1, 13);
+    return Math.min(
+      Math.floor(this.game.cards.length / this.getNumberOfPlayers()) + 1,
+      13
+    );
   }
 
   public getStartDeltaMs(): number {
@@ -358,18 +411,22 @@ export class GameService {
     if (this.isGameDone()) {
       return 0;
     } else {
-      var previousCard = this.isChugging()? this.game.cards[this.game.cards.length - 2]: this.getLatestCard();
+      var previousCard = this.isChugging()
+        ? this.game.cards[this.game.cards.length - 2]
+        : this.getLatestCard();
       const previous_start_delta_ms = this.getCardEndTime(previousCard);
       return this.getStartDeltaMs() - previous_start_delta_ms;
     }
   }
 
   public getCardsForPlayer(player: User): Card[] {
-    return this.game.cards.filter((_, i) => i % this.getNumberOfPlayers() === player.index);
+    return this.game.cards.filter(
+      (_, i) => i % this.getNumberOfPlayers() === player.index
+    );
   }
 
   public getAcesForPlayer(player: User): Card[] {
-    return this.getCardsForPlayer(player).filter(c => c.value === 14);
+    return this.getCardsForPlayer(player).filter((c) => c.value === 14);
   }
 
   public getChugs(): Chug[] {
@@ -377,10 +434,12 @@ export class GameService {
 
     for (let i = 0; i < this.game.cards.length; i++) {
       if (this.game.cards[i].value === 14) {
-        chugs.push(new Chug(
-          this.usersService.users[i % this.getNumberOfPlayers()],
-          this.game.cards[i]
-        ));
+        chugs.push(
+          new Chug(
+            this.usersService.users[i % this.getNumberOfPlayers()],
+            this.game.cards[i]
+          )
+        );
       }
     }
 
@@ -403,7 +462,10 @@ export class GameService {
   }
 
   public isCardDrawn(suit: string, value: number): boolean {
-    return this.game.cards.filter(c => c.suit === suit && c.value === value).length > 0;
+    return (
+      this.game.cards.filter((c) => c.suit === suit && c.value === value)
+        .length > 0
+    );
   }
 
   public isDNF(user: User) {

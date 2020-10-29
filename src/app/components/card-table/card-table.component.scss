@@ -1,5 +1,4 @@
 :host {
-
   text-align: center;
 
   table {
@@ -7,7 +6,8 @@
     width: 100%;
   }
 
-  td, th {
+  td,
+  th {
     border: none;
     text-align: center;
     padding: 4px;
@@ -36,4 +36,3 @@
     background-color: #e0e6e9;
   }
 }
-

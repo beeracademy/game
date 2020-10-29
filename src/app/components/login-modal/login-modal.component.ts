@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { GameService } from 'src/app/services/game.service';
-import { UsersService } from 'src/app/services/users.service';
-import { ModalService } from 'src/app/services/modal.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { SoundService } from 'src/app/services/sound.service';
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { GameService } from "src/app/services/game.service";
+import { UsersService } from "src/app/services/users.service";
+import { ModalService } from "src/app/services/modal.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { SoundService } from "src/app/services/sound.service";
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.scss']
+  selector: "app-login-modal",
+  templateUrl: "./login-modal.component.html",
+  styleUrls: ["./login-modal.component.scss"],
 })
 export class LoginModalComponent implements OnInit {
   public numberOfPlayers = 4;
@@ -27,43 +27,44 @@ export class LoginModalComponent implements OnInit {
     public usersService: UsersService,
     private modal: ModalService,
     private soundService: SoundService,
-    private changeDetectorRef: ChangeDetectorRef) {
-      this.usersService.reset();
-    }
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
+    this.usersService.reset();
+  }
 
   ngOnInit() {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
 
-    this.soundService.playLoop('homosangen_fuve');
+    this.soundService.playLoop("homosangen_fuve");
 
-    const elms = document.getElementsByTagName('input');
+    const elms = document.getElementsByTagName("input");
 
-    document.body.addEventListener('keydown', (e: any) => {
-        if (e.target.tagName !== 'INPUT') {
-          return;
-        }
+    document.body.addEventListener("keydown", (e: any) => {
+      if (e.target.tagName !== "INPUT") {
+        return;
+      }
 
-        if (e.keyCode !== 13) {
-          return;
-        }
+      if (e.keyCode !== 13) {
+        return;
+      }
 
-        const a = Array.from(elms);
-        const i = a.indexOf(e.target);
+      const a = Array.from(elms);
+      const i = a.indexOf(e.target);
 
-        if (i === a.length) {
-          return;
-        }
+      if (i === a.length) {
+        return;
+      }
 
-        const next = a[i + 1];
+      const next = a[i + 1];
 
-        if (next.type !== 'text' && next.type !== 'password') {
-          e.target.blur();
-          return;
-        }
+      if (next.type !== "text" && next.type !== "password") {
+        e.target.blur();
+        return;
+      }
 
-        next.focus();
+      next.focus();
 
-        e.preventDefault();
+      e.preventDefault();
     });
   }
 
@@ -77,14 +78,17 @@ export class LoginModalComponent implements OnInit {
   public startGame() {
     const ref = this.modal.showSpinner();
 
-    this.gameService.start().subscribe((game) => {
-      this.soundService.stopLoop('homosangen_fuve');
-      this.usersService.save();
-      ref.close();
-    }, (err: HttpErrorResponse) => {
-      ref.close();
-      this.modal.showSnack('Failed to create game');
-    });
+    this.gameService.start().subscribe(
+      (game) => {
+        this.soundService.stopLoop("homosangen_fuve");
+        this.usersService.save();
+        ref.close();
+      },
+      (err: HttpErrorResponse) => {
+        ref.close();
+        this.modal.showSnack("Failed to create game");
+      }
+    );
   }
 
   public ready(index: number) {
@@ -110,7 +114,7 @@ export class LoginModalComponent implements OnInit {
   public shuffle() {
     this.isShuffling = true;
 
-    const sound = this.soundService.play('slot_machine');
+    const sound = this.soundService.play("slot_machine");
 
     const interval = setInterval(() => {
       this.usersService.assignPlayerIndexes(true);
@@ -119,14 +123,14 @@ export class LoginModalComponent implements OnInit {
     setTimeout(() => {
       clearInterval(interval);
       sound.pause();
-      this.soundService.play('slot_machine_winner');
+      this.soundService.play("slot_machine_winner");
       this.isShuffling = false;
       this.shuffleDone = true;
     }, this.shuffleTimeTotal);
   }
 
   public toggleMute() {
-    this.soundService.toggleMute('homosangen_fuve');
+    this.soundService.toggleMute("homosangen_fuve");
     this.isMuted = !this.isMuted;
   }
 }

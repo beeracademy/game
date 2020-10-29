@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'https://academy.beer'
+  url: "https://academy.beer",
 };

@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -9,36 +9,36 @@
 @include mat-core();
 
 $md-academy-palette: (
-  50 : #f8e5e6,
-  100 : #edbfc0,
-  200 : #e19496,
-  300 : #d4696c,
-  400 : #cb484d,
-  500 : #c2282d,
-  600 : #bc2428,
-  700 : #b41e22,
-  800 : #ac181c,
-  900 : #9f0f11,
-  A100 : #ffcfcf,
-  A200 : #ff9c9c,
-  A400 : #ff696a,
-  A700 : #ff4f50,
+  50: #f8e5e6,
+  100: #edbfc0,
+  200: #e19496,
+  300: #d4696c,
+  400: #cb484d,
+  500: #c2282d,
+  600: #bc2428,
+  700: #b41e22,
+  800: #ac181c,
+  900: #9f0f11,
+  A100: #ffcfcf,
+  A200: #ff9c9c,
+  A400: #ff696a,
+  A700: #ff4f50,
   contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #ffffff,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
-  )
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
 );
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -49,7 +49,11 @@ $AcademyWebGame-accent: mat-palette($md-academy-palette, 50);
 $AcademyWebGame-warn: mat-palette($mat-red, 300);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$AcademyWebGame-theme: mat-light-theme($AcademyWebGame-primary, $AcademyWebGame-accent, $AcademyWebGame-warn);
+$AcademyWebGame-theme: mat-light-theme(
+  $AcademyWebGame-primary,
+  $AcademyWebGame-accent,
+  $AcademyWebGame-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -60,44 +64,71 @@ $AcademyWebGame-theme: mat-light-theme($AcademyWebGame-primary, $AcademyWebGame-
 
 // From https://mitstudie.au.dk/Content/main.css
 @font-face {
-	font-family: AUPassataBold;
-	src: url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.eot);
-	src: url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.eot?#iefix) format("embedded-opentype"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.woff2) format("woff2"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.woff) format("woff"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.ttf) format("truetype"), url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.svg#AUPassataBold) format("svg");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+  font-family: AUPassataBold;
+  src: url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.eot);
+  src: url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.woff2) format("woff2"),
+    url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.woff) format("woff"),
+    url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.ttf)
+      format("truetype"),
+    url(https://www.aucdn.dk/fonts/aupassata_bold-webfont.svg#AUPassataBold)
+      format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-	font-family: AUPassataLight;
-	src: url(https://www.aucdn.dk/fonts/aupassata_light-webfont.eot);
-	src: url(https://www.aucdn.dk/fonts/aupassata_light-webfont.eot?#iefix) format("embedded-opentype"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.woff2) format("woff2"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.woff) format("woff"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.ttf) format("truetype"), url(https://www.aucdn.dk/fonts/aupassata_light-webfont.svg#AUPassataLight) format("svg");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+  font-family: AUPassataLight;
+  src: url(https://www.aucdn.dk/fonts/aupassata_light-webfont.eot);
+  src: url(https://www.aucdn.dk/fonts/aupassata_light-webfont.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://www.aucdn.dk/fonts/aupassata_light-webfont.woff2)
+      format("woff2"),
+    url(https://www.aucdn.dk/fonts/aupassata_light-webfont.woff) format("woff"),
+    url(https://www.aucdn.dk/fonts/aupassata_light-webfont.ttf)
+      format("truetype"),
+    url(https://www.aucdn.dk/fonts/aupassata_light-webfont.svg#AUPassataLight)
+      format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-	font-family: AUPassataRegular;
-	src: url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.eot);
-	src: url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.eot?#iefix) format("embedded-opentype"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.woff2) format("woff2"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.woff) format("woff"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.ttf) format("truetype"), url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.svg#AUPassataRegular) format("svg");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+  font-family: AUPassataRegular;
+  src: url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.eot);
+  src: url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.woff2) format("woff2"),
+    url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.woff) format("woff"),
+    url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.ttf) format("truetype"),
+    url(https://www.aucdn.dk/fonts/aupassata_rg-webfont.svg#AUPassataRegular)
+      format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
   font-family: AUPassataRegular, "opensans-regular", sans-serif;
 }
 
-html, body, app-root {
+html,
+body,
+app-root {
   margin: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  overflow: hidden;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .flip {
   transform: rotate(180deg);

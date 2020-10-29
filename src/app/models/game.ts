@@ -1,10 +1,10 @@
-import { Card } from './card';
+import { Card } from "./card";
 
 class Location {
   constructor(
     public latitude: number,
     public longitude: number,
-    public accuracy: number,
+    public accuracy: number
   ) {}
 }
 
@@ -27,6 +27,6 @@ export class Game {
     public token?: string,
     public shuffle_indices?: number[],
 
-    public location?: Location,
+    public location?: Location
   ) {}
 }

@@ -1,29 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { fadeOut, rubberBand } from 'ng-animate';
-import { useAnimation, transition, trigger } from '@angular/animations';
-import { FlashService } from 'src/app/services/flash.service';
+import { Component, OnInit } from "@angular/core";
+import { fadeOut, rubberBand } from "ng-animate";
+import { useAnimation, transition, trigger } from "@angular/animations";
+import { FlashService } from "src/app/services/flash.service";
 
 @Component({
-  selector: 'app-text-flash-modal',
-  templateUrl: './text-flash-modal.component.html',
-  styleUrls: ['./text-flash-modal.component.scss'],
+  selector: "app-text-flash-modal",
+  templateUrl: "./text-flash-modal.component.html",
+  styleUrls: ["./text-flash-modal.component.scss"],
   animations: [
-    trigger('animation', [
-      transition(':enter', useAnimation( rubberBand, {
-        params: { timing: 0.5 }
-      })),
-      transition(':leave', useAnimation( fadeOut, {
-        params: { timing: 0.3 }
-      }))
-    ])
-  ]
+    trigger("animation", [
+      transition(
+        ":enter",
+        useAnimation(rubberBand, {
+          params: { timing: 0.5 },
+        })
+      ),
+      transition(
+        ":leave",
+        useAnimation(fadeOut, {
+          params: { timing: 0.3 },
+        })
+      ),
+    ]),
+  ],
 })
 export class TextFlashModalComponent implements OnInit {
-
   public show = false;
-  public text = '';
+  public text = "";
 
-  constructor(public flashService: FlashService) { }
+  constructor(public flashService: FlashService) {}
 
   ngOnInit() {
     this.flashService.onFlashText.subscribe((text) => {

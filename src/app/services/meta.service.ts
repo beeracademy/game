@@ -1,35 +1,41 @@
-import { Injectable } from '@angular/core';
-import { Card } from '../models/card';
-import { GameService } from './game.service';
-import { User } from '../models/user';
+import { Injectable } from "@angular/core";
+import { Card } from "../models/card";
+import { GameService } from "./game.service";
+import { User } from "../models/user";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MetaService {
-
   constructor(private gameService: GameService) {}
 
   private getTheoratical(user: User, sort: (a: number, b: number) => number) {
-      let remaining = this.gameService.getCardsLeft().map(c => c.value).sort(sort);
+    let remaining = this.gameService
+      .getCardsLeft()
+      .map((c) => c.value)
+      .sort(sort);
 
-      remaining = remaining.slice(remaining.length - this.gameService.getDrawsLeftForPlayer(user), remaining.length);
-      remaining.push(...this.gameService.getCardsForPlayer(user).map(c => c.value));
+    remaining = remaining.slice(
+      remaining.length - this.gameService.getDrawsLeftForPlayer(user),
+      remaining.length
+    );
+    remaining.push(
+      ...this.gameService.getCardsForPlayer(user).map((c) => c.value)
+    );
 
-      return remaining.reduce((a, b) => a + b, 0);
+    return remaining.reduce((a, b) => a + b, 0);
   }
 
   public toBase14(n: number): string {
-      return n.toString(14).toUpperCase();
+    return n.toString(14).toUpperCase();
   }
 
   public getTheoraticalMax(user: User): string {
-      return this.toBase14(this.getTheoratical(user, (a, b) => b - a));
+    return this.toBase14(this.getTheoratical(user, (a, b) => b - a));
   }
 
   public getTheoraticalMin(user: User): string {
     return this.toBase14(this.getTheoratical(user, (a, b) => a - b));
-
   }
 
   public getBeers(cards: Card[]): number {
@@ -51,12 +57,12 @@ export class MetaService {
   }
 
   public getTotalSips(cards: Card[]): string {
-      return this.toBase14(this.getSips(cards));
+    return this.toBase14(this.getSips(cards));
   }
 
   public getCummulativeSips(cards: Card[]) {
     const res = [];
-    cards.reduce((a, b, i) => res[i] = a + b.value, 0);
+    cards.reduce((a, b, i) => (res[i] = a + b.value), 0);
     return [0].concat(res);
   }
 
@@ -74,7 +80,7 @@ export class MetaService {
 
     const playerSums = new Array(numPlayers).fill(0);
 
-    const fullRoundCards = cards.length - cards.length % numPlayers;
+    const fullRoundCards = cards.length - (cards.length % numPlayers);
 
     for (let j = 0; j < fullRoundCards; j++) {
       const playerIndex = j % numPlayers;

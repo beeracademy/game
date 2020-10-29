@@ -1,11 +1,25 @@
-<h5>{{user.username}}</h5>
-<p>{{ sips }} sip{{ sips > 1 ? 's' : '' }} left in beer {{ beers + 1}}</p>
+<h5>{{ user.username }}</h5>
+<p>{{ sips }} sip{{ sips > 1 ? "s" : "" }} left in beer {{ beers + 1 }}</p>
 
-<hr>
+<hr />
 
 <button mat-raised-button color="primary" (click)="draw()">Draw card</button>
 <div class="row">
   <button mat-raised-button color="primary" (click)="stats()">Stats</button>
-  <button mat-raised-button color="primary" (click)="gameService.abort()" *ngIf="!gameService.isGameDone()">Abort</button>
-  <button mat-raised-button color="primary" (click)="exit()" *ngIf="gameService.isGameDone()">Exit</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="gameService.abort()"
+    *ngIf="!gameService.isGameDone()"
+  >
+    Abort
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="exit()"
+    *ngIf="gameService.isGameDone()"
+  >
+    Exit
+  </button>
 </div>

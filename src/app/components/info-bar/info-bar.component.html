@@ -4,10 +4,17 @@
   <div class="item">Round {{ gameService.getRound() }}</div>
   <div class="item">
     <p class="game-over" *ngIf="gameService.isGameDone()">GAME OVER</p>
-    <p class="turn-duration" *ngIf="!gameService.isGameDone()">{{ turnDuration | date: "HH:mm:ss":"+0000" }}</p>
+    <p class="turn-duration" *ngIf="!gameService.isGameDone()">
+      {{ turnDuration | date: "HH:mm:ss":"+0000" }}
+    </p>
     <p class="game-duration">{{ duration | date: "HH:mm:ss":"+0000" }}</p>
   </div>
-  <div class="item">{{ gameService.getNumberOfCardsLeft() }} card{{ gameService.getNumberOfCardsLeft() === 1 ? '' : 's' }} left</div>
+  <div class="item">
+    {{ gameService.getNumberOfCardsLeft() }} card{{
+      gameService.getNumberOfCardsLeft() === 1 ? "" : "s"
+    }}
+    left
+  </div>
   <div class="item mhide"></div>
   <div class="item controls">
     <div (click)="abort()" *ngIf="!gameService.isGameDone()">
@@ -17,8 +24,5 @@
       Go to game <i class="material-icons">play_arrow</i>
     </div>
   </div>
-  <div>
-
-  </div>
+  <div></div>
 </mat-card>
-

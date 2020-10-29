@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-
   constructor() {}
 
   ngOnInit() {
-    document.querySelector('meta[name=theme-color]').setAttribute('content', '#fff');
+    document
+      .querySelector("meta[name=theme-color]")
+      .setAttribute("content", "#fff");
     localStorage.clear();
   }
 }

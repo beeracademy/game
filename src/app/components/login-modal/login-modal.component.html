@@ -5,34 +5,80 @@
 
   <p>Number of players</p>
 
-  <br>
+  <br />
 
-  <mat-slider min="2" max="6" step="1" tickInterval="1" color="primary" thumbLabel="thumbLabel" [(ngModel)]="numberOfPlayers" (change)="sliderChange($event.value)" [disabled]="isShuffling"></mat-slider>
+  <mat-slider
+    min="2"
+    max="6"
+    step="1"
+    tickInterval="1"
+    color="primary"
+    thumbLabel="thumbLabel"
+    [(ngModel)]="numberOfPlayers"
+    (change)="sliderChange($event.value)"
+    [disabled]="isShuffling"
+  ></mat-slider>
 
   <mat-divider></mat-divider>
 
-  <app-login-modal-item *ngFor="let u of usersService.users; let i = index;" [index]="i" [locked]="shuffleDone || isShuffling" (ready)="ready(i)" (notReady)="notReady(i)">
+  <app-login-modal-item
+    *ngFor="let u of usersService.users; let i = index"
+    [index]="i"
+    [locked]="shuffleDone || isShuffling"
+    (ready)="ready(i)"
+    (notReady)="notReady(i)"
+  >
   </app-login-modal-item>
 
   <mat-divider></mat-divider>
 
   <div class="center">
-    <mat-checkbox [(ngModel)]="gameService.game.official" color="primary" tabIndex="-1" [disabled]="isShuffling">Official</mat-checkbox>
-    <mat-checkbox [(ngModel)]="gameService.offline" color="primary" tabIndex="-1" [disabled]="isShuffling || true">Offline</mat-checkbox>
+    <mat-checkbox
+      [(ngModel)]="gameService.game.official"
+      color="primary"
+      tabIndex="-1"
+      [disabled]="isShuffling"
+      >Official</mat-checkbox
+    >
+    <mat-checkbox
+      [(ngModel)]="gameService.offline"
+      color="primary"
+      tabIndex="-1"
+      [disabled]="isShuffling || true"
+      >Offline</mat-checkbox
+    >
   </div>
 
   <mat-divider></mat-divider>
 
-  <button mat-raised-button color="primary" (click)="shuffle()" [disabled]="!isReady || isShuffling || shuffleDone" #startButton style="margin-bottom: 5px;">Shuffle Players</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="shuffle()"
+    [disabled]="!isReady || isShuffling || shuffleDone"
+    #startButton
+    style="margin-bottom: 5px"
+  >
+    Shuffle Players
+  </button>
 
-  <button mat-raised-button color="primary" (click)="startGame()" [disabled]="!isReady || isShuffling" #startButton>Start Game</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="startGame()"
+    [disabled]="!isReady || isShuffling"
+    #startButton
+  >
+    Start Game
+  </button>
 
-  <button id="muteButton" mat-raised-button color="primary" (click)="toggleMute()">
-    <ng-container *ngIf="!this.isMuted; else muted">
-      Mute lobby
-    </ng-container>
-    <ng-template #muted>
-      Unmute lobby
-    </ng-template>
+  <button
+    id="muteButton"
+    mat-raised-button
+    color="primary"
+    (click)="toggleMute()"
+  >
+    <ng-container *ngIf="!this.isMuted; else muted"> Mute lobby </ng-container>
+    <ng-template #muted> Unmute lobby </ng-template>
   </button>
 </mat-card>

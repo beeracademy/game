@@ -1,15 +1,14 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
-import { Card } from '../models/card';
+import { Injectable, EventEmitter, Output } from "@angular/core";
+import { Card } from "../models/card";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class FlashService {
-
   @Output() onFlashText: EventEmitter<string> = new EventEmitter();
   @Output() onFlashCard: EventEmitter<Card> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   public flashText(text: string) {
     setTimeout(() => {

@@ -1,15 +1,46 @@
 <mat-form-field [hideRequiredMarker]="true">
-  <input matInput placeholder="Username" required #username [(ngModel)]="usersService.users[index].username" [disabled]="disabled" autofocus>
+  <input
+    matInput
+    placeholder="Username"
+    required
+    #username
+    [(ngModel)]="usersService.users[index].username"
+    [disabled]="disabled"
+    autofocus
+  />
 </mat-form-field>
 
 <mat-form-field [hideRequiredMarker]="true" *ngIf="!gameService.offline">
-  <input matInput placeholder="Password" type="password" required #password (blur)="login(username.value, password.value)" [disabled]="disabled" value="test" required>
+  <input
+    matInput
+    placeholder="Password"
+    type="password"
+    required
+    #password
+    (blur)="login(username.value, password.value)"
+    [disabled]="disabled"
+    value="test"
+    required
+  />
 </mat-form-field>
 
-<div class="login-image" [ngClass]="{locked: locked}" [ngStyle]="{'background-image': 'url(' + ( usersService.users[index].image ? usersService.users[index].image : 'assets/user.jpg') + ')'}" (click)="resetLogin()">
-  <i class="material-icons">
-    delete
-  </i>
+<div
+  class="login-image"
+  [ngClass]="{ locked: locked }"
+  [ngStyle]="{
+    'background-image':
+      'url(' +
+      (usersService.users[index].image
+        ? usersService.users[index].image
+        : 'assets/user.jpg') +
+      ')'
+  }"
+  (click)="resetLogin()"
+>
+  <i class="material-icons"> delete </i>
 </div>
 
-<div class="login-dicator" [ngStyle]="{'background-color': indicatorColor }"></div>
+<div
+  class="login-dicator"
+  [ngStyle]="{ 'background-color': indicatorColor }"
+></div>

@@ -1,13 +1,18 @@
-<p class="title">
-    {{ user.username }}, chug!
-</p>
+<p class="title">{{ user.username }}, chug!</p>
 <p class="time">
-    {{ time | date: "mm:ss:SSS":"+0000"}}
+  {{ time | date: "mm:ss:SSS":"+0000" }}
 </p>
 
 <p class="best" *ngIf="bestChug">
-  your best <br>
+  your best <br />
   {{ bestChug | date: "s:SSS" }} from season {{ bestChugSeason }}
 </p>
 
-<button mat-raised-button color="primary" (click)="isRunning ? stop() : start()" tabIndex="-1">{{isRunning ? 'Stop' : 'Start'}}</button>
+<button
+  mat-raised-button
+  color="primary"
+  (click)="isRunning ? stop() : start()"
+  tabIndex="-1"
+>
+  {{ isRunning ? "Stop" : "Start" }}
+</button>
