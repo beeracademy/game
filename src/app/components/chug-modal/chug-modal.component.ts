@@ -148,7 +148,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   }
 
   stop() {
-    if (this.time > 200) {
+    if (this.time > 2000) {
       clearInterval(this.intervalRef);
       this.chugMusic.pause();
       this.isRunning = false;
