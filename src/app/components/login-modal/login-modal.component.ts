@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { GameService } from "src/app/services/game.service";
 import { UsersService } from "src/app/services/users.service";
+import { TimeService } from "src/app/services/time.service";
 import { ModalService } from "src/app/services/modal.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { SoundService } from "src/app/services/sound.service";
@@ -25,6 +26,7 @@ export class LoginModalComponent implements OnInit {
   constructor(
     public gameService: GameService,
     public usersService: UsersService,
+    private timeService: TimeService,
     private modal: ModalService,
     private soundService: SoundService,
     private changeDetectorRef: ChangeDetectorRef
@@ -36,6 +38,18 @@ export class LoginModalComponent implements OnInit {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
 
     this.soundService.playLoop("homosangen_fuve");
+
+    this.timeService.approxServerTimeDifference().subscribe((diff) => {
+      const absDiff = Math.abs(diff);
+      if (absDiff > 10 * 1000) {
+        const diffStr = `${Math.floor(absDiff / 1000)} seconds ${
+          diff > 0 ? "ahead" : "behind"
+        }`;
+        this.modal.openAlert(
+          `Your clock seems to be ${diffStr} of the server's. To avoid issues, please synchronize your clock.`
+        );
+      }
+    });
 
     const elms = document.getElementsByTagName("input");
 

@@ -2,6 +2,7 @@ import { Injectable, Output, EventEmitter } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ConfirmModalComponent } from "../components/confirm-modal/confirm-modal.component";
+import { AlertModalComponent } from "../components/alert-modal/alert-modal.component";
 import { User } from "../models/user";
 import { ChugModalComponent } from "../components/chug-modal/chug-modal.component";
 import { FinishModalComponent } from "../components/finish-modal/finish-modal.component";
@@ -33,6 +34,16 @@ export class ModalService {
     return this.dialog.open(SpinnerModalComponent, {
       disableClose: true,
     });
+  }
+
+  public openAlert(text: string) {
+    return this.dialog
+      .open(AlertModalComponent, {
+        data: {
+          text,
+        },
+      })
+      .afterClosed();
   }
 
   public openConfirm(text: string) {

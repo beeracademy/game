@@ -14,6 +14,7 @@ import { MatInputModule } from "@angular/material/input";
 import { LoginModalItemComponent } from "./components/login-modal-item/login-modal-item.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ConfirmModalComponent } from "./components/confirm-modal/confirm-modal.component";
+import { AlertModalComponent } from "./components/alert-modal/alert-modal.component";
 import { GameComponent } from "./views/game/game.component";
 import { ChugModalComponent } from "./components/chug-modal/chug-modal.component";
 import { FinishModalComponent } from "./components/finish-modal/finish-modal.component";
@@ -46,6 +47,7 @@ import { WebcamModule } from "ngx-webcam";
     LoginComponent,
     LoginModalItemComponent,
     ConfirmModalComponent,
+    AlertModalComponent,
     GameComponent,
     ChugModalComponent,
     FinishModalComponent,
@@ -92,6 +94,7 @@ import { WebcamModule } from "ngx-webcam";
   ],
   entryComponents: [
     ConfirmModalComponent,
+    AlertModalComponent,
     ChugModalComponent,
     FinishModalComponent,
     SpinnerModalComponent,
