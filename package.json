@@ -5,7 +5,8 @@
     "ng": "./generate_asset_list && ng",
     "start": "./generate_asset_list && ng serve",
     "build": "./generate_asset_list && ng build",
-    "lint": "./generate_asset_list && ng lint"
+    "lint": "./generate_asset_list && ng lint",
+    "test": "./generate_asset_list && ng test --browsers ChromeHeadless"
   },
   "private": true,
   "dependencies": {
