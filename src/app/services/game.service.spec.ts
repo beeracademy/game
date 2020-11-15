@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async } from "@angular/core/testing";
+import { waitForAsync, fakeAsync, tick } from "@angular/core/testing";
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -24,15 +24,19 @@ describe("GameService", () => {
   let gameService: GameService;
   let usersService: UsersService;
   let httpTestingController: HttpTestingController;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        // RouterTestingModule.withRoutes([])
         /*
-        RouterTestingModule.withRoutes([
-          { path: "game", component: BlankComponent },
-        ]),*/
+          { path: "", component: BlankComponent },
+          { path: "login", component: BlankComponent },
+          { path: "**", redirectTo: "" },
+        ]),
+        */
       ],
       providers: [
         {
@@ -43,16 +47,53 @@ describe("GameService", () => {
           provide: MatSnackBar,
           useValue: {},
         },
+        /*
         {
           provide: Router,
           useValue: {
-            navigate: () => null,
+            navigate: arg => {
+              console.error(arg);
+              //throw new Error("AAAA");
+              return null;
+            }
           },
+        },*/
+        {
+          provide: Router,
+          useValue: new Proxy(
+            {},
+            {
+              get: function (obj, prop) {
+                console.error("get", obj, prop);
+                if (prop === "navigate") {
+                  return (arg) => {
+                    console.error("navigate", arg);
+                    return new Proxy(
+                      {},
+                      {
+                        get: function (obj, prop) {
+                          console.error("navigate get", obj, prop);
+                          throw "AAA";
+                        },
+                      }
+                    );
+                  };
+                } else if (prop === "ngOnDestroy") {
+                  return () => {};
+                }
+              },
+              set: function (obj, prop, value, receiver) {
+                console.error("set", obj, prop, value, receiver);
+                return true;
+              },
+            }
+          ),
         },
       ],
-    });
+    }).compileComponents();
 
     httpTestingController = TestBed.inject(HttpTestingController);
+    router = TestBed.inject(Router);
 
     gameService = TestBed.inject(GameService);
     usersService = TestBed.inject(UsersService);
@@ -70,7 +111,7 @@ describe("GameService", () => {
     expect(gameService).toBeTruthy();
   });
 
-  it("test start", async(() => {
+  it("test start", fakeAsync(() => {
     function get_user(i) {
       const u = new User();
       u.id = i + 1;
@@ -86,6 +127,7 @@ describe("GameService", () => {
       console.error(game);
     });
 
+    tick();
     const req = httpTestingController.expectOne(
       `${environment.url}/api/games/`
     );
