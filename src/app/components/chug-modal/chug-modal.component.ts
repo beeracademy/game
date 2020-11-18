@@ -130,12 +130,13 @@ export class ChugModalComponent implements OnInit, OnDestroy {
     if (chugMusic) {
       this.gameService.nextChugMusic = null;
     } else {
-      if (Math.random() < 0.05) {
-        chugMusic = "big_chungus";
-      } else {
-        chugMusic = "bubbi_fuve";
-      }
+      chugMusic = "bubbi_fuve";
     }
+
+    if (Math.random() < 0.05) {
+      chugMusic = "big_chungus";
+    }
+
     this.chugMusic = this.sounds.play(chugMusic);
 
     if (this.chugs !== 9001) {
