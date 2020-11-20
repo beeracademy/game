@@ -38,6 +38,10 @@ export class LoginModalComponent implements OnInit {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
 
     this.soundService.playLoop("homosangen_fuve");
+    if (localStorage.getItem("academy:muteLobby") === "true") {
+      this.soundService.toggleMute("homosangen_fuve");
+      this.isMuted = true;
+    }
 
     this.timeService.approxServerTimeDifference().subscribe((diff) => {
       const absDiff = Math.abs(diff);
@@ -146,5 +150,6 @@ export class LoginModalComponent implements OnInit {
   public toggleMute() {
     this.soundService.toggleMute("homosangen_fuve");
     this.isMuted = !this.isMuted;
+    localStorage.setItem("academy:muteLobby", this.isMuted.toString());
   }
 }

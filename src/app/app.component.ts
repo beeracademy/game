@@ -43,7 +43,7 @@ export class AppComponent {
     ) {
       this.router.navigate(["game"]);
     } else {
-      localStorage.clear();
+      this.gameService.clearSavedGame();
     }
 
     setTimeout(() => {

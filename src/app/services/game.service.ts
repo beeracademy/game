@@ -140,6 +140,18 @@ export class GameService {
     }
   }
 
+  public clearSavedGame() {
+    const keys = [
+      "academy:game",
+      "academy:deck",
+      "academy:offline",
+      "academy:localStartTimestamp",
+    ];
+    for (const k of keys) {
+      localStorage.removeItem(k);
+    }
+  }
+
   public setChugStartTime(start_delta_ms: number) {
     const c = this.getLatestCard();
     c.chug_start_start_delta_ms = start_delta_ms;
@@ -184,10 +196,10 @@ export class GameService {
           this.game.dnf = true;
           this.postUpdate().subscribe(
             () => {
-              localStorage.clear();
+              this.clearSavedGame();
             },
             (error) => {
-              localStorage.clear();
+              this.clearSavedGame();
             }
           );
 
@@ -203,7 +215,7 @@ export class GameService {
   }
 
   public resetAndGoToLogin() {
-    localStorage.clear();
+    this.clearSavedGame();
     this.reset();
     this.usersService.reset();
     this.router.navigate(["login"]);
@@ -225,7 +237,7 @@ export class GameService {
 
       this.postUpdate().subscribe(
         () => {
-          localStorage.clear();
+          this.clearSavedGame();
           spinner.close();
         },
         (error) => {
@@ -246,7 +258,7 @@ export class GameService {
       })
       .afterClosed()
       .subscribe(() => {
-        localStorage.clear();
+        this.clearSavedGame();
       });
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { GameService } from "../../services/game.service";
 
 @Component({
   selector: "app-login",
@@ -6,12 +7,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private gameService: GameService) {}
 
   ngOnInit() {
     document
       .querySelector("meta[name=theme-color]")
       .setAttribute("content", "#fff");
-    localStorage.clear();
+    this.gameService.clearSavedGame();
   }
 }
