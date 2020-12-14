@@ -3,6 +3,7 @@ import { GameService } from "./services/game.service";
 import { Router } from "@angular/router";
 import { UsersService } from "./services/users.service";
 import { ASSETS } from "./assets";
+import Snowflakes from "magic-snowflakes";
 
 @Component({
   selector: "app-root",
@@ -36,6 +37,10 @@ export class AppComponent {
     private gameService: GameService,
     private userService: UsersService
   ) {
+    Snowflakes({
+      count: 500,
+    });
+
     this.preloadAssets();
     if (
       this.gameService.game.start_datetime &&

@@ -22,6 +22,7 @@
     "@angular/service-worker": "~11.0.0",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
+    "magic-snowflakes": "^4.1.6",
     "ng-animate": "^0.3.4",
     "ng2-charts": "^2.3.2",
     "ngx-webcam": "^0.3.0",
