@@ -8,6 +8,7 @@ import { Card } from "src/app/models/card";
 import { Game } from "src/app/models/game";
 import { ModalService } from "src/app/services/modal.service";
 import { UsersService } from "src/app/services/users.service";
+import Snowflakes from "magic-snowflakes";
 
 @Component({
   selector: "app-game",
@@ -25,6 +26,8 @@ export class GameComponent implements OnInit, OnDestroy {
   private disableDraw = false;
 
   private game: Game;
+
+  private snowflakes: Snowflakes;
 
   constructor(
     private gameService: GameService,
@@ -79,6 +82,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.registerCommand("downunder", this.flipBody.bind(this));
     this.registerCommand("olderenneger", this.oldErEnNeger.bind(this));
     this.registerCommand("mimimi", this.mimimi.bind(this));
+    this.registerCommand("letitsnow", this.toggleSnowflakes.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -197,6 +201,17 @@ export class GameComponent implements OnInit, OnDestroy {
 
   mimimi() {
     this.gameService.nextChugMusic = "mimimi";
+  }
+
+  toggleSnowflakes() {
+    if (this.snowflakes) {
+      this.snowflakes.destroy();
+      this.snowflakes = null;
+    } else {
+      this.snowflakes = new Snowflakes({
+        count: 500,
+      });
+    }
   }
 
   playIDLSound() {
