@@ -21,6 +21,8 @@ export class UsersService {
     "#C85200",
   ];
 
+  private randomEngine = Random.browserCrypto;
+
   constructor(private http: HttpClient) {
     this.resume();
   }
@@ -38,10 +40,6 @@ export class UsersService {
       .pipe(
         map((user: User) => {
           user.username = username;
-          user.color = this.userColors.splice(
-            Math.floor(Math.random() * this.userColors.length),
-            1
-          )[0];
           return user;
         })
       );
@@ -49,8 +47,7 @@ export class UsersService {
 
   public assignPlayerIndexes(shuffle: boolean) {
     if (shuffle) {
-      const engine = Random.browserCrypto;
-      Random.shuffle(engine, this.users);
+      Random.shuffle(this.randomEngine, this.users);
     }
 
     for (let i = 0; i < this.users.length; i++) {
@@ -61,9 +58,12 @@ export class UsersService {
   public setNumberOfUsers(val: number) {
     this.users = this.users.slice(0, val);
 
+    Random.shuffle(this.randomEngine, this.userColors);
+
     for (let i = 0; i < val; i++) {
       if (!this.users[i]) {
         this.users[i] = new User();
+        this.users[i].color = this.userColors[i];
       }
     }
   }
