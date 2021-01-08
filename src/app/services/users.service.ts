@@ -63,8 +63,8 @@ export class UsersService {
     for (let i = 0; i < val; i++) {
       if (!this.users[i]) {
         this.users[i] = new User();
-        this.users[i].color = this.userColors[i];
       }
+      this.users[i].color = this.userColors[i];
     }
   }
 
