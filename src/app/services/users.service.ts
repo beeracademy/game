@@ -12,20 +12,40 @@ import * as Random from "random-js";
 export class UsersService {
   public users: User[] = [];
 
-  public userColors = [
-    "#006BA4",
-    "#FF800E",
-    "#ABABAB",
-    "#595959",
-    "#5F9ED1",
-    "#C85200",
-  ];
+  public userColors = [];
+
+  public colorBlindFriendlyColors = [
+    '#006BA4',
+    '#FF800E',
+    '#ABABAB',
+    '#595959',
+    '#5F9ED1',
+    '#C85200',
+  ]
+
+  public asgerColors = [
+    '#2abb9b',
+    '#7befb2',
+    '#4daf7c',
+    '#f03434',
+    '#e26a6a',
+    '#db0a5b',
+  ]
 
   private randomEngine = Random.browserCrypto;
 
   constructor(private http: HttpClient) {
+    if (window.location.href.indexOf("?asger") > -1) {
+      this.userColors = this.asgerColors;
+    } else {
+      this.userColors = this.colorBlindFriendlyColors;
+    }
+
+    console.log(this.userColors);
+
     this.resume();
   }
+
 
   public login(username: string, password: string): Observable<User> {
     if (this.isAlreadyLoggedIn(username)) {
