@@ -41,8 +41,6 @@ export class UsersService {
       this.userColors = this.colorBlindFriendlyColors;
     }
 
-    console.log(this.userColors);
-
     this.resume();
   }
 
