@@ -15,6 +15,7 @@ import { Chug } from "../models/chug";
 import { RetryUploadModalComponent } from "../components/retry-upload-modal/retry-upload-modal.component";
 import { MatDialog } from "@angular/material/dialog";
 import { FlashService } from "./flash.service";
+import { GIT_COMMIT_HASH } from "../generated";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +31,7 @@ export class GameService {
   public offline = false;
 
   public nextChugMusic: string = null;
+  public gameStartHash: string = null;
 
   constructor(
     private http: HttpClient,
@@ -91,6 +93,8 @@ export class GameService {
           timeOffset
         );
 
+        this.gameStartHash = GIT_COMMIT_HASH;
+
         this.save();
 
         location.subscribe(
@@ -146,6 +150,7 @@ export class GameService {
       "academy:deck",
       "academy:offline",
       "academy:localStartTimestamp",
+      "academy:gameStartHash",
     ];
     for (const k of keys) {
       localStorage.removeItem(k);
@@ -293,6 +298,10 @@ export class GameService {
       JSON.stringify(this.localStartTimestamp)
     );
     localStorage.setItem("academy:offline", JSON.stringify(this.offline));
+    localStorage.setItem(
+      "academy:gameStartHash",
+      JSON.stringify(this.gameStartHash)
+    );
   }
 
   public resume() {
