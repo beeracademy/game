@@ -33,26 +33,37 @@ mat-card {
     font-size: 24px;
     flex: 1;
 
+    &.hash,
     &.controls {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
 
       div {
         display: flex;
         align-items: center;
-        padding-right: 12px;
-        color: #fff;
-        opacity: 0.5;
+        padding: 12px;
         cursor: pointer;
-
+        opacity: 0.5;
         &:hover {
           opacity: 1;
         }
+      }
+    }
 
-        i {
-          margin-left: 4px;
-        }
+    &.hash {
+      font-size: 16px;
+
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+    }
+
+    &.controls {
+      justify-content: flex-end;
+
+      i {
+        margin-left: 4px;
       }
     }
 

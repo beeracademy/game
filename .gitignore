@@ -4,7 +4,7 @@
 /dist
 /tmp
 /out-tsc
-/src/app/assets.ts
+/src/app/generated.ts
 
 # dependencies
 /node_modules

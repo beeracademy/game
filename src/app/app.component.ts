@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { GameService } from "./services/game.service";
 import { Router } from "@angular/router";
 import { UsersService } from "./services/users.service";
-import { ASSETS } from "./assets";
+import { ASSETS } from "./generated";
 
 @Component({
   selector: "app-root",

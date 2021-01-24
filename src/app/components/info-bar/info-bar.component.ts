@@ -4,6 +4,7 @@ import { ModalService } from "src/app/services/modal.service";
 import { Router } from "@angular/router";
 import { SoundService } from "src/app/services/sound.service";
 import { environment } from "src/environments/environment";
+import { GIT_COMMIT_HASH } from "src/app/generated";
 
 @Component({
   selector: "app-info-bar",
@@ -13,6 +14,7 @@ import { environment } from "src/environments/environment";
 export class InfoBarComponent implements OnInit, OnDestroy {
   public duration = 0;
   public turnDuration = 0;
+  public GIT_COMMIT_HASH = GIT_COMMIT_HASH;
 
   private intervalRef;
 

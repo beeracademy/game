@@ -1,5 +1,12 @@
 <mat-card>
-  <div class="item mhide"></div>
+  <div class="item mhide hash">
+    <div>
+      <a
+        href="https://github.com/beeracademy/game/commit/{{ GIT_COMMIT_HASH }}"
+        >{{ GIT_COMMIT_HASH }}</a
+      >
+    </div>
+  </div>
   <div class="item mhide"></div>
   <div class="item">Round {{ gameService.getRound() }}</div>
   <div class="item">

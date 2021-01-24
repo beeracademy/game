@@ -2,10 +2,10 @@
   "name": "academy-web-game",
   "version": "0.0.0",
   "scripts": {
-    "ng": "./generate_asset_list && ng",
-    "start": "./generate_asset_list && ng serve",
-    "build": "./generate_asset_list && ng build",
-    "lint": "./generate_asset_list && ng lint"
+    "ng": "./generate_constants && ng",
+    "start": "./generate_constants && ng serve",
+    "build": "./generate_constants && ng build",
+    "lint": "./generate_constants && ng lint"
   },
   "private": true,
   "dependencies": {
