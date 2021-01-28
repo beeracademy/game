@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -euo pipefail
 
 if [[ -z "${GIT_COMMIT_HASH:-}" ]]; then
