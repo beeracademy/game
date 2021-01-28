@@ -1,0 +1,4 @@
+#!/bin/bash
+GIT_COMMIT_HASH=$(git rev-parse --short HEAD)
+name=ghcr.io/beeracademy/game
+docker build -t "$name" -t "$name:$GIT_COMMIT_HASH" --build-arg "GIT_COMMIT_HASH=$GIT_COMMIT_HASH" .

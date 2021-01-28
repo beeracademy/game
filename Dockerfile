@@ -11,6 +11,9 @@ RUN ./node_modules/.bin/ngcc --properties es2015  browser module main --create-i
 
 COPY . /app
 
+ARG GIT_COMMIT_HASH
+ENV GIT_COMMIT_HASH $GIT_COMMIT_HASH
+
 RUN yarn build --prod
 
 FROM nginx:alpine
