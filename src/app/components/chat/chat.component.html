@@ -1,0 +1,18 @@
+<div class="chat-header">Chat</div>
+<div class="messages">
+  <div *ngFor="let data of messages" class="message">
+    <a [href]="data.userUrl" target="_blank" class="username">{{
+      data.username
+    }}</a
+    >&nbsp;<span>{{ data.message }}</span>
+  </div>
+</div>
+<input
+  class="chat-input"
+  autocomplete="off"
+  type="text"
+  [disabled]="isDisconnected"
+  placeholder="Send a message"
+  #chatInput
+  (keyup)="inputKeyup($event)"
+/>

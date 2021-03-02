@@ -39,6 +39,7 @@ import { PlayerItemBottleComponent } from "./components/player-item-bottle/playe
 import { CardFlashModalComponent } from "./components/card-flash-modal/card-flash-modal.component";
 import { WebcamModalComponent } from "./components/webcam-modal/webcam-modal.component";
 import { WebcamModule } from "ngx-webcam";
+import { ChatComponent } from "./components/chat/chat.component";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { WebcamModule } from "ngx-webcam";
     PlayerItemBottleComponent,
     CardFlashModalComponent,
     WebcamModalComponent,
+    ChatComponent,
   ],
   imports: [
     WebcamModule,

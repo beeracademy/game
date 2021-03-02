@@ -1,0 +1,43 @@
+:host {
+  height: 100%;
+  border: black 1px solid;
+
+  display: grid;
+  grid:
+    [row1-start] "chat-header" 64px [row1-end]
+    [row2-start] "chat-messages" 1fr [row2-end]
+    [row3-start] "chat-input" 64px [row3-end]
+    / auto;
+  justify-content: center;
+
+  .chat-header {
+    grid-area: chat-header;
+    border-bottom: 1px solid #dededf;
+    text-align: center;
+    font-size: 1.5em;
+    color: #666;
+    text-transform: uppercase;
+    margin-top: 0.5em;
+  }
+
+  .messages {
+    grid-area: chat-messages;
+    padding: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .chat-input {
+    grid-area: chat-input;
+    margin: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    outline-color: #bd2130;
+  }
+
+  .username {
+    font-weight: bolder;
+  }
+}

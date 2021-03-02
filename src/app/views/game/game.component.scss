@@ -4,18 +4,18 @@
 
   display: grid;
 
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 0.3fr 1fr 1fr 1fr;
   grid-template-rows: 70px auto 110px 30px 275px;
 
   align-items: center;
   justify-content: center;
 
   grid-template-areas:
-    "header  header  header"
-    "deck    table   chart"
-    "deck    chugs   chart"
-    ".       .       .    "
-    "players players players";
+    "header  header  header  header"
+    "chat    deck    table   chart"
+    "chat    deck    chugs   chart"
+    "chat    .       .       .    "
+    "chat    players players players";
 
   app-info-bar {
     grid-area: header;
@@ -40,6 +40,10 @@
 
   app-players {
     grid-area: players;
+  }
+
+  app-chat {
+    grid-area: chat;
   }
 
   app-mobile-controls {
@@ -75,6 +79,10 @@
   }
 
   app-players {
+    display: none;
+  }
+
+  app-chat {
     display: none;
   }
 
