@@ -3,6 +3,7 @@
   border: black 1px solid;
 
   display: grid;
+  min-height: 0; /* Fix scrolling */
   grid:
     [row1-start] "chat-header" 64px [row1-end]
     [row2-start] "chat-messages" 1fr [row2-end]

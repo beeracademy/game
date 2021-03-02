@@ -1,4 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
+} from "@angular/core";
 import { environment } from "src/environments/environment";
 import { ChatService } from "../../services/chat.service";
 import { GameService } from "../../services/game.service";
@@ -15,9 +21,12 @@ class ChatMessage {
   templateUrl: "./chat.component.html",
   styleUrls: ["./chat.component.scss"],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
+  @ViewChild("messagesContainer") messagesContainer: ElementRef;
+
   isDisconnected: boolean;
   messages: Array<any> = [];
+  scrollToBottom = false;
 
   constructor(
     private gameService: GameService,
@@ -60,11 +69,24 @@ export class ChatComponent implements OnInit {
         }
 
         this.messages.push(message);
+
+        this.scrollToBottom = true;
       },
     });
   }
 
   ngOnInit(): void {}
+
+  ngAfterViewChecked(): void {
+    if (this.scrollToBottom) {
+      console.error("Scrolling!");
+      this.messagesContainer.nativeElement.scrollTo(
+        0,
+        this.messagesContainer.nativeElement.scrollHeight
+      );
+      this.scrollToBottom = false;
+    }
+  }
 
   inputKeyup(e: KeyboardEvent) {
     const chatInput = e.target as HTMLInputElement;
