@@ -93,5 +93,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.chatService.sendMessage(chatInput.value);
       chatInput.value = "";
     }
+    e.preventDefault();
+    e.stopPropagation();
   }
 }
