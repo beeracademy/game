@@ -79,7 +79,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (this.scrollToBottom) {
-      console.error("Scrolling!");
       this.messagesContainer.nativeElement.scrollTo(
         0,
         this.messagesContainer.nativeElement.scrollHeight
