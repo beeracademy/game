@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { StorageService } from "src/app/services/storage.service";
 import { GameService } from "src/app/services/game.service";
 import { UsersService } from "src/app/services/users.service";
 import { TimeService } from "src/app/services/time.service";
@@ -24,6 +25,7 @@ export class LoginModalComponent implements OnInit {
   private shuffleEvery = 200;
 
   constructor(
+    private storageService: StorageService,
     public gameService: GameService,
     public usersService: UsersService,
     private timeService: TimeService,
@@ -38,7 +40,7 @@ export class LoginModalComponent implements OnInit {
     this.usersService.setNumberOfUsers(this.numberOfPlayers);
 
     this.soundService.playLoop("homosangen_fuve");
-    if (localStorage.getItem("academy:muteLobby") === "true") {
+    if (this.storageService.get("muteLobby", false)) {
       this.soundService.toggleMute("homosangen_fuve");
       this.isMuted = true;
     }
@@ -150,6 +152,6 @@ export class LoginModalComponent implements OnInit {
   public toggleMute() {
     this.soundService.toggleMute("homosangen_fuve");
     this.isMuted = !this.isMuted;
-    localStorage.setItem("academy:muteLobby", this.isMuted.toString());
+    this.storageService.set("muteLobby", this.isMuted);
   }
 }

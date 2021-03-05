@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as Random from "random-js";
 import { Card, suits, values } from "../models/card";
+import { StorageService } from "./storage.service";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +12,7 @@ export class CardsService {
   public cardBack = "cardback.png";
   public dickMode = false;
 
-  constructor() {
+  constructor(private storageService: StorageService) {
     this.resume();
     this.setDickMode(this.dickMode);
   }
@@ -126,11 +127,10 @@ export class CardsService {
   }
 
   public save() {
-    localStorage.setItem("academy:dickMode", JSON.stringify(this.dickMode));
+    this.storageService.set("dickMode", this.dickMode);
   }
 
   public resume() {
-    this.dickMode =
-      JSON.parse(localStorage.getItem("academy:dickMode")) || this.dickMode;
+    this.dickMode = this.storageService.get("dickMode", this.dickMode);
   }
 }

@@ -16,6 +16,7 @@ import { RetryUploadModalComponent } from "../components/retry-upload-modal/retr
 import { MatDialog } from "@angular/material/dialog";
 import { FlashService } from "./flash.service";
 import { GIT_COMMIT_HASH } from "../generated";
+import { StorageService } from "./storage.service";
 
 @Injectable({
   providedIn: "root",
@@ -37,6 +38,7 @@ export class GameService {
     private http: HttpClient,
     private sounds: SoundService,
     private modal: ModalService,
+    private storageService: StorageService,
     private usersService: UsersService,
     private cardsService: CardsService,
     private flashService: FlashService,
@@ -145,14 +147,9 @@ export class GameService {
   }
 
   public clearSavedGame() {
-    const keys = [
-      "academy:game",
-      "academy:offline",
-      "academy:localStartTimestamp",
-      "academy:gameStartHash",
-    ];
+    const keys = ["game", "offline", "localStartTimestamp", "gameStartHash"];
     for (const k of keys) {
-      localStorage.removeItem(k);
+      this.storageService.remove(k);
     }
   }
 
@@ -290,31 +287,26 @@ export class GameService {
   */
 
   public save() {
-    localStorage.setItem("academy:game", JSON.stringify(this.game));
-    localStorage.setItem(
-      "academy:localStartTimestamp",
-      JSON.stringify(this.localStartTimestamp)
-    );
-    localStorage.setItem("academy:offline", JSON.stringify(this.offline));
-    localStorage.setItem(
-      "academy:gameStartHash",
-      JSON.stringify(this.gameStartHash)
-    );
+    this.storageService.set("game", this.game);
+    this.storageService.set("localStartTimestamp", this.localStartTimestamp);
+    this.storageService.set("offline", this.offline);
+    this.storageService.set("gameStartHash", this.gameStartHash);
   }
 
   public resume() {
-    this.game = JSON.parse(localStorage.getItem("academy:game")) || this.game;
+    this.game = this.storageService.get("game", this.game);
     if (this.game.shuffle_indices) {
       this.deck = this.cardsService.generateCardsFromShuffleIndices(
         this.getNumberOfPlayers(),
         this.game.shuffle_indices
       );
     }
-    this.localStartTimestamp =
-      JSON.parse(localStorage.getItem("academy:localStartTimestamp")) ||
-      this.localStartTimestamp;
-    this.offline =
-      JSON.parse(localStorage.getItem("academy:offline")) || this.offline;
+
+    this.localStartTimestamp = this.storageService.get(
+      "localStartTimestamp",
+      this.localStartTimestamp
+    );
+    this.offline = this.storageService.get("offline", this.offline);
 
     if (!this.game.dnf_player_ids) {
       this.game.dnf_player_ids = [];

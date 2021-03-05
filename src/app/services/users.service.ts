@@ -5,6 +5,7 @@ import { Observable, throwError } from "rxjs";
 import { map } from "rxjs/operators";
 import { User } from "../models/user";
 import * as Random from "random-js";
+import { StorageService } from "./storage.service";
 
 @Injectable({
   providedIn: "root",
@@ -15,26 +16,29 @@ export class UsersService {
   public userColors = [];
 
   public colorBlindFriendlyColors = [
-    '#006BA4',
-    '#FF800E',
-    '#ABABAB',
-    '#595959',
-    '#5F9ED1',
-    '#C85200',
-  ]
+    "#006BA4",
+    "#FF800E",
+    "#ABABAB",
+    "#595959",
+    "#5F9ED1",
+    "#C85200",
+  ];
 
   public asgerColors = [
-    '#2abb9b',
-    '#7befb2',
-    '#4daf7c',
-    '#f03434',
-    '#e26a6a',
-    '#db0a5b',
-  ]
+    "#2abb9b",
+    "#7befb2",
+    "#4daf7c",
+    "#f03434",
+    "#e26a6a",
+    "#db0a5b",
+  ];
 
   private randomEngine = Random.browserCrypto;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private storageService: StorageService,
+    private http: HttpClient
+  ) {
     if (window.location.href.indexOf("?asger") > -1) {
       this.userColors = this.asgerColors;
     } else {
@@ -43,7 +47,6 @@ export class UsersService {
 
     this.resume();
   }
-
 
   public login(username: string, password: string): Observable<User> {
     if (this.isAlreadyLoggedIn(username)) {
@@ -106,11 +109,10 @@ export class UsersService {
   */
 
   public save() {
-    localStorage.setItem("academy:users", JSON.stringify(this.users));
+    this.storageService.set("users", this.users);
   }
 
   public resume() {
-    this.users =
-      JSON.parse(localStorage.getItem("academy:users")) || this.users;
+    this.users = this.storageService.get("users", this.users);
   }
 }
