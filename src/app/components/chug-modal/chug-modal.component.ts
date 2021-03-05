@@ -15,6 +15,7 @@ import { User } from "src/app/models/user";
 import { Game } from "src/app/models/game";
 import { FlashService } from "src/app/services/flash.service";
 import { StatsService, UserStats } from "src/app/services/stats.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-chug-modal",
@@ -22,6 +23,8 @@ import { StatsService, UserStats } from "src/app/services/stats.service";
   styleUrls: ["./chug-modal.component.scss"],
 })
 export class ChugModalComponent implements OnInit, OnDestroy {
+  private minTime = environment.production ? 2000 : 0;
+
   public time = 0;
   public isRunning = false;
 
@@ -149,7 +152,7 @@ export class ChugModalComponent implements OnInit, OnDestroy {
   }
 
   stop() {
-    if (this.time > 2000) {
+    if (this.time > this.minTime) {
       clearInterval(this.intervalRef);
       this.chugMusic.pause();
       this.isRunning = false;
