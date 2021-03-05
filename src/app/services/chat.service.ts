@@ -19,6 +19,11 @@ export class ChatService {
   public startSocket() {
     const url = environment.url.replace(/^http/, "ws");
     const gameId = this.gameService.game.id;
+    if (!gameId) {
+      setTimeout(this.startSocket.bind(this), 1000);
+      return;
+    }
+
     this.socket = new WebSocket(`${url}/ws/chat/${gameId}/?game`);
 
     this.socket.addEventListener("open", (e) => {

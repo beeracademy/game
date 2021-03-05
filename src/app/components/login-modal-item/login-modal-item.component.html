@@ -5,6 +5,7 @@
     required
     #username
     [(ngModel)]="usersService.users[index].username"
+    (blur)="gameService.offline && login(username.value)"
     [disabled]="disabled"
     autofocus
   />

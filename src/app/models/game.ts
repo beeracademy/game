@@ -10,7 +10,7 @@ class Location {
 
 export class Game {
   constructor(
-    public start_datetime: number = 0,
+    public start_datetime: string = "",
     public official: boolean = true,
     public player_names: string[] = [],
     public cards: Card[] = [],

@@ -49,7 +49,22 @@ export class LoginModalItemComponent implements OnInit {
     this.resetIndicator();
   }
 
-  public login(username: string, password: string) {
+  private loginSuccessful(user: User) {
+    this.indicatorColor = this.indicatorSuccess;
+    user.index = this.index;
+    Object.assign(this.usersService.users[this.index], user);
+    this.ready.emit();
+  }
+
+  public login(username: string, password?: string) {
+    if (this.gameService.offline && username) {
+      const user = this.usersService.users[this.index];
+      user.id = -1;
+      user.username = username;
+      this.loginSuccessful(user);
+      return;
+    }
+
     if (!username || !password) {
       return;
     }
@@ -57,16 +72,9 @@ export class LoginModalItemComponent implements OnInit {
     this.indicatorColor = this.indicatorWaiting;
     this.disabled = true;
 
-    this.usersService.login(username, password).subscribe(
-      (user: User) => {
-        this.indicatorColor = this.indicatorSuccess;
-        user.index = this.index;
-
-        Object.assign(this.usersService.users[this.index], user);
-
-        this.ready.emit();
-      },
-      (err: HttpErrorResponse) => {
+    this.usersService
+      .login(username, password)
+      .subscribe(this.loginSuccessful.bind(this), (err: HttpErrorResponse) => {
         if (err.status === 404) {
           this.modalService
             .openConfirm("Create new user " + username + "?")
@@ -79,11 +87,12 @@ export class LoginModalItemComponent implements OnInit {
             });
         } else {
           this.resetIndicator();
-          this.passwordField.nativeElement.value = "";
+          if (this.passwordField) {
+            this.passwordField.nativeElement.value = "";
+          }
           this.modalService.showSnack(this.parseFieldErrors(err.error));
         }
-      }
-    );
+      });
   }
 
   public createNewUser(username: string, password: string) {
@@ -108,7 +117,9 @@ export class LoginModalItemComponent implements OnInit {
     this.notReady.emit();
     this.resetIndicator();
     this.disabled = false;
-    this.passwordField.nativeElement.value = "";
+    if (this.passwordField) {
+      this.passwordField.nativeElement.value = "";
+    }
   }
 
   public resetIndicator() {

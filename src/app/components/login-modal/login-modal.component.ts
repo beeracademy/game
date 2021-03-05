@@ -107,6 +107,7 @@ export class LoginModalComponent implements OnInit {
       (err: HttpErrorResponse) => {
         ref.close();
         this.modal.showSnack("Failed to create game");
+        console.error(err);
       }
     );
   }

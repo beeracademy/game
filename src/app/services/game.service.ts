@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { Card } from "../models/card";
 import { ModalService } from "./modal.service";
 import { UsersService } from "./users.service";
-import { Observable } from "rxjs";
+import { from, Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { CardsService } from "./cards.service";
@@ -263,11 +263,23 @@ export class GameService {
       });
   }
 
+  private createOfflineGame(): Game {
+    const game = new Game();
+    game.shuffle_indices = this.cardsService.generateShuffleIndicesForPlayers(
+      this.getNumberOfPlayers()
+    );
+    game.start_datetime = new Date().toISOString();
+    return game;
+  }
+
   /*
     Requests
   */
 
   private postStart(): Observable<Game> {
+    if (this.offline) {
+      return from([this.createOfflineGame()]);
+    }
     return this.http.post<Game>(`${environment.url}/api/games/`, {
       tokens: this.usersService.users.map((u) => u.token),
       official: this.game.official,
@@ -276,6 +288,9 @@ export class GameService {
 
   private postUpdate(): Observable<any> {
     this.save();
+    if (this.offline && !this.isGameDone()) {
+      return from([null]);
+    }
     return this.http.post(
       `${environment.url}/api/games/` + this.game.id + "/update_state/",
       this.game
