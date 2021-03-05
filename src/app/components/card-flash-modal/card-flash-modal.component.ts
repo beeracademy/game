@@ -50,33 +50,33 @@ export class CardFlashModalComponent implements OnInit {
       for (const card of Object.values(cards)) {
         this.preloadImage(card.user_image);
       }
+    });
 
-      this.flashService.onFlashCard.subscribe((card) => {
-        if (!card) {
-          this.clear();
-          return;
-        }
+    this.flashService.onFlashCard.subscribe((card) => {
+      if (!card) {
+        this.clear();
+        return;
+      }
 
-        if (this.timeout != null) {
-          this.clear();
-        }
+      if (this.timeout != null) {
+        this.clear();
+      }
 
-        const cardName = card.suit + "-" + card.value;
+      const cardName = card.suit + "-" + card.value;
 
-        if (cardName in this.rankedCards) {
-          this.rankedPhoto = this.rankedCards[cardName].user_image;
-        } else {
-          this.rankedPhoto = null;
-        }
+      if (this.rankedCards && cardName in this.rankedCards) {
+        this.rankedPhoto = this.rankedCards[cardName].user_image;
+      } else {
+        this.rankedPhoto = null;
+      }
 
-        this.cardURI = "assets/cards/" + cardName + ".png";
-        this.show = true;
+      this.cardURI = "assets/cards/" + cardName + ".png";
+      this.show = true;
 
-        this.timeout = setTimeout(() => {
-          this.show = false;
-          this.rankedPhoto = null;
-        }, 1500);
-      });
+      this.timeout = setTimeout(() => {
+        this.show = false;
+        this.rankedPhoto = null;
+      }, 1500);
     });
   }
 
