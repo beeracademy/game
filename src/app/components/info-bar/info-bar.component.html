@@ -27,6 +27,7 @@
     <div (click)="abort()" *ngIf="!gameService.isGameDone()">
       Abort <i class="material-icons">exit_to_app</i>
     </div>
+    <div (click)="restart()" *ngIf="gameService.isGameDone()">Restart</div>
     <div (click)="goToGame()" *ngIf="gameService.isGameDone()">
       Go to game <i class="material-icons">play_arrow</i>
     </div>

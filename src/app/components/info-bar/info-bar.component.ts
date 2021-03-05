@@ -51,4 +51,8 @@ export class InfoBarComponent implements OnInit, OnDestroy {
     window.location.href =
       environment.url + "/games/" + this.gameService.game.id + "/";
   }
+
+  public restart() {
+    this.gameService.resetAndGoToLogin();
+  }
 }
