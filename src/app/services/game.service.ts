@@ -147,7 +147,6 @@ export class GameService {
   public clearSavedGame() {
     const keys = [
       "academy:game",
-      "academy:deck",
       "academy:offline",
       "academy:localStartTimestamp",
       "academy:gameStartHash",
@@ -292,7 +291,6 @@ export class GameService {
 
   public save() {
     localStorage.setItem("academy:game", JSON.stringify(this.game));
-    localStorage.setItem("academy:deck", JSON.stringify(this.deck));
     localStorage.setItem(
       "academy:localStartTimestamp",
       JSON.stringify(this.localStartTimestamp)
@@ -306,7 +304,12 @@ export class GameService {
 
   public resume() {
     this.game = JSON.parse(localStorage.getItem("academy:game")) || this.game;
-    this.deck = JSON.parse(localStorage.getItem("academy:deck")) || this.deck;
+    if (this.game.shuffle_indices) {
+      this.deck = this.cardsService.generateCardsFromShuffleIndices(
+        this.getNumberOfPlayers(),
+        this.game.shuffle_indices
+      );
+    }
     this.localStartTimestamp =
       JSON.parse(localStorage.getItem("academy:localStartTimestamp")) ||
       this.localStartTimestamp;
