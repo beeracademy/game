@@ -6,6 +6,7 @@ import { TimeService } from "src/app/services/time.service";
 import { ModalService } from "src/app/services/modal.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { SoundService } from "src/app/services/sound.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-login-modal",
@@ -23,6 +24,8 @@ export class LoginModalComponent implements OnInit {
   public isMuted = false;
   private shuffleTimeTotal = 3000;
   private shuffleEvery = 200;
+
+  public environment = environment;
 
   constructor(
     private storageService: StorageService,
@@ -110,6 +113,16 @@ export class LoginModalComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  public testGame(offline: boolean) {
+    this.gameService.offline = offline;
+
+    for (let i = 0; i < this.numberOfPlayers; i++) {
+      this.usersService.users[i].username = `Player${i + 1}`;
+    }
+
+    //this.startGame();
   }
 
   public ready(index: number) {

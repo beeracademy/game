@@ -56,8 +56,6 @@
     color="primary"
     (click)="shuffle()"
     [disabled]="!isReady || isShuffling || shuffleDone"
-    #startButton
-    style="margin-bottom: 5px"
   >
     Shuffle Players
   </button>
@@ -70,6 +68,24 @@
     #startButton
   >
     Start Game
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="testGame(true)"
+    *ngIf="!environment.production"
+  >
+    Test Offline Game
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="testGame(false)"
+    *ngIf="!environment.production"
+  >
+    Test Online Game
   </button>
 
   <button
