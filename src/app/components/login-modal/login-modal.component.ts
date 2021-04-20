@@ -99,6 +99,8 @@ export class LoginModalComponent implements OnInit {
   }
 
   public startGame() {
+    this.usersService.assignColors();
+
     const ref = this.modal.showSpinner();
 
     this.gameService.start().subscribe(

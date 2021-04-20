@@ -79,12 +79,16 @@ export class UsersService {
   public setNumberOfUsers(val: number) {
     this.users = this.users.slice(0, val);
 
-    Random.shuffle(this.randomEngine, this.userColors);
-
     for (let i = 0; i < val; i++) {
       if (!this.users[i]) {
         this.users[i] = new User();
       }
+    }
+  }
+
+  public assignColors() {
+    Random.shuffle(this.randomEngine, this.userColors);
+    for (let i = 0; i < this.users.length; i++) {
       this.users[i].color = this.userColors[i];
     }
   }
