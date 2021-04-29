@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  HostListener,
+} from "@angular/core";
 import { StorageService } from "src/app/services/storage.service";
 import { GameService } from "src/app/services/game.service";
 import { UsersService } from "src/app/services/users.service";
@@ -169,5 +174,14 @@ export class LoginModalComponent implements OnInit {
     this.soundService.toggleMute("homosangen_fuve");
     this.isMuted = !this.isMuted;
     this.storageService.set("muteLobby", this.isMuted);
+  }
+
+  @HostListener("document:keyup", ["$event"])
+  handleKeyup(event: KeyboardEvent) {
+    if (event.code === "Space") {
+      if (this.isReady) {
+        this.startGame();
+      }
+    }
   }
 }
