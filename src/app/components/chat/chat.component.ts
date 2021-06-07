@@ -15,6 +15,7 @@ class ChatMessage {
   userUrl: string;
   message: string;
   timestamp: Date;
+  chatId: string;
 }
 
 @Component({
@@ -28,6 +29,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isDisconnected: boolean;
   messages: Array<any> = [];
   scrollToBottom = false;
+  chatId: string;
 
   constructor(
     private gameService: GameService,
@@ -41,9 +43,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
     this.chatService.onMessage.subscribe({
       next: (data) => {
+        if (data.event === "chat_id") {
+          this.chatId = data.chat_id;
+          return;
+        }
+
         const message = new ChatMessage();
         message.username = data.is_game ? "Game" : data.username || "Guest";
         message.timestamp = new Date(data.datetime);
+        message.chatId = data.chat_id;
 
         switch (data.event) {
           case "message":
@@ -70,7 +78,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           message.userUrl = "#";
         }
 
-        if (data.event === "message" && !data.is_game) {
+        if (data.event === "message" && message.chatId !== this.chatId) {
           this.modalService.showSnack(`${message.username} ${message.message}`);
         }
 
