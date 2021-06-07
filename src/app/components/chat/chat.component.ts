@@ -8,6 +8,7 @@ import {
 import { environment } from "src/environments/environment";
 import { ChatService } from "../../services/chat.service";
 import { GameService } from "../../services/game.service";
+import { ModalService } from "src/app/services/modal.service";
 
 class ChatMessage {
   username: string;
@@ -30,7 +31,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private gameService: GameService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private modalService: ModalService
   ) {
     const gameId = this.gameService.game.id;
 
@@ -66,6 +68,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           message.userUrl = `${environment.url}/games/${gameId}/`;
         } else {
           message.userUrl = "#";
+        }
+
+        if (data.event === "message" && !data.is_game) {
+          this.modalService.showSnack(`${message.username} ${message.message}`);
         }
 
         this.messages.push(message);
