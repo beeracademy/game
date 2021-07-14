@@ -55,23 +55,33 @@
   </div>
   <div class="dnf-button" (click)="toggleDNF()">DNF</div>
   <h3>{{ user?.username }}</h3>
-  <div class="stats-wrap">
-    <div>
-      <p>Total sips</p>
-      <p>Total time</p>
-      <p>Max sips</p>
-      <p>Min sips</p>
-    </div>
-    <div class="right-flex">
-      <p>{{ meta.getTotalSips(cards) }}<sub>14</sub></p>
-      <p>{{ meta.getTotalTime(user) | date: "H:mm:ss":"+0000" }}</p>
-      <p>{{ meta.getTheoraticalMin(user) }}<sub>14</sub></p>
-      <p>{{ meta.getTheoraticalMax(user) }}<sub>14</sub></p>
-    </div>
-  </div>
   <div
-    class="indicator"
-    [style.height.%]="indicatorHeight"
-    [style.transition]="indicatorTransition"
-  ></div>
+    (click)="toggleSimpleMode()"
+    [ngClass]="usersService.simpleMode ? 'simple-mode' : 'stats-mode'"
+  >
+    <div style="position: relative; height: 0">
+      <div class="simple-mode-text">
+        {{ meta.getTotalSips(cards) }}<sub>14</sub>
+      </div>
+    </div>
+    <div class="stats-wrap">
+      <div>
+        <p>Total sips</p>
+        <p>Total time</p>
+        <p>Max sips</p>
+        <p>Min sips</p>
+      </div>
+      <div class="right-flex">
+        <p>{{ meta.getTotalSips(cards) }}<sub>14</sub></p>
+        <p>{{ meta.getTotalTime(user) | date: "H:mm:ss":"+0000" }}</p>
+        <p>{{ meta.getTheoraticalMin(user) }}<sub>14</sub></p>
+        <p>{{ meta.getTheoraticalMax(user) }}<sub>14</sub></p>
+      </div>
+    </div>
+    <div
+      class="indicator"
+      [style.height.%]="indicatorHeight"
+      [style.transition]="indicatorTransition"
+    ></div>
+  </div>
 </mat-card>

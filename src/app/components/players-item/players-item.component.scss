@@ -67,6 +67,22 @@
       }
     }
 
+    .simple-mode .stats-wrap {
+      visibility: hidden;
+    }
+
+    .simple-mode-text {
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      margin-top: 0.3em;
+      font-size: 3.5em;
+    }
+
+    .stats-mode .simple-mode-text {
+      display: none;
+    }
+
     .indicator {
       position: absolute;
       width: 100%;

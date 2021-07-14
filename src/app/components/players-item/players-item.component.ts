@@ -114,4 +114,8 @@ export class PlayersItemComponent implements OnInit {
   toggleDNF() {
     this.gameService.toggleDNF(this.user);
   }
+
+  toggleSimpleMode() {
+    this.usersService.simpleMode = !this.usersService.simpleMode;
+  }
 }
