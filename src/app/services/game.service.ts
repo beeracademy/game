@@ -337,8 +337,9 @@ export class GameService {
     if (
       this.game.cards.length > 0 &&
       latestCard.value === 14 &&
-      !latestCard.chug_start_start_delta_ms
+      !latestCard.chug_end_start_delta_ms
     ) {
+      // TODO: Proper resume chug dialog when reloading during a started chug
       this.showChugModal();
       return;
     }
