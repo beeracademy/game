@@ -42,7 +42,6 @@ export class GameService {
     private usersService: UsersService,
     private cardsService: CardsService,
     private flashService: FlashService,
-    private soundService: SoundService,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -138,10 +137,6 @@ export class GameService {
         // NOOP
       },
     });
-
-    if (draw.value === 6) {
-      this.soundService.play("prst_a_krk");
-    }
 
     // Check if ace or game done
     if (draw.value === 14) {
