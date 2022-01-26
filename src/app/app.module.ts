@@ -94,15 +94,6 @@ import { ChatComponent } from "./components/chat/chat.component";
       multi: true,
     },
   ],
-  entryComponents: [
-    ConfirmModalComponent,
-    AlertModalComponent,
-    ChugModalComponent,
-    FinishModalComponent,
-    SpinnerModalComponent,
-    RetryUploadModalComponent,
-    StatsModalComponent,
-  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
