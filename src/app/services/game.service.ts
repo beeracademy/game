@@ -64,11 +64,11 @@ export class GameService {
         observer.error("Geolocation not available");
       } else {
         navigator.geolocation.getCurrentPosition(
-          (position: Position) => {
+          (position: GeolocationPosition) => {
             observer.next(position);
             observer.complete();
           },
-          (error: PositionError) => {
+          (error: GeolocationPositionError) => {
             observer.error(error);
           }
         );
@@ -100,7 +100,7 @@ export class GameService {
         this.save();
 
         location.subscribe(
-          (position: Position) => {
+          (position: GeolocationPosition) => {
             const coords = position.coords;
             this.game.location = {
               latitude: coords.latitude,
