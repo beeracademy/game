@@ -138,6 +138,12 @@ export class GameService {
       },
     });
 
+    if (draw.value === 12 && (draw.suit === "S" || draw.suit === "C")) {
+      if (Math.random() < 0.25) {
+        this.sounds.play("ole_vedel");
+      }
+    }
+
     // Check if ace or game done
     if (draw.value === 14) {
       this.showChugModal();
