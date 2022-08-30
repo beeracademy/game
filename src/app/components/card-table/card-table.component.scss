@@ -12,6 +12,8 @@
     text-align: center;
     padding: 4px;
     max-width: 70px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   td {

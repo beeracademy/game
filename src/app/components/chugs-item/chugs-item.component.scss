@@ -12,6 +12,9 @@
 
   .name {
     font-weight: bold;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .symbol {
