@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "AcademyWebGame"
+  "defaultProject": "AcademyWebGame",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { GameService } from "src/app/services/game.service";
 import { UsersService } from "src/app/services/users.service";
 import { MetaService } from "src/app/services/meta.service";
+import { ChartConfiguration, ChartOptions, LegendItem } from "chart.js";
 
 @Component({
   selector: "app-chart",
@@ -9,33 +10,47 @@ import { MetaService } from "src/app/services/meta.service";
   styleUrls: ["./chart.component.scss"],
 })
 export class ChartComponent implements OnInit {
-  public chartOptions = {
+  public chartOptions: ChartOptions<"line"> = {
     responsive: true,
     animation: false,
     scales: {
-      yAxes: [
-        {
-          ticks: {
-            min: 0,
-            stepSize: 14,
-            callback: this.meta.toBase14,
-          },
+      y: {
+        min: 0,
+        ticks: {
+          stepSize: 14,
+          callback: this.meta.toBase14,
         },
-      ],
-      xAxes: [
-        {
-          ticks: {
-            min: 0,
-          },
-        },
-      ],
+      },
+      x: {
+        min: 0,
+      },
     },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            return `${context.dataset.label}: ${this.meta.toBase14(
+              context.parsed.y
+            )}`;
+          },
+        },
+      },
+    },
+    /*
+    plugins: {
+      legend: {
+        labels: {
+          generateLabels: function (x): LegendItem[] {
+            return [];
+          },
+        },
+      },
+    },*/
   };
-  public chartLabels = Array.from(Array(14).keys());
-  public chartType = "line";
-  public chartLegend = true;
-  public chartColors = [];
-  public chartData = [];
+  public chartData: ChartConfiguration<"line">["data"] = {
+    labels: Array.from(Array(14).keys()),
+    datasets: [],
+  };
 
   constructor(
     private gameService: GameService,
@@ -49,22 +64,27 @@ export class ChartComponent implements OnInit {
   }
 
   update() {
-    for (const u of this.usersService.users) {
-      this.chartColors.push({
-        backgroundColor: u.color,
-        borderColor: u.color,
-      });
-    }
+    this.chartData.datasets = [];
 
     for (const u of this.usersService.users) {
       const cards = this.gameService.getCardsForPlayer(u);
 
-      this.chartData[u.index] = {
+      this.chartData.datasets[u.index] = {
         data: this.meta.getCummulativeSips(cards),
         label: u.username,
         fill: false,
-        lineTension: 0,
+        tension: 0,
+        borderColor: u.color,
+        backgroundColor: u.color,
+        pointBorderColor: u.color,
+        pointBackgroundColor: u.color,
       };
     }
+
+    // Needed to make Angular redraw the chart
+    this.chartData = {
+      labels: this.chartData.labels,
+      datasets: this.chartData.datasets,
+    };
   }
 }

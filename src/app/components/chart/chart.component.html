@@ -2,12 +2,10 @@
   <div style="display: block">
     <canvas
       baseChart
-      [datasets]="chartData"
-      [labels]="chartLabels"
+      [type]="'line'"
+      [legend]="true"
+      [data]="chartData"
       [options]="chartOptions"
-      [legend]="chartLegend"
-      [chartType]="chartType"
-      [colors]="chartColors"
     >
     </canvas>
   </div>
