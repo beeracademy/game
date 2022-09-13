@@ -14,7 +14,7 @@ COPY . /app
 ARG GIT_COMMIT_HASH
 ENV GIT_COMMIT_HASH $GIT_COMMIT_HASH
 
-RUN yarn build --prod
+RUN yarn build --configuration production
 
 FROM nginx:alpine
 
