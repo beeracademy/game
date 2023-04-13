@@ -103,6 +103,17 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener("window:beforeunload", ["$event"])
+  beforeUnload(event: BeforeUnloadEvent): string | undefined {
+    if (this.gameService.isGameDone()) {
+      return;
+    }
+
+    event.preventDefault();
+    event.returnValue = "";
+    return "";
+  }
+
   registerCommand(word: string, callback: (string) => void) {
     let progess = 0;
     let cmd = "";
