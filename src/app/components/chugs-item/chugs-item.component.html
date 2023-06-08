@@ -1,4 +1,4 @@
-<mat-card *ngIf="duration">
+<mat-card appearance="outlined" *ngIf="duration">
   <p [style.color]="color" class="symbol">{{ symbol }}</p>
   <p class="name">{{ username }}</p>
   <p>{{ duration | date: "mm:ss.SSS" }}</p>

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card appearance="outlined">
   <h2>New Game</h2>
 
   <mat-divider></mat-divider>
@@ -7,17 +7,29 @@
 
   <br />
 
+  <!-- TODO: The 'tickInterval' property no longer exists -->
   <mat-slider
     min="2"
     max="6"
     step="1"
-    tickInterval="1"
     color="primary"
     thumbLabel="thumbLabel"
     [(ngModel)]="numberOfPlayers"
-    (change)="sliderChange($event.value)"
     [disabled]="isShuffling"
-  ></mat-slider>
+    #ngSlider
+    ><input
+      matSliderThumb
+      (change)="
+        sliderChange(
+          {
+            source: ngSliderThumb,
+            parent: ngSlider,
+            value: ngSliderThumb.value
+          }.value
+        )
+      "
+      #ngSliderThumb="matSliderThumb"
+  /></mat-slider>
 
   <mat-divider></mat-divider>
 
