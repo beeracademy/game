@@ -113,7 +113,7 @@ export class GameService {
           }
         );
 
-        this.router.navigate(["game"]);
+        this.router.navigate([""]);
         this.sounds.play("baladada");
       })
     );
@@ -225,7 +225,7 @@ export class GameService {
     this.clearSavedGame();
     this.reset();
     this.usersService.reset();
-    this.router.navigate(["login"]);
+    this.router.navigate([""]);
   }
 
   public reset() {

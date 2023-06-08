@@ -37,14 +37,6 @@ export class AppComponent {
     private userService: UsersService
   ) {
     this.preloadAssets();
-    if (
-      this.gameService.game.start_datetime &&
-      this.userService.users.length > 0
-    ) {
-      this.router.navigate(["game"]);
-    } else {
-      this.gameService.clearSavedGame();
-    }
 
     setTimeout(() => {
       (window as any).cold = false;
