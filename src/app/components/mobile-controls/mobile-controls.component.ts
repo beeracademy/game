@@ -13,15 +13,17 @@ import { User } from "src/app/models/user";
 })
 export class MobileControlsComponent implements OnInit {
   public user: User;
-  public beers: number;
-  public sips: number;
+  public total_sips: string;
+  private simple_sips: boolean;
 
   constructor(
     public gameService: GameService,
     public sounds: SoundService,
     public meta: MetaService,
     private bottomSheet: MatBottomSheet
-  ) {}
+  ) {
+    this.simple_sips = false;
+  }
 
   ngOnInit() {
     this.gameService.onCardDrawn.subscribe(() => {
@@ -39,9 +41,16 @@ export class MobileControlsComponent implements OnInit {
     this.user = this.gameService.getActivePlayer();
 
     const cards = this.gameService.getCardsForPlayer(this.user);
+    const sips = this.meta.getSipsLeftInBeer(cards);
 
-    this.beers = this.meta.getBeers(cards);
-    this.sips = this.meta.getSipsLeftInBeer(cards);
+    this.total_sips = this.simple_sips ? 
+                        this.meta.getTotalSips(cards) + "<sub>14</sub>" 
+                        : `${sips} sip${sips > 1 ? "s" : ""} left in beer ${this.meta.getBeers(cards) + 1}`;
+  }
+
+  public toggleSips() {
+    this.simple_sips = !this.simple_sips;
+    this.update();
   }
 
   public draw() {
