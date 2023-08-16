@@ -82,6 +82,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.registerCommand("downunder", this.flipBody.bind(this));
     this.registerCommand("olderenneger", this.oldErEnNeger.bind(this));
     this.registerCommand("mimimi", this.mimimi.bind(this));
+    this.registerCommand("mimimihs", this.mimimi_spedup.bind(this));
     this.registerCommand("letitsnow", this.toggleSnowflakes.bind(this));
     this.registerCommand("30305244", this.benjamin.bind(this));
   }
@@ -213,6 +214,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   mimimi() {
     this.gameService.nextChugMusic = "mimimi";
+  }
+
+  mimimi_spedup() {
+    this.gameService.nextChugMusic = "mimimi_spedup";
   }
 
   toggleSnowflakes() {
