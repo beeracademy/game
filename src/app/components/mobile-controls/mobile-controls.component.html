@@ -1,7 +1,8 @@
-<h5>{{ user.username }}</h5>
-<p>{{ sips }} sip{{ sips > 1 ? "s" : "" }} left in beer {{ beers + 1 }}</p>
 
-<hr />
+
+<h5>{{ user.username }}</h5>
+<p [innerHTML]=total_sips (click)="toggleSips()"></p>
+
 
 <button mat-raised-button color="primary" (click)="draw()">Draw card</button>
 <div class="row">
