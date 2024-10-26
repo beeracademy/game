@@ -25,6 +25,8 @@ export class GameService {
   @Output() onCardDrawn: EventEmitter<Card> = new EventEmitter();
   @Output() onChugDone: EventEmitter<Card> = new EventEmitter();
 
+  private useOldSounds = false;
+
   public game: Game = new Game();
   public deck: Card[] = [];
 
@@ -119,6 +121,22 @@ export class GameService {
     );
   }
 
+  private playSoundForDraw(card: Card) {
+    if (this.useOldSounds) {
+      if (card.value !== 14 && ["C", "D", "H", "S"].includes(card.suit)) {
+        const soundName = `old/${card.suit}-${card.value}`;
+        this.sounds.play(soundName);
+        return;
+      }
+    }
+
+    if (card.value === 12 && ["S", "C"].includes(card.suit)) {
+      if (Math.random() < 0.25) {
+        this.sounds.play("ole_vedel");
+      }
+    }
+  }
+
   public draw() {
     if (this.getNumberOfCardsLeft() === 0) {
       return;
@@ -138,11 +156,7 @@ export class GameService {
       },
     });
 
-    if (draw.value === 12 && (draw.suit === "S" || draw.suit === "C")) {
-      if (Math.random() < 0.25) {
-        this.sounds.play("ole_vedel");
-      }
-    }
+    this.playSoundForDraw(draw);
 
     // Check if ace or game done
     if (draw.value === 14) {
@@ -543,5 +557,9 @@ export class GameService {
       prevFinishStartDeltaMs = finishStartDeltaMs;
     }
     return durations;
+  }
+
+  public toggleOldSounds() {
+    this.useOldSounds = !this.useOldSounds;
   }
 }

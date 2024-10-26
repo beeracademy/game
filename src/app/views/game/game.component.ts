@@ -85,6 +85,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.registerCommand("mimimihs", this.mimimi_spedup.bind(this));
     this.registerCommand("letitsnow", this.toggleSnowflakes.bind(this));
     this.registerCommand("30305244", this.benjamin.bind(this));
+    this.registerCommand("oldsounds", this.oldSounds.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -233,6 +234,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   benjamin() {
     this.sound.play("benjamin");
+  }
+
+  oldSounds() {
+    this.gameService.toggleOldSounds();
   }
 
   playIDLSound() {
