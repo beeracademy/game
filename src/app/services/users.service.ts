@@ -33,7 +33,7 @@ export class UsersService {
     "#db0a5b",
   ];
 
-  public simpleMode = false;
+  public simpleMode = true;
 
   private randomEngine = Random.browserCrypto;
 
