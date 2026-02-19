@@ -5,6 +5,12 @@
       {{ u.username }}
     </th>
   </tr>
+  <tr>
+    <th>Total</th>
+    <th *ngFor="let u of usersService.users; let i = index">
+      {{ meta.toBase14(meta.getPlayerSips(i)) }}
+    </th>
+  </tr>
   <tr *ngFor="let row of matrix; let i = index">
     <td>{{ i + 1 }}</td>
     <td

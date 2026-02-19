@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { GameService } from "src/app/services/game.service";
 import { UsersService } from "src/app/services/users.service";
 import { CardsService } from "src/app/services/cards.service";
+import { MetaService } from "src/app/services/meta.service";
 
 @Component({
   selector: "app-card-table",
@@ -20,7 +21,8 @@ export class CardTableComponent implements OnInit {
   constructor(
     public gameService: GameService,
     public usersService: UsersService,
-    public cardsService: CardsService
+    public cardsService: CardsService,
+    public meta: MetaService
   ) {}
 
   ngOnInit() {

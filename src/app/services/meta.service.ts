@@ -74,6 +74,17 @@ export class MetaService {
     return (this.getSipsLeftInBeer(cards) / 14) * 100;
   }
 
+  public getPlayerSips(i: number): number {
+    const numPlayers = this.gameService.getNumberOfPlayers();
+    const cards = this.gameService.game.cards;
+
+    let res = 0;
+    for (let j = i; j < cards.length; j += numPlayers) {
+      res += cards[j].value;
+    }
+    return res;
+  }
+
   public isLeadingPlayer(i: number): boolean {
     const numPlayers = this.gameService.getNumberOfPlayers();
     const cards = this.gameService.game.cards;
